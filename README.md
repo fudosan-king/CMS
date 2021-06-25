@@ -27,5 +27,8 @@ python3 manage.py createsuperuser
 ### How to run?
 
 ```
+cd ~/project/wagtail
+. ./env/bin/activate
+cd logknot
 python3 manage.py runserver
 ````

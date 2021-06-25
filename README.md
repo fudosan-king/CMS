@@ -40,6 +40,26 @@ screen -c .screenrc.develop
 http://cms.localhost:5000/
 
 
+### How to run shell
+
+```
+cd ~/project/wagtail
+. ./env/bin/activate
+cd logknot
+python3 manage.py shell
+
+```
+
+List all commanline
+```
+cd ~/project/wagtail
+. ./env/bin/activate
+cd logknot
+python3 manage.py
+
+```
+
+
 
 ### Document
 

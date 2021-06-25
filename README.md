@@ -32,3 +32,7 @@ cd ~/project/wagtail
 cd logknot
 python3 manage.py runserver
 ````
+
+### Document
+
+https://docs.wagtail.io/en/stable/

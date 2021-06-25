@@ -21,7 +21,6 @@ cd ~/project/wagtail
 virtualenv env
 . ./env/bin/activate
 pip3 install wagtail
-wagtail start logknot
 cd logknot
 pip3 install -r requirements.txt
 python3 manage.py migrate

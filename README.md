@@ -38,6 +38,9 @@ cd ~/project/wagtail
 cd logknot
 screen -c .screenrc.develop
 ````
+http://cms.localhost:5000/
+
+
 
 ### Document
 

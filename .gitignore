@@ -18,6 +18,7 @@ npm-debug.log*
 /storybook-static
 /logknot/db.sqlite3
 /logknot/www
+/logknot/media
 
 ### JetBrains
 .idea/

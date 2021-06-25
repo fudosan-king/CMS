@@ -8,7 +8,7 @@
 /wagtail.egg-info/
 /docs/_build/
 /.tox/
-/venv
+/env
 /node_modules/
 npm-debug.log*
 *.idea/
@@ -17,6 +17,7 @@ npm-debug.log*
 /.pytest_cache/
 /storybook-static
 /logknot/db.sqlite3
+/logknot/www
 
 ### JetBrains
 .idea/

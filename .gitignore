@@ -16,7 +16,7 @@ npm-debug.log*
 /.cache/
 /.pytest_cache/
 /storybook-static
-/logknot/db.sqlite3*
+db.sqlite3*
 /logknot/www
 /logknot/media
 

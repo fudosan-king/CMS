@@ -19,6 +19,7 @@ npm-debug.log*
 db.sqlite3*
 /logknot/www
 /logknot/media
+/logknot/admin
 
 ### JetBrains
 .idea/

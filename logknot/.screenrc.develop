@@ -4,5 +4,5 @@ zombie "^d^r"
 hardstatus alwayslastline I%wI
 vbell off
 
-screen -t webapp 0 sh -c 'source ../env/bin/activate ; ../env/bin/uwsgi ../etc/localhost/uwsgi.ini'
 screen -t nginx sh -c '/usr/local/bin/nginx -p `pwd`/www  -c `pwd`/../etc/localhost/nginx/nginx.conf'
+screen -t webapp 0 sh -c 'source ../env/bin/activate ; ../env/bin/uwsgi ../etc/localhost/uwsgi.ini'

@@ -50,7 +50,7 @@ python3 manage.py shell
 
 ```
 
-List all commanline
+List all command line
 ```
 cd ~/project/wagtail
 . ./env/bin/activate

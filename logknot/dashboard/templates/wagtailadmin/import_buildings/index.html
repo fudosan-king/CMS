@@ -1,10 +1,20 @@
 {% extends "wagtailadmin/base.html" %}
 {% load i18n wagtailadmin_tags %}
 
-{% block titletag %}{% trans "Buildings" %}{% endblock %}
+{% block titletag %}{% trans "Import Buildings" %}{% endblock %}
 
 {% block content %}
-<h1>Import Buildings</h1>
+<header class="merged nice-padding">
+    <div class="row">
+        <h1>
+        	<svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-folder-open-inverse"></use></svg>
+                {% trans 'Import Buildings' %}
+        </h1>
+        <div class="col9">
+        </div>
+    </div>
+</header>
+<h1>{% trans 'Import Buildings' %}</h1>
 {% endblock %}
 
 {% block extra_css %}

@@ -1,0 +1,12 @@
+.merged.nice-padding,
+.hasform,
+.merged.tab-merged {
+  background-color: #0091b4;
+}
+
+@media only screen and (max-width: 600px) {
+  .merged.nice-padding {
+    padding-left: 60px;
+    padding-top: 10px;
+  }
+}

@@ -1,0 +1,26 @@
+{% extends "wagtailadmin/base.html" %}
+{% load wagtailadmin_tags i18n %}
+{% block titletag %}{% trans "Dashboard" %}{% endblock %}
+{% block bodyclass %}homepage{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<header class="merged nice-padding">
+    <div class="row">
+        <div class="col1">
+            <div class="avatar"><img src="{% avatar_url user %}" alt="" /></div>
+        </div>
+        <div class="col9">
+            <h1>{% block branding_welcome %}{% blocktrans %}Welcome to the LogKnot CMS {% endblocktrans %}{% endblock %}</h1>
+            <div class="user-name">{{ user|user_display_name }}</div>
+        </div>
+    </div>
+</header>
+<h1>Dashboard</h1>
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}

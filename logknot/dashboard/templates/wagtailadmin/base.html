@@ -7,14 +7,18 @@
             <a href="/" class="logo" aria-label="{% trans 'Dashboard' %}">
                 {% block branding_logo %}
                     {# Mobile-only logo: #}
-                    <div class="wagtail-logo-container__mobile u-hidden@sm">
-                        <img class="wagtail-logo wagtail-logo__full" src="{% versioned_static 'wagtailadmin/images/wagtail-logo.svg' %}" alt="" width="80" />
+                    <div class="wagtail-logo-container u-hidden@sm">
+                        <img class="wagtail-logo wagtail-logo__full" src="/static/images/logo.svg" alt="" width="40" />
                     </div>
 
                     {# Desktop logo (animated): #}
-                    {% include "wagtailadmin/shared/animated_logo.html" %}
+                    <div class="wagtail-logo-container u-hidden@xs logo-serious" data-animated-logo-container="">
+                        <div class="wagtail-logo-container-inner">
+                            <img class="wagtail-logo wagtail-logo__full" src="/static/images/logo.svg" alt="" width="80" />
+                        </div>
+                    </div>
                 {% endblock %}
-                <span class="u-hidden@sm">{% trans "Dashboard" %}</span>
+                <span class="u-hidden@sm" style="padding-left: 20px;">Logknot</span>
             </a>
 
             {% main_nav %}

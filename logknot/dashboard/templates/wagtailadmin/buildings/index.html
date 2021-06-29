@@ -4,7 +4,17 @@
 {% block titletag %}{% trans "Buildings" %}{% endblock %}
 
 {% block content %}
-<h1>Buildings</h1>
+<header class="merged nice-padding">
+    <div class="row">
+        <h1>
+        	<svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-image"></use></svg>
+                {% trans 'Buildings' %}
+        </h1>
+        <div class="col9">
+        </div>
+    </div>
+</header>
+<h1>{% trans 'Buildings' %}</h1>
 {% endblock %}
 
 {% block extra_css %}

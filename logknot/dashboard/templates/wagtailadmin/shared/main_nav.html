@@ -4,14 +4,14 @@
     <ul>
         <li class="menu-item {% if request.path == '/dashboard/' %}menu-active{% endif %}">
             <a href="/dashboard/" class="">
-                <svg class="icon icon-image icon--menuitem" aria-hidden="true" focusable="false"><use href="#icon-image"></use></svg>
-                Dashboard
+                <svg class="icon icon-image icon--menuitem" aria-hidden="true" focusable="false"><use href="#icon-plus"></use></svg>
+                {% trans "Dashboard" %}
             </a>
         </li>
         <li class="menu-item {% if request.path == '/dashboard/buildings/' %}menu-active{% endif %}">
             <a href="/dashboard/buildings/" class="">
                 <svg class="icon icon-image icon--menuitem" aria-hidden="true" focusable="false"><use href="#icon-image"></use></svg>
-                Buildings
+                {% trans "Buildings" %}
             </a>
         </li>
         <li class="menu-item {% if request.path == '/dashboard/import/' %}menu-active{% endif %}">
@@ -20,32 +20,32 @@
                     <svg class="icon icon-folder-open-inverse icon--menuitem" aria-hidden="true">
                     <use href="#icon-folder-open-inverse"></use></svg>
                 </span>
-            Import
+                {% trans "Import" %}
             </a>
         </li>
 
-        <li class="menu-item {% if request.path in '/dashboard/users/' or request.path == '/dashboard/groups/' or request.path == '/dashboard/account/' %}menu-active{% endif %}">
+        <li class="menu-item {% if request.path == '/dashboard/users/' or request.path == '/dashboard/groups/' or request.path == '/dashboard/account/' %}menu-active{% endif %}">
             <a href="#" data-nav-primary-submenu-trigger="" class="">
                 <svg class="icon icon-cogs icon--menuitem" aria-hidden="true" focusable="false"><use href="#icon-cogs"></use></svg>
-                Settings
+                {% trans "Settings" %}
                 <svg class="icon icon-arrow-right icon--submenu-trigger" aria-hidden="true" focusable="false"><use href="#icon-arrow-right"></use></svg>
             </a>
             <div class="nav-submenu">
                 <h2 id="nav-submenu-settings-title" class="">
                     <svg class="icon icon-cogs icon--submenu-header" aria-hidden="true" focusable="false"><use href="#icon-cogs"></use></svg>
-                    Settings
+                    {% trans "Settings" %}
                 </h2>
                 <ul class="nav-submenu__list" aria-labelledby="nav-submenu-settings-title">
                     <li class="menu-item">
                         <a href="/dashboard/users/" class="">
                             <svg class="icon icon-user icon--menuitem" aria-hidden="true" focusable="false"><use href="#icon-user"></use></svg>
-                            Users
+                            {% trans "Users" %}
                         </a>
                     </li>
                     <li class="menu-item">
                         <a href="/dashboard/groups/" class="">
                             <svg class="icon icon-group icon--menuitem" aria-hidden="true" focusable="false"><use href="#icon-group"></use></svg>
-                            Groups
+                            {% trans "Groups" %}
                         </a>
                     </li>
                 </ul>

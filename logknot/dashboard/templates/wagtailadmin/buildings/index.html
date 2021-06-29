@@ -4,17 +4,57 @@
 {% block titletag %}{% trans "Buildings" %}{% endblock %}
 
 {% block content %}
-<header class="merged nice-padding">
-    <div class="row">
-        <h1>
-        	<svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-image"></use></svg>
-                {% trans 'Buildings' %}
-        </h1>
-        <div class="col9">
+    <header class="hasform">
+        <div class="row nice-padding">
+            <div class="col2">
+                <h1>
+                	<svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-image"></use></svg>
+                        {% trans 'Buildings' %}
+                </h1>
+            </div>
+            <div class="col9">
+                <form class="col search-form" action="/dashboard/buildings/" method="get" novalidate="" role="search">
+                    <ul class="fields">
+                        <li class="required">
+                        <div class="field char_field text_input field-small iconfield" data-contentpath="building_name">
+                            <label for="building_name">Search term:</label>
+                            <div class="field-content">
+                                <div class="input icon-search ">
+                                        <input type="text" name="building_name" placeholder="Search buildings" required="" id="building_name">
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                        </li>
+                        <li class="submit visuallyhidden"><input type="submit" value="Search" class="button"></li>
+                    </ul>
+                </form>
+            </div>
+            <div class="col1">
+                <div class="actionbutton">
+                    <a href="/dashboard/building/add/" class="button bicolor button--icon"><span class="icon-wrapper"><svg class="icon icon-plus icon" aria-hidden="true" focusable="false"><use href="#icon-plus"></use></svg></span>Add</a>
+                </div>
+            </div>
         </div>
+    </header>
+
+    <div style="padding-top: 20px"></div>
+
+    {% for building in buildings %}
+    <div style="padding-left: 50px;">
+        <a href="/dashboard/buildings/{{ building.id }}/">
+        <span>{{ building.building_name }}</span>
+        </a>
+        <form method="post" action="/dashboard/buildings/{{ building.id }}/" style="width: 50px; float: right;">
+            {% csrf_token %}
+            <input type="hidden" name="delete" value="{{ building.id }}">
+            <button class="button" type="submit" style="background-color: red; float: right; margin-right: 20px;" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
+        </form>
+        <br>
     </div>
-</header>
-<h1>{% trans 'Buildings' %}</h1>
+    <hr>
+    {% endfor %}
+
 {% endblock %}
 
 {% block extra_css %}

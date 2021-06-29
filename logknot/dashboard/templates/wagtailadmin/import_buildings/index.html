@@ -14,7 +14,15 @@
         </div>
     </div>
 </header>
-<h1>{% trans 'Import Buildings' %}</h1>
+<h1>{{ method }}</h1>
+{% if request.method == 'GET' %}
+<form method="post" action="/dashboard/import/">
+    {% csrf_token %}
+    <div align="center">
+        <button type="submit" class="button" style="width: 200px;">SUBMIT</button>
+    </div>
+</form>
+{% endif %}
 {% endblock %}
 
 {% block extra_css %}

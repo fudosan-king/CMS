@@ -5,21 +5,32 @@
 
 {% block extra_css %}
     {{ block.super }}
+    <link rel="stylesheet" href="{% versioned_static 'wagtailadmin/css/layouts/home.css' %}" type="text/css" />
 {% endblock %}
 
 {% block content %}
-<header class="merged nice-padding">
-    <div class="row">
-        <div class="col1">
-            <div class="avatar"><img src="{% avatar_url user %}" alt="" /></div>
+    <header class="merged nice-padding">
+        <div class="row">
+            <div class="col1">
+                <div class="avatar"><img src="{% avatar_url user %}" alt="" /></div>
+            </div>
+            <div class="col9">
+                <h1>{% block branding_welcome %}{% blocktrans %}Welcome to the LogKnot CMS {% endblocktrans %}{% endblock %}</h1>
+                <div class="user-name">{{ user|user_display_name }}</div>
+            </div>
         </div>
-        <div class="col9">
-            <h1>{% block branding_welcome %}{% blocktrans %}Welcome to the LogKnot CMS {% endblocktrans %}{% endblock %}</h1>
-            <div class="user-name">{{ user|user_display_name }}</div>
-        </div>
-    </div>
-</header>
-<h1>Dashboard</h1>
+    </header>
+
+    {% if panels %}
+        {% for panel in panels %}
+            {% if panel.order < 100 %}
+                {{ panel.render }}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>{% trans "This is your dashboard on which helpful information about content you've created will be displayed." %}</p>
+    {% endif %}
+
 {% endblock %}
 
 {% block extra_js %}

@@ -1,0 +1,61 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n wagtailadmin_tags %}
+
+{% block titletag %}{% trans "Building Detail" %}{% endblock %}
+
+{% block content %}
+    <header class="merged nice-padding">
+        <div class="row">
+            <h1>
+            	<svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-image"></use></svg>
+                    {% trans 'Building Detail' %}
+            </h1>
+            <div class="col9">
+            </div>
+        </div>
+    </header>
+    <form method="post" action="{{ action }}">
+        {% csrf_token %}
+        <ul class="tab-nav merged" data-tab-nav="">
+            <li class="active"><a href="#infomation">Infomation</a></li>
+            <li><a href="#photos">Photos</a></li>
+        </ul>
+
+        <div class="tab-content" style="height: 700px">
+            <section id="infomation" class="active nice-padding">
+                <li class="required">
+                    <div class="field char_field text_input" data-contentpath="buidingName">
+                        <label class="required" for="building_name">Building Name:</label>
+                        <div class="field-content">
+                            <div class="input  ">
+                                    <input type="text" name="building_name" value="{{ building_detail.building_name }}" maxlength="150" required="" id="building_name">
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </section>
+            <section id="photos" class="nice-padding">
+                {% for image in media %}
+                     <img src="{{ image }}" width="60">
+                {% endfor %}
+            </section>
+        </div>
+        <div align="center">
+            <button type="submit" class="button" style="width: 200px; left: 100px;">Save</button>
+        </div>
+    </form>
+
+    <form method="post" action="/dashboard/buildings/{{ building_detail.id }}/" style="position: relative; top: -39px; left: 760px; width: 30px;">
+        {% csrf_token %}
+        <input type="hidden" name="delete" value="{{ building_detail.id }}">
+        <button class="button" type="submit" style="background-color: red;" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
+    </form>
+
+{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_mongoengine'
 ]
 
 MIDDLEWARE = [
@@ -94,14 +95,18 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-    'estates': {
+    'cms_buildings': {
         'ENGINE': 'django.db.backends.dummy',
     }
 }
 
 # MongoDB settings
 MONGODB_DATABASES = {
-    'cms_estate': {'name': 'estates'}
+    'default': {
+        'name': 'cms_buildings',
+        'host': 'localhost',
+        'tz_aware': True
+    }
 }
 
 # Password validation
@@ -160,6 +165,7 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+MEDIA_BUILDINGS = '/media/buildings/'
 
 
 # Wagtail settings

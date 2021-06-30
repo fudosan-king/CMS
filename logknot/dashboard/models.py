@@ -2,6 +2,7 @@ from django_mongoengine import Document, fields, QuerySet
 import datetime
 from django.conf import settings
 from bson import ObjectId
+from mongoengine.queryset.visitor import Q
 
 
 class Buildings(Document):
@@ -18,6 +19,12 @@ class Buildings(Document):
     last_time_rollback = fields.DateTimeField(default=datetime.datetime.now)
     rollback_by = fields.StringField(max_length=255, default='system')
 
+    def query(self, request, removed=False):
+        q = Q(removed=removed)
+        if request.GET.get('building_name', None):
+            q &= Q(building_name=request.GET.get('building_name', None))
+        return q
+
 
 class MediaQuerySet(QuerySet):
     def media_by_building(self, building_id):
@@ -33,9 +40,9 @@ class Media(Document):
     meta = {'queryset_class': MediaQuerySet}
 
 
-def media_path(building_id):
-    media = Media.objects.media_by_building(ObjectId(building_id))
-    media_path = []
-    for m in media:
-        media_path.append('{}{}/{}.{}'.format(settings.MEDIA_BUILDINGS, m.building_id, m.id, m.file_type))
-    return media_path
+class PhotosBuildings():
+    def media_path(self, media_id):
+        media = Media.objects(id=ObjectId(media_id)).first()
+        if not media:
+            return '/static/images/no-image.png'
+        return '{}{}/{}.{}'.format(settings.MEDIA_BUILDINGS, media.building_id, media.id, media.file_type)

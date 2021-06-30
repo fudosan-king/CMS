@@ -23,17 +23,7 @@
 
         <div class="tab-content" style="height: 700px">
             <section id="infomation" class="active nice-padding">
-                <li class="required">
-                    <div class="field char_field text_input" data-contentpath="buidingName">
-                        <label class="required" for="building_name">Building Name:</label>
-                        <div class="field-content">
-                            <div class="input  ">
-                                    <input type="text" name="building_name" value="{{ building_detail.building_name }}" maxlength="150" required="" id="building_name">
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                </li>
+                {{ forms.building_name.label }}{{ forms.building_name }}
             </section>
             <section id="photos" class="nice-padding">
                 {% for photo in photos %}

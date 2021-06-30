@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from django.template import loader
-from dashboard.models import Buildings, media_path
-from mongoengine.queryset.visitor import Q
+from dashboard.models import Buildings, PhotosBuildings
 from django.shortcuts import redirect
 from django.http import Http404
 import datetime
@@ -9,27 +8,17 @@ from django.core.paginator import Paginator
 
 
 def index(request):
-    q = Q(removed=False)
-    building_name = request.GET.get('building_name', '')
-    if building_name:
-        q &= Q(building_name=building_name)
-    buildings = Buildings.objects().filter(q)
-
-    media = {}
-    for building in buildings:
-        media[building.id] = media_path(building.id)
-    template = loader.get_template('wagtailadmin/buildings/index.html')
+    query = Buildings().query(request, False)
+    buildings = Buildings.objects().filter(query)
 
     try:
         page = int(request.GET.get('page', 1))
         per_page = int(request.GET.get('limit', 10))
-        if page < 1:
-            page = 1
     except:
         page = 1
         per_page = 10
-    paginator_result = Paginator(buildings, per_page)
 
+    paginator_result = Paginator(buildings, per_page)
     try:
         paginator = paginator_result.page(page)
     except:
@@ -44,9 +33,8 @@ def index(request):
         'page': page,
         'limit': limit,
         'buildings': buildings,
-        'media': media,
-        'building_name': building_name
     }
+    template = loader.get_template('wagtailadmin/buildings/index.html')
     return HttpResponse(template.render(context, request))
 
 
@@ -68,13 +56,16 @@ def show(request, building_id):
         building_detail.update_by = str(request.user)
         building_detail.save()
 
-    media = media_path(building_detail.id)
     template = loader.get_template('wagtailadmin/buildings/show.html')
+    photos = []
+    if 'photos' in building_detail:
+        for p in building_detail.photos:
+            photos.append(PhotosBuildings().media_path(p.id))
 
     context = {
         'action': '/dashboard/buildings/edit/{}/'.format(building_detail.id),
         'building_detail': building_detail,
-        'media': media
+        'photos': photos
     }
     return HttpResponse(template.render(context, request))
 
@@ -97,20 +88,33 @@ def add(request):
 
 
 def removed(request):
-    q = Q(removed=True)
-    building_name = request.GET.get('building_name', None)
-    if building_name:
-        q &= Q(building_name=building_name)
-    buildings = Buildings.objects().filter(q)
+    query = Buildings().query(request, True)
+    buildings = Buildings.objects().filter(query)
 
-    media = {}
-    for building in buildings:
-        media[building.id] = media_path(building.id)
+    try:
+        page = int(request.GET.get('page', 1))
+        per_page = int(request.GET.get('limit', 10))
+    except:
+        page = 1
+        per_page = 10
+
+    paginator_result = Paginator(buildings, per_page)
+    try:
+        paginator = paginator_result.page(page)
+    except:
+        raise Http404
+
+    index = (page - 1) * per_page
+    limit = index + per_page
+    buildings = buildings[index:limit]
+
     template = loader.get_template('wagtailadmin/buildings/buildings_removed.html')
 
     context = {
-        'buildings': buildings,
-        'media': media
+        'paginator': paginator,
+        'page': page,
+        'limit': limit,
+        'buildings': buildings
     }
     return HttpResponse(template.render(context, request))
 
@@ -126,14 +130,12 @@ def removed_show(request, building_id):
             building_detail.last_time_rollback = datetime.datetime.now
             building_detail.rollback_by = str(request.user)
             building_detail.save()
-            return redirect('buildings')
+            return redirect('buildings_removed')
 
-    media = media_path(building_detail.id)
     template = loader.get_template('wagtailadmin/buildings/removed_detail.html')
 
     context = {
         'action': '/dashboard/removed/{}/'.format(building_detail.id),
-        'building_detail': building_detail,
-        'media': media
+        'building_detail': building_detail
     }
     return HttpResponse(template.render(context, request))

@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from django.http import Http404
 import datetime
 from django.core.paginator import Paginator
+from dashboard.forms.buildings import BuildingsForm
 
 
 def index(request):
@@ -62,10 +63,13 @@ def show(request, building_id):
         for p in building_detail.photos:
             photos.append(PhotosBuildings().media_path(p.id))
 
+    forms = BuildingsForm(instance=building_detail)
+
     context = {
         'action': '/dashboard/buildings/edit/{}/'.format(building_detail.id),
         'building_detail': building_detail,
-        'photos': photos
+        'photos': photos,
+        'forms': forms
     }
     return HttpResponse(template.render(context, request))
 
@@ -80,8 +84,11 @@ def add(request):
             return redirect('buildings_show', building_add.id)
         raise Http404
 
+    forms = BuildingsForm()
+
     template = loader.get_template('wagtailadmin/buildings/show.html')
     context = {
-        'action': '/dashboard/buildings/add/'
+        'action': '/dashboard/buildings/add/',
+        'forms': forms
     }
     return HttpResponse(template.render(context, request))

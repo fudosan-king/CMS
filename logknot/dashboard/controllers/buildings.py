@@ -5,11 +5,12 @@ from mongoengine.queryset.visitor import Q
 from django.shortcuts import redirect
 from django.http import Http404
 import datetime
+from django.core.paginator import Paginator
 
 
 def index(request):
     q = Q(removed=False)
-    building_name = request.GET.get('building_name', None)
+    building_name = request.GET.get('building_name', '')
     if building_name:
         q &= Q(building_name=building_name)
     buildings = Buildings.objects().filter(q)
@@ -19,9 +20,32 @@ def index(request):
         media[building.id] = media_path(building.id)
     template = loader.get_template('wagtailadmin/buildings/index.html')
 
+    try:
+        page = int(request.GET.get('page', 1))
+        per_page = int(request.GET.get('limit', 10))
+        if page < 1:
+            page = 1
+    except:
+        page = 1
+        per_page = 10
+    paginator_result = Paginator(buildings, per_page)
+
+    try:
+        paginator = paginator_result.page(page)
+    except:
+        raise Http404
+
+    index = (page - 1) * per_page
+    limit = index + per_page
+    buildings = buildings[index:limit]
+
     context = {
+        'paginator': paginator,
+        'page': page,
+        'limit': limit,
         'buildings': buildings,
-        'media': media
+        'media': media,
+        'building_name': building_name
     }
     return HttpResponse(template.render(context, request))
 

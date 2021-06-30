@@ -1,7 +1,7 @@
 {% extends "wagtailadmin/base.html" %}
 {% load i18n wagtailadmin_tags %}
 
-{% block titletag %}{% trans "Buildings" %}{% endblock %}
+{% block titletag %}{% trans "Buildings Removed" %}{% endblock %}
 
 {% block content %}
     <header class="hasform">
@@ -9,11 +9,11 @@
             <div class="col2">
                 <h1>
                 	<svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-image"></use></svg>
-                        {% trans 'Buildings' %}
+                        {% trans 'Buildings Removed' %}
                 </h1>
             </div>
             <div class="col9">
-                <form class="col search-form" action="{% url 'buildings' %}" method="get" novalidate="" role="search">
+                <form class="col search-form" action="{% url 'buildings_removed' %}" method="get" novalidate="" role="search">
                     <ul class="fields">
                         <li class="required">
                         <div class="field char_field text_input field-small iconfield" data-contentpath="building_name">
@@ -30,11 +30,6 @@
                     </ul>
                 </form>
             </div>
-            <div class="col1">
-                <div class="actionbutton">
-                    <a href="{% url 'buildings_add' %}" class="button bicolor button--icon"><span class="icon-wrapper"><svg class="icon icon-plus icon" aria-hidden="true" focusable="false"><use href="#icon-plus"></use></svg></span>{% trans 'Add' %}</a>
-                </div>
-            </div>
         </div>
     </header>
 
@@ -42,30 +37,18 @@
 
     {% for building in buildings %}
     <div style="padding-left: 50px;">
-        <a href="{% url 'buildings_show' building.id %}">
+        <a href="{% url 'buildings_removed_show' building.id %}">
         <span>{{ building.building_name }}</span>
         </a>
-        <form method="post" action="{% url 'buildings_show' building.id %}" style="width: 50px; float: right;">
+        <form method="post" action="{% url 'buildings_removed_show' building.id %}" style="width: 50px; float: right;">
             {% csrf_token %}
-            <input type="hidden" name="remove" value="{{ building.id }}">
-            <button class="button" type="submit" style="background-color: red; float: right; margin-right: 20px;" onclick="return confirm('Are you sure you want to remove this item?');">{% trans 'Remove' %}</button>
+            <input type="hidden" name="rollback" value="{{ building.id }}">
+            <button class="button" type="submit" style="background-color: hsl(180.4761904762,100%,24.7058823529%); float: right; margin-right: 20px;" onclick="return confirm('Are you sure you want to rollback this item?');">{% trans 'Rollback' %}</button>
         </form>
         <br>
     </div>
     <hr>
     {% endfor %}
-
-    <div align="center">
-    {% if paginator %}
-        {% if paginator.has_previous %}
-            <a href="{% url 'buildings' %}?building_name={{ building_name }}&amp;page={{ paginator.previous_page_number }}&amp;limit={{ limit }}">Previous</a>
-        {% endif %}
-        {{ paginator }}
-        {% if paginator.has_next %}
-            <a href="{% url 'buildings' %}?building_name={{ building_name }}&amp;page={{ paginator.next_page_number }}&amp;limit={{ limit }}">Next</a>
-        {% endif %}
-    {% endif %}
-    </div>
 
 {% endblock %}
 

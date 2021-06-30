@@ -10,6 +10,13 @@ class Buildings(Document):
     )
     building_name = fields.StringField(max_length=255)
     removed = fields.BooleanField(default=False)
+    create_by = fields.StringField(max_length=255, default='system')
+    last_time_remove = fields.DateTimeField(default=datetime.datetime.now)
+    remove_by = fields.StringField(max_length=255, default='system')
+    last_time_update = fields.DateTimeField(default=datetime.datetime.now)
+    update_by = fields.StringField(max_length=255, default='system')
+    last_time_rollback = fields.DateTimeField(default=datetime.datetime.now)
+    rollback_by = fields.StringField(max_length=255, default='system')
 
 
 class MediaQuerySet(QuerySet):

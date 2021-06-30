@@ -41,15 +41,12 @@
                 {% endfor %}
             </section>
         </div>
-        <div align="center">
-            <button type="submit" class="button" style="width: 200px; left: 100px;">Save</button>
-        </div>
     </form>
 
-    <form method="post" action="/dashboard/buildings/{{ building_detail.id }}/" style="position: relative; top: -39px; left: 760px; width: 30px;">
+    <form method="post" action="{% url 'buildings_removed_show' building_detail.id %}" style="position: relative; top: -39px; left: 760px; width: 30px;">
         {% csrf_token %}
-        <input type="hidden" name="delete" value="{{ building_detail.id }}">
-        <button class="button" type="submit" style="background-color: red;" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
+        <input type="hidden" name="rollback" value="{{ building_detail.id }}">
+        <button class="button" type="submit" style="background-color: hsl(180.4761904762,100%,24.7058823529%);" onclick="return confirm('Are you sure you want to rollback this item?');">{% trans 'Rollback' %}</button>
     </form>
 
 {% endblock %}

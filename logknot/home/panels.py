@@ -21,7 +21,7 @@ class WelcomePanel:
                     </a>
                 </li>
                 <li class="icon icon-doc-full-inverse">
-                    <a href="/dashboard/buildings/">
+                    <a href="/dashboard/removed/">
                         <span>{}</span> Removed<span class="visuallyhidden">created in logknot</span>
                     </a>
                 </li>

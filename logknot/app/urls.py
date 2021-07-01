@@ -7,7 +7,7 @@ from search import views as search_views
 
 urlpatterns = [
     path('dashboard/', include(wagtailadmin_urls)),
-    path('search/', search_views.search, name='search'),
+    path('search/', search_views.search, name='search')
 ]
 
 

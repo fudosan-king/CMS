@@ -1,5 +1,5 @@
 from django.utils.safestring import mark_safe
-from dashboard.models import Buildings, Media
+from dashboard.models import Buildings
 
 from wagtail.core import hooks
 
@@ -10,7 +10,6 @@ class WelcomePanel:
     def render(self):
         buildings = Buildings.objects(removed=False).count()
         buildings_removed = Buildings.objects(removed=True).count()
-        media = Media.objects.count()
         return mark_safe("""
         <section class="panel summary nice-padding">
             <h2 class="visuallyhidden">Site summary</h2>
@@ -25,12 +24,9 @@ class WelcomePanel:
                         <span>{}</span> Removed<span class="visuallyhidden">created in logknot</span>
                     </a>
                 </li>
-                <li class="icon icon-image">
-                    <span>{}</span> Images <span class="visuallyhidden">created in logknot</span>
-                </li>
             </ul>
         </section>
-        """.format(buildings, buildings_removed, media))
+        """.format(buildings, buildings_removed))
 
 
 @hooks.register('construct_homepage_panels')

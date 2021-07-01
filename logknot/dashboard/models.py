@@ -1,7 +1,5 @@
-from django_mongoengine import Document, fields, QuerySet
+from django_mongoengine import Document, fields
 import datetime
-from django.conf import settings
-from bson import ObjectId
 from mongoengine.queryset.visitor import Q
 
 
@@ -24,25 +22,3 @@ class Buildings(Document):
         if request.GET.get('building_name', None):
             q &= Q(building_name=request.GET.get('building_name', None))
         return q
-
-
-class MediaQuerySet(QuerySet):
-    def media_by_building(self, building_id):
-        return self.filter(building_id=building_id)
-
-
-class Media(Document):
-    created_at = fields.DateTimeField(
-        default=datetime.datetime.now, editable=False,
-    )
-    file_type = fields.StringField(max_length=10)
-    building_id = fields.ObjectIdField()
-    meta = {'queryset_class': MediaQuerySet}
-
-
-class PhotosBuildings():
-    def media_path(self, media_id):
-        media = Media.objects(id=ObjectId(media_id)).first()
-        if not media:
-            return '/static/images/no-image.png'
-        return '{}{}/{}.{}'.format(settings.MEDIA_BUILDINGS, media.building_id, media.id, media.file_type)

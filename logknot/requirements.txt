@@ -3,3 +3,4 @@ wagtail>=2.13,<2.14
 mongoengine>=0.23.1
 pymongo>=3.11.4
 django-mongoengine>=0.4.6
+git+https://github.com/spapas/wagtail-multi-upload.git

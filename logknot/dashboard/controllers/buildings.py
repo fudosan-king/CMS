@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.template import loader
-from dashboard.models import Buildings, PhotosBuildings
+from dashboard.models import Buildings
 from django.shortcuts import redirect
 from django.http import Http404
 import datetime
@@ -59,9 +59,6 @@ def show(request, building_id):
 
     template = loader.get_template('wagtailadmin/buildings/show.html')
     photos = []
-    if 'photos' in building_detail:
-        for p in building_detail.photos:
-            photos.append(PhotosBuildings().media_path(p.id))
 
     forms = BuildingsForm(instance=building_detail)
 

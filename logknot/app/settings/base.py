@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'dashboard',
     'search',
 
+    'wagtail_multi_upload',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
@@ -174,3 +175,5 @@ WAGTAIL_SITE_NAME = "logknot"
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
+
+WAGTAILIMAGES_IMAGE_MODEL = 'home.BuildingImage'

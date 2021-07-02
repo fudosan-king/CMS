@@ -3,11 +3,13 @@ from django.urls import include, path
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from search import views as search_views
+from .upload import UploadImages
 
 
 urlpatterns = [
     path('dashboard/', include(wagtailadmin_urls)),
-    path('search/', search_views.search, name='search')
+    path('search/', search_views.search, name='search'),
+    path('images/upload/', UploadImages.as_view(), name='upload'),
 ]
 
 

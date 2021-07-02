@@ -13,7 +13,26 @@
 
 {% block content %}
     {% trans "Add images" as add_str %}
-    {% include "wagtailadmin/shared/header.html" with title=add_str icon="image" %}
+    <header class="merged nice-padding">
+        <div class="row">
+            <div class="col2">
+                <h1>
+                    <svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-upload"></use></svg>
+                        {% trans 'Upload' %}
+                </h1>
+            </div>
+            <div class="col9">
+                <span>&nbsp;</span>
+            </div>
+            {% if request.GET.building_id %}
+            <div class="col1">
+                <div class="actionbutton">
+                    <a href="{% url 'buildings_show' request.GET.building_id %}" class="button bicolor button--icon"><span class="icon-wrapper"><svg class="icon icon-arrow-left icon" aria-hidden="true" focusable="false"><use href="#icon-arrow-left"></use></svg></span>{% trans 'Back' %}</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </header>
 
     <div class="nice-padding">
         <div class="drop-zone">

@@ -6,6 +6,7 @@ from django.http import Http404
 import datetime
 from django.core.paginator import Paginator
 from dashboard.forms.buildings import BuildingsForm
+from wagtail.images import get_image_model
 
 
 def index(request):
@@ -58,7 +59,7 @@ def show(request, building_id):
         building_detail.save()
 
     template = loader.get_template('wagtailadmin/buildings/show.html')
-    photos = []
+    photos = get_image_model().objects.all()
 
     forms = BuildingsForm(instance=building_detail)
 

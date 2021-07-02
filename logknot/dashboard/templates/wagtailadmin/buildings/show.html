@@ -1,24 +1,33 @@
 {% extends "wagtailadmin/base.html" %}
 {% load i18n wagtailadmin_tags %}
+{% load wagtailimages_tags %}
 
 {% block titletag %}{% trans "Building Detail" %}{% endblock %}
 
 {% block content %}
     <header class="merged nice-padding">
         <div class="row">
-            <h1>
-            	<svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-image"></use></svg>
-                    {% trans 'Building Detail' %}
-            </h1>
+            <div class="col2">
+                <h1>
+                	<svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-image"></use></svg>
+                        {% trans 'Building Detail' %}
+                </h1>
+            </div>
             <div class="col9">
+                <span>&nbsp;</span>
+            </div>
+            <div class="col1">
+                <div class="actionbutton">
+                    <a href="{% url 'upload' %}?building_id={{ building_detail.id }}" class="button bicolor button--icon"><span class="icon-wrapper"><svg class="icon icon-plus icon" aria-hidden="true" focusable="false"><use href="#icon-plus"></use></svg></span>{% trans 'Upload' %}</a>
+                </div>
             </div>
         </div>
     </header>
     <form method="post" action="{{ action }}">
         {% csrf_token %}
         <ul class="tab-nav merged" data-tab-nav="">
-            <li class="active"><a href="#infomation">Infomation</a></li>
-            <li><a href="#photos">Photos</a></li>
+            <li class="active"><a href="#infomation">{% trans 'Infomation' %}</a></li>
+            <li><a href="#photos">{% trans 'Photos' %}</a></li>
         </ul>
 
         <div class="tab-content" style="height: 700px">
@@ -27,8 +36,11 @@
             </section>
             <section id="photos" class="nice-padding">
                 {% for photo in photos %}
-                <img src="{{ photo }}" width="60">
+                    <h3>{{ photo.title }}</h3>
+                    {% image photo width-300 %}
+                    <hr>
                 {% endfor %}
+                <button type="button" class="button button-secondary" data-toggle="modal" data-target="#listPhotos" style="float: right; margin-left: 20px;">+</button>
             </section>
         </div>
             <div align="center">
@@ -47,10 +59,31 @@
     </form>
     {% endif %}
 
+    <div class="modal" tabindex="-1" role="dialog" id="listPhotos">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">listPhotos</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 {% endblock %}
 
 {% block extra_css %}
 {% endblock %}
 
 {% block extra_js %}
+    <script>
+        $('#listPhotos').modal('hidden');
+    </script>
 {% endblock %}

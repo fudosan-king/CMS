@@ -2,7 +2,7 @@
 {% load i18n wagtailadmin_tags %}
 {% load wagtailimages_tags %}
 
-{% block titletag %}{% trans "Building Detail" %}{% endblock %}
+{% block titletag %}{{ building_detail.building_name }}{% endblock %}
 
 {% block content %}
     <header class="merged nice-padding">
@@ -10,7 +10,7 @@
             <div class="col2">
                 <h1>
                 	<svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-image"></use></svg>
-                        {% trans 'Building Detail' %}
+                        {{ building_detail.building_name }}
                 </h1>
             </div>
             <div class="col9">

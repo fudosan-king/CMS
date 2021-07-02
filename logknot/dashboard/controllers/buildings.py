@@ -59,7 +59,7 @@ def show(request, building_id):
         building_detail.save()
 
     template = loader.get_template('wagtailadmin/buildings/show.html')
-    photos = get_image_model().objects.all()
+    photos = get_image_model().objects.filter(building_id=building_id)
 
     forms = BuildingsForm(instance=building_detail)
 

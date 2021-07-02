@@ -20,7 +20,6 @@ sudo chmod 777 /var/log/nginx
 cd ~/project/wagtail
 virtualenv env
 . ./env/bin/activate
-pip3 install wagtail
 cd logknot
 pip3 install -r requirements.txt
 python3 manage.py migrate

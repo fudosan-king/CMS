@@ -4,6 +4,20 @@
   background-color: #0091b4;
 }
 
+.modal-dialog {
+  width: 90%;
+  max-width:  none;
+}
+
+.content-wrapper #listPhotos .row {
+  padding-top: 50px;
+  margin: 0 10px 0 10px;
+}
+
+.content-wrapper #listPhotos .row .col3 {
+  height: 400px;
+}
+
 @media only screen and (max-width: 600px) {
   .merged.nice-padding {
     padding-left: 60px;

@@ -3,9 +3,8 @@ from django.template import loader
 from dashboard.models import Buildings
 from django.shortcuts import redirect
 from django.http import Http404
-import datetime
 from django.core.paginator import Paginator
-from dashboard.forms.buildings import BuildingsForm
+from dashboard.forms.buildings import BuildingsForm, PhotosForm
 from wagtail.images import get_image_model
 
 
@@ -48,26 +47,29 @@ def show(request, building_id):
     if request.method == 'POST':
         _id = request.POST.get('remove', None)
         if _id and str(building_detail.id) == _id:
-            building_detail.removed = True
-            building_detail.last_time_remove = datetime.datetime.now
-            building_detail.remove_by = str(request.user)
+            building_detail = building_detail.remove(request)
+            if building_detail:
+                if building_detail.validate():
+                    building_detail.save()
+                return redirect('buildings')
+            return Http404
+
+        building_detail = building_detail.update(request)
+        if building_detail and building_detail.validate():
             building_detail.save()
-            return redirect('buildings')
-        building_detail.building_name = request.POST.get('building_name', None)
-        building_detail.last_time_update = datetime.datetime.now
-        building_detail.update_by = str(request.user)
-        building_detail.save()
 
     template = loader.get_template('wagtailadmin/buildings/show.html')
     photos = get_image_model().objects.filter(building_id=building_id)
 
     forms = BuildingsForm(instance=building_detail)
+    photos_form = PhotosForm(parent_document=building_detail)
 
     context = {
         'action': '/dashboard/buildings/edit/{}/'.format(building_detail.id),
         'building_detail': building_detail,
         'photos': photos,
-        'forms': forms
+        'forms': forms,
+        'photos_form': photos_form
     }
     return HttpResponse(template.render(context, request))
 
@@ -76,10 +78,11 @@ def add(request):
     if request.method == 'POST':
         building_name = request.POST.get('building_name', None)
         if building_name:
-            building_add = Buildings(building_name=building_name)
-            building_add.create_by = str(request.user)
-            building_add.save()
-            return redirect('buildings_show', building_add.id)
+            building = Buildings(building_name=building_name)
+            building = building.add(request)
+            if building and building.validate():
+                building.save()
+                return redirect('buildings_show', building.id)
         raise Http404
 
     forms = BuildingsForm()

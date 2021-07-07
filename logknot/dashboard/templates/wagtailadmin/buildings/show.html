@@ -10,16 +10,18 @@
             <div class="col2">
                 <h1>
                 	<svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-image"></use></svg>
-                        {{ building_detail.building_name }}
+                        {% if building_detail %}{{ building_detail.building_name }}{% else %}{% trans 'Add' %}{% endif %}
                 </h1>
             </div>
             <div class="col9">
                 <span>&nbsp;</span>
             </div>
             <div class="col1">
+                {% if building_detail %}
                 <div class="actionbutton">
                     <a href="{% url 'upload' %}?building_id={{ building_detail.id }}" class="button bicolor button--icon"><span class="icon-wrapper"><svg class="icon icon-plus icon" aria-hidden="true" focusable="false"><use href="#icon-plus"></use></svg></span>{% trans 'Upload' %}</a>
                 </div>
+                {% endif %}
             </div>
         </div>
     </header>
@@ -27,7 +29,9 @@
         {% csrf_token %}
         <ul class="tab-nav merged" data-tab-nav="">
             <li class="active"><a href="#infomation">{% trans 'Infomation' %}</a></li>
+            {% if building_detail %}
             <li><a href="#photos">{% trans 'Photos' %}</a></li>
+            {% endif %}
         </ul>
 
         <div class="tab-content" style="height: 700px">
@@ -35,8 +39,30 @@
                 {{ forms.building_name.label }}{{ forms.building_name }}
             </section>
             <section id="photos" class="nice-padding">
-                {{ photos_form }}
-                <button type="button" class="button button-secondary" data-toggle="modal" data-target="#listPhotos" style="float: right; margin-left: 20px;">+</button>
+                <div class="photos-building">
+                    {% for photo in building_detail.photos %}
+                    <div class="col3 item-photo-{{ forloop.counter }}">
+                        <div align="right">
+                            <button type="button" class="close-photo">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="photo" data-image="photo-{{ forloop.counter }}" data-path="path-{{ forloop.counter }}">
+                            <img src="{% if photo.path %}{{ photo.path }}{% else %}/static/images/no-image.png{% endif %}" id="photo-{{ forloop.counter }}" data-toggle="modal" data-target="#listPhotos">
+                        </div>
+                        <input type="hidden" name="path" value="{{ photo.path }}" id="path-{{ forloop.counter }}">
+                        <select name="category">
+                            {% for k, v in category %}
+                                <option value="{{ k }}" {% if v == photo.category %}selected{% endif %}>{{ v }}</option>
+                            {% endfor %}
+                        </select>
+                        <textarea name="comment">{{ photo.comment }}</textarea>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="col12">
+                <button type="button" class="button button-secondary insert-photo" style="float: right; margin-left: 20px;" onclick="insertPhoto()">+</button>
+                </div>
             </section>
         </div>
             <div align="center">
@@ -66,9 +92,8 @@
                 <div class="modal-body">
                     <div class="row">
                         {% for photo in photos %}
-                        <div class="col3">
-                          <h3>{{ photo.title }}</h3>
-                            {% image photo width-300 %}
+                        <div class="col3 galary" data-photo="" data-path="">
+                            {% image photo original %}
                         </div>
                         {% endfor %}
                     </div>
@@ -86,5 +111,51 @@
 {% block extra_js %}
     <script>
         $('#listPhotos').modal('hidden');
+
+        function insertPhoto(){
+            var random = Math.floor(Math.random() * 200) + 100;
+            $('.photos-building').append(`
+                <div class="col3">
+                    <div align="right">
+                        <button type="button" class="close-photo">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="photo" data-image="photo-` + random + `" data-path="path-` + random + `">
+                        <img src="/static/images/no-image.png"  id="photo-` + random + `" data-toggle="modal" data-target="#listPhotos">
+                    </div>
+                    <input type="hidden" name="path" value="" id="path-` + random + `">
+                    <select name="category">
+                            {% for k, v in category %}
+                                <option value="{{ k }}">{{ v }}</option>
+                            {% endfor %}
+                        </select>
+                    <textarea name="comment"></textarea>
+                </div>
+            `);
+        };
+
+        $(function(){
+            $('.photos-building').on('click', '.close-photo', function(){
+                $(this).parent().parent().empty();
+            });
+            $('.photos-building').on('click', '.photo', function(){
+                $('.galary').attr('data-photo', $(this).data('image'));
+                $('.galary').data('photo', $(this).data('image'));
+
+                $('.galary').attr('data-path', $(this).data('path'));
+                $('.galary').data('path', $(this).data('path'));
+            });
+            $('#listPhotos').on('click', '.galary', function(){
+                var photo = $(this).data('photo');
+                var path = $(this).data('path');
+                var galary = $(this).find('img').attr('src');
+
+                $('#' + photo).attr('src', galary);
+                $('#' + path).val(galary);
+
+                $('#listPhotos').modal('toggle');
+            });
+        });
     </script>
 {% endblock %}

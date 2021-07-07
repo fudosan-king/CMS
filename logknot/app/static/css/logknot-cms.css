@@ -18,6 +18,14 @@
   height: 400px;
 }
 
+.photos-building .photo {
+  height: 300px;
+}
+
+.photos-building .photo img{
+  width: 100%;
+}
+
 @media only screen and (max-width: 600px) {
   .merged.nice-padding {
     padding-left: 60px;

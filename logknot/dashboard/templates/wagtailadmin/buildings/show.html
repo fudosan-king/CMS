@@ -36,7 +36,10 @@
 
         <div class="tab-content">
             <section id="infomation" class="active nice-padding">
-                {{ forms.building_name.label }}{{ forms.building_name }}
+                <div {% if forms.errors.building_name %}class="error"{% endif %}>
+                    {{ forms.building_name.label }}{{ forms.building_name }}
+                    <span class="message-error">{{ forms.errors.building_name }}</span>
+                </div>
             </section>
             <section id="photos" class="nice-padding">
                 <div class="col12 photos-building">

@@ -64,6 +64,10 @@
   padding-bottom: 20px;
 }
 
+.message-error .errorlist li {
+  color: #cd3238;
+}
+
 @media only screen and (max-width: 600px) {
   .merged.nice-padding {
     padding-left: 60px;

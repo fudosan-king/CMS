@@ -7,7 +7,8 @@ virtualenv >= 20.4.7 (pip3)
 Django >= 3.2.4 (pip3)
 uwsgi >= 2.0.19.1 (pip3)
 nginx
-mongoDB
+mongoDB >= 4.0
+mySQL >= 5.7
 ```
 
 

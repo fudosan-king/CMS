@@ -48,6 +48,12 @@ def show(request, building_id):
     if not building_detail:
         raise Http404
 
+    template = loader.get_template('wagtailadmin/buildings/show.html')
+    photos = get_image_model().objects.filter(building_id=building_id)
+
+    forms = BuildingsForm(instance=building_detail)
+    photos_form = PhotosForm(parent_document=building_detail)
+
     if request.method == 'POST':
         _id = request.POST.get('remove', None)
         if _id and str(building_detail.id) == _id and request.user:
@@ -57,19 +63,13 @@ def show(request, building_id):
                 return redirect('buildings')
             return Http404
 
-        form = BuildingsForm(request.POST)
-        if form.is_valid():
+        forms = BuildingsForm(request.POST)
+        if forms.is_valid():
             building_detail = building_detail.update(request)
             building_detail.save()
             messages.success(request, _('Updated'))
         else:
             messages.error(request, _('Errors'))
-
-    template = loader.get_template('wagtailadmin/buildings/show.html')
-    photos = get_image_model().objects.filter(building_id=building_id)
-
-    forms = BuildingsForm(instance=building_detail)
-    photos_form = PhotosForm(parent_document=building_detail)
 
     context = {
         'action': '/dashboard/buildings/edit/{}/'.format(building_detail.id),
@@ -91,7 +91,7 @@ def add(request):
             building = building.add(request)
             if building:
                 building.save()
-                messages.success(request, 'Created building: {}'.format(building.building_name))
+                messages.success(request, '{}{}'.format(_('Created building: '), building.building_name))
                 return redirect('buildings_show', building.id)
         else:
             raise Http404

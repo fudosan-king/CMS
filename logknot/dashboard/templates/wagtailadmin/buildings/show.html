@@ -25,7 +25,7 @@
             </div>
         </div>
     </header>
-    <form method="post" action="{{ action }}">
+    <form method="post" action="{{ action }}" class="building-content">
         {% csrf_token %}
         <ul class="tab-nav merged" data-tab-nav="">
             <li class="active"><a href="#infomation">{% trans 'Infomation' %}</a></li>
@@ -34,14 +34,14 @@
             {% endif %}
         </ul>
 
-        <div class="tab-content" style="height: 700px">
+        <div class="tab-content">
             <section id="infomation" class="active nice-padding">
                 {{ forms.building_name.label }}{{ forms.building_name }}
             </section>
             <section id="photos" class="nice-padding">
-                <div class="photos-building">
+                <div class="col12 photos-building">
                     {% for photo in building_detail.photos %}
-                    <div class="col3 item-photo-{{ forloop.counter }}">
+                    <div class="col3 item-photo-{{ forloop.counter }}" id="item-photo">
                         <div align="right">
                             <button type="button" class="close-photo">
                                 <span aria-hidden="true">×</span>
@@ -60,25 +60,30 @@
                     </div>
                     {% endfor %}
                 </div>
-                <div class="col12">
-                <button type="button" class="button button-secondary insert-photo" style="float: right; margin-left: 20px;" onclick="insertPhoto()">+</button>
+                <div class="col12 button-add-photo" align="right">
+                    <button type="button" class="button button-secondary insert-photo" onclick="insertPhoto()">+ <svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-image"></use></svg></button>
                 </div>
             </section>
         </div>
-            <div align="center">
-                {% if building_detail %}
-                    <button type="submit" class="button" style="width: 200px; left: 100px;">{% trans 'Save' %}</button>
-                {% else %}
-                    <button type="submit" class="button" style="width: 200px;">{% trans 'Create' %}</button>
-                {% endif %}
+
+        {% if building_detail %}
+            <div class="button-submit button-submit-right" align="center">
+                <button type="submit" class="button button-save">{% trans 'Save' %}</button>
             </div>
+        {% else %}
+            <div class="button-submit" align="center">
+                <button type="submit" class="button button-center">{% trans 'Create' %}</button>
+            </div>
+        {% endif %}
     </form>
     {% if building_detail %}
-    <form method="post" action="{% url 'buildings_show' building_detail.id %}" style="position: relative; top: -39px; left: 760px; width: 30px;">
-        {% csrf_token %}
-        <input type="hidden" name="remove" value="{{ building_detail.id }}">
-        <button class="button" type="submit" style="background-color: red;" onclick="return confirm('Are you sure you want to remove this item?');">{% trans 'Remove' %}</button>
-    </form>
+        <form method="post" action="{% url 'buildings_show' building_detail.id %}" class="building-content-remove">
+            {% csrf_token %}
+            <div class="button-submit button-submit-left" align="center">
+                <input type="hidden" name="remove" value="{{ building_detail.id }}">
+                <button class="button button-remove" type="submit" onclick="return confirm('Are you sure you want to remove this item?');">{% trans 'Remove' %}</button>
+            </div>
+        </form>
     {% endif %}
 
     <div class="modal" tabindex="-1" role="dialog" id="listPhotos">
@@ -115,7 +120,7 @@
         function insertPhoto(){
             var random = Math.floor(Math.random() * 200) + 100;
             $('.photos-building').append(`
-                <div class="col3">
+                <div class="col3 item-photo-` + random + `" id="item-photo">
                     <div align="right">
                         <button type="button" class="close-photo">
                             <span aria-hidden="true">×</span>
@@ -137,8 +142,9 @@
 
         $(function(){
             $('.photos-building').on('click', '.close-photo', function(){
-                $(this).parent().parent().empty();
+                $(this).parent().parent().remove();
             });
+
             $('.photos-building').on('click', '.photo', function(){
                 $('.galary').attr('data-photo', $(this).data('image'));
                 $('.galary').data('photo', $(this).data('image'));
@@ -146,6 +152,7 @@
                 $('.galary').attr('data-path', $(this).data('path'));
                 $('.galary').data('path', $(this).data('path'));
             });
+
             $('#listPhotos').on('click', '.galary', function(){
                 var photo = $(this).data('photo');
                 var path = $(this).data('path');
@@ -155,6 +162,12 @@
                 $('#' + path).val(galary);
 
                 $('#listPhotos').modal('toggle');
+            });
+
+            $('.photos-building').sortable({
+                update: function (event, ui) {
+                    ui.item.addClass('#item-photo');
+                }
             });
         });
     </script>

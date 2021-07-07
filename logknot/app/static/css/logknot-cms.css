@@ -26,9 +26,53 @@
   width: 100%;
 }
 
+.button-remove {
+  background-color: red;
+}
+
+.button-center {
+  width: 400px;
+}
+
+.button-save {
+  width: 200px;
+}
+
+.button-submit-right {
+  margin-left: 200px;
+}
+
+.button-submit-left {
+  margin-right: 200px;
+}
+
+.building-content-remove .button-submit-left {
+  position: relative;
+  top:  -39px;
+}
+
+.building-content .nice-padding, .button-add-photo {
+  padding-bottom: 120px;
+  padding-top: 50px;
+}
+
+.building-content .button-save {
+  z-index: 1;
+}
+
+.building-content #item-photo {
+  padding-bottom: 20px;
+}
+
 @media only screen and (max-width: 600px) {
   .merged.nice-padding {
     padding-left: 60px;
     padding-top: 10px;
+  }
+  .building-content-remove .button-submit-left {
+    top:  -30px;
+  }
+  .button-save {
+    width: 120px;
   }
 }

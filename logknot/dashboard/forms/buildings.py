@@ -6,8 +6,8 @@ from django.utils.translation import gettext_lazy as __  # noqa
 
 CATEGORY = [
     ('', ''),
-    ('category 1', 'category 1'),
-    ('category 2', 'category 2')
+    ('Category 1', 'Category 1'),
+    ('Category 2', 'Category 2')
 ]
 
 

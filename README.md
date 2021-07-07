@@ -63,4 +63,5 @@ python3 manage.py
 ### Document
 http://docs.mongoengine.org/ <br>
 https://docs.wagtail.io/en/stable/ <br>
+https://docs.wagtail.io/en/stable/reference/contrib/forms/customisation.html <br>
 https://github.com/spapas/wagtail-multi-upload <br>

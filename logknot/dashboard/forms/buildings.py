@@ -4,6 +4,12 @@ from dashboard.models import Buildings, Photos
 from django.utils.translation import gettext as _  # noqa
 from django.utils.translation import gettext_lazy as __  # noqa
 
+CATEGORY = [
+    ('', ''),
+    ('category 1', 'category 1'),
+    ('category 2', 'category 2')
+]
+
 
 class PhotosForm(EmbeddedDocumentForm):
     class Meta:

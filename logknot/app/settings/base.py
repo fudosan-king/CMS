@@ -91,10 +91,21 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# mySQL setting
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # },
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'localhost',
+        'NAME': 'cms_buildings',
+        'USER': 'root',
+        'PASSWORD': '',
+        'TEST': {
+            'NAME': 'cms_buildings_test',
+        },
     },
     'cms_buildings': {
         'ENGINE': 'django.db.backends.dummy',

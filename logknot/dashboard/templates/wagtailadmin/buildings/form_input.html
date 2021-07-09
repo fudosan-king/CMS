@@ -1,0 +1,7 @@
+{% load i18n wagtailadmin_tags %}
+{% load wagtailimages_tags %}
+
+<div class="{{ col }} field-building {% if error %}error{% endif %}">
+    <span class="field-label">{{ field.label }}</span><span class="required-field">{% if field.field.required %}({% trans 'required' %}){% endif %}</span>{{ field }}
+    <span class="message-error">{{ error }}</span>
+</div>

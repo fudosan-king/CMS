@@ -1,4 +1,5 @@
 {% extends "wagtailadmin/base.html" %}
+{% include "wagtailadmin/macros.html" %}
 {% load i18n wagtailadmin_tags %}
 {% load wagtailimages_tags %}
 
@@ -25,22 +26,183 @@
             </div>
         </div>
     </header>
+
     <form method="post" action="{{ action }}" class="building-content">
         {% csrf_token %}
         <ul class="tab-nav merged" data-tab-nav="">
-            <li class="active"><a href="#infomation">{% trans 'Infomation' %}</a></li>
+            <li class="active"><a href="#information">{% trans '情報' %}</a></li>
+            <li><a href="#room">{% trans 'ドアへの扉' %}</a></li>
+            <li><a href="#renovation">{% trans 'リノベーション' %}</a></li>
+            <li><a href="#fee">{% trans '費用' %}</a></li>
             {% if building_detail %}
-            <li><a href="#photos">{% trans 'Photos' %}</a></li>
+            <li><a href="#photos">{% trans '写真' %}</a></li>
             {% endif %}
         </ul>
 
+        <ul class="col12 errorlist">
+          {% for field in forms %}
+            {% if field.errors %}
+              <li class="col6">
+                <a href="#{{ field.name }}">{{ field.label }}: {% for error in field.errors %} {{ error }} {% endfor %}</a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+
         <div class="tab-content">
-            <section id="infomation" class="active nice-padding">
-                <div {% if forms.errors.building_name %}class="error"{% endif %}>
-                    {{ forms.building_name.label }}{{ forms.building_name }}
-                    <span class="message-error">{{ forms.errors.building_name }}</span>
+            <section id="information" class="active nice-padding">
+                <div class="row">
+                    <div class="col6 column-content">
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.building_name col='col12' error=forms.errors.building_name %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.structure col='col6' error=forms.errors.structure %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.ground_floors col='col6' error=forms.errors.ground_floors %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.underground_floors col='col6' error=forms.errors.underground_floors %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.built_date col='col6' error=forms.errors.built_date %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.total_houses col='col6' error=forms.errors.total_houses %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.management_scope col='col6' error=forms.errors.management_scope %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.area_purpose col='col6' error=forms.errors.area_purpose %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.company col='col12' error=forms.errors.company %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.constructor_label col='col6' error=forms.errors.constructor_label %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.design_club col='col6' error=forms.errors.design_club %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.management_company col='col6' error=forms.errors.management_company %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.banners_1 col='col12' error=forms.errors.banners_1 %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.banners_2 col='col12' error=forms.errors.banners_2 %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.banners_3 col='col12' error=forms.errors.banners_3 %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.banners_4 col='col12' error=forms.errors.banners_4 %}
+
+                    </div>
+                    <div class="col6 column-content">
+
+                        {% include 'wagtailadmin/buildings/form_address.html' with field=forms.address %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.land_rights col='col12' error=forms.errors.land_rights %}
+
+                        {% include 'wagtailadmin/buildings/form_transports.html' with index='1' %}
+
+                        {% include 'wagtailadmin/buildings/form_transports.html' with index='2' %}
+
+                        {% include 'wagtailadmin/buildings/form_transports.html' with index='3' %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.google_map col='col12' error=forms.errors.google_map %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.google_map_lat col='col6' error=forms.errors.google_map_lat %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.google_map_lng col='col6' error=forms.errors.google_map_lng %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.google_map_yaw col='col4' error=forms.errors.google_map_yaw %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.google_map_pitch col='col4' error=forms.errors.google_map_pitch %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.google_map_zoom col='col4' error=forms.errors.google_map_zoom %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.elementary_school_district col='col12' error=forms.errors.elementary_school_district %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.junior_high_school_district col='col12' error=forms.errors.junior_high_school_district %}
+
+                    <div>
                 </div>
             </section>
+
+
+            <section id="room" class="nice-padding">
+                <div class="row">
+                    <div class="col6 column-content">
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.price col='col6' error=forms.errors.price %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.tatemono_menseki col='col6' error=forms.errors.tatemono_menseki %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.balcony_space col='col6' error=forms.errors.balcony_space %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.room_floor col='col6' error=forms.errors.room_floor %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.direction col='col6' error=forms.errors.direction %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.room_count col='col3' error=forms.errors.room_count %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.room_kind col='col3' error=forms.errors.room_kind %}
+
+                    </div>
+
+                    <div class="col6 column-content">
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.management_fee col='col6' error=forms.errors.management_fee %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.repair_reserve_fee col='col6' error=forms.errors.repair_reserve_fee %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.other_fee col='col6' error=forms.errors.other_fee %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.when_to_move_in col='col6' error=forms.errors.when_to_move_in %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.limitations col='col12' error=forms.errors.limitations %}
+
+                    </div>
+            </section>
+
+
+            <section id="renovation" class="nice-padding">
+                <div class="row">
+                    <div class="col6 column-content">
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.price_full_renovation col='col6' error=forms.errors.price_full_renovation %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.link_2d col='col12' error=forms.errors.link_2d %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.link_3d col='col12' error=forms.errors.link_3d %}
+
+                    </div>
+
+                    <div class="col6 column-content">
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.specification_description col='col12' error=forms.errors.specification_description %}
+
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="fee" class="nice-padding">
+                <div class="row">
+                    <div class="col6 column-content">
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.one_stop_price col='col6' error=forms.errors.one_stop_price %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.loan_borrowing col='col6' error=forms.errors.loan_borrowing %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.loan_interest_rate col='col6' error=forms.errors.loan_interest_rate %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.loan_repayment_method col='col6' error=forms.errors.loan_repayment_method %}
+
+                    </div>
+
+                    <div class="col6 column-content">
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.repayment_period col='col6' error=forms.errors.repayment_period %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.monthly_payment col='col6' error=forms.errors.monthly_payment %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.bonus_payment col='col6' error=forms.errors.bonus_payment %}
+
+                    </div>
+                </div>
+            </section>
+
+
             <section id="photos" class="nice-padding">
                 <div class="col12 photos-building">
                     {% for photo in building_detail.photos %}
@@ -75,7 +237,7 @@
             </div>
         {% else %}
             <div class="button-submit" align="center">
-                <button type="submit" class="button button-center">{% trans 'Create' %}</button>
+                <button type="submit" class="button button-center">{% trans '作成する' %}</button>
             </div>
         {% endif %}
     </form>
@@ -120,6 +282,7 @@
     <script>
         $('#listPhotos').modal('hidden');
 
+        // Div photo
         function insertPhoto(){
             var random = Math.floor(Math.random() * 200) + 100;
             $('.photos-building').append(`
@@ -144,10 +307,12 @@
         };
 
         $(function(){
+            // Remove photo
             $('.photos-building').on('click', '.close-photo', function(){
                 $(this).parent().parent().remove();
             });
 
+            // Set photo ID to galary
             $('.photos-building').on('click', '.photo', function(){
                 $('.galary').attr('data-photo', $(this).data('image'));
                 $('.galary').data('photo', $(this).data('image'));
@@ -156,6 +321,7 @@
                 $('.galary').data('path', $(this).data('path'));
             });
 
+            // Set photo from galary to tab photo
             $('#listPhotos').on('click', '.galary', function(){
                 var photo = $(this).data('photo');
                 var path = $(this).data('path');
@@ -167,10 +333,19 @@
                 $('#listPhotos').modal('toggle');
             });
 
+            // Drag and drop photo (Sort)
             $('.photos-building').sortable({
                 update: function (event, ui) {
                     ui.item.addClass('#item-photo');
                 }
+            });
+
+            $('#id_built_date').datetimepicker({
+              format: 'Y-m-d',
+            });
+
+            $('#id_when_to_move_in').datetimepicker({
+              format: 'Y-m-d',
             });
         });
     </script>

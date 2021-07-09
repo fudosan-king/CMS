@@ -1,0 +1,26 @@
+{% load i18n wagtailadmin_tags %}
+{% load wagtailimages_tags %}
+
+<div class="col4 field-building">
+    <span class="field-label">交通_{{ index }}_駅</span>
+    <div>
+        <input type="text" name="station_name" value="" maxlength="254" id="id_station_name">
+        <span class="message-error"></span>
+    </div>
+</div>
+
+<div class="col4 field-building">
+    <span class="field-label">交通_{{ index }}_手段</span>
+    <div>
+        <input type="text" name="station_to" value="" maxlength="254" id="id_station_to">
+        <span class="message-error"></span>
+    </div>
+</div>
+
+<div class="col4 field-building">
+    <span class="field-label">交通_{{ index }}_時間(分)</span>
+    <div>
+        <input type="text" name="walk_mins" value="" maxlength="254" id="id_walk_mins">
+        <span class="message-error"></span>
+    </div>
+</div>

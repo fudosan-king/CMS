@@ -68,6 +68,36 @@
   color: #cd3238;
 }
 
+.building-content .errorlist {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.building-content .errorlist a{
+  color: #cd3238;
+}
+
+.half-size {
+  width: 49%;
+}
+
+.full-size {
+  width: 100%;
+}
+
+.column-content .field-building {
+  margin-top: 10px;
+}
+
+.required-field {
+  color: #cd3238;
+  padding-left: 10px;
+}
+
+#id_limitations label {
+  width: 24%;
+}
+
 @media only screen and (max-width: 600px) {
   .merged.nice-padding {
     padding-left: 60px;

@@ -53,7 +53,7 @@ def show(request, building_id):
 
     forms = BuildingsForm(instance=building_detail)
     photos_form = PhotosForm(parent_document=building_detail)
-
+    errors = []
     if request.method == 'POST':
         _id = request.POST.get('remove', None)
         if _id and str(building_detail.id) == _id and request.user:
@@ -62,13 +62,20 @@ def show(request, building_id):
                 building_detail.save()
                 return redirect('buildings')
             return Http404
-
         forms = BuildingsForm(request.POST)
+
         if forms.is_valid():
             building_detail = building_detail.update(request)
-            building_detail.save()
-            messages.success(request, _('Updated'))
+            try:
+                building_detail.save()
+                messages.success(request, _('Updated'))
+
+            except:
+                errors = forms.errors.items()
+                forms = BuildingsForm(instance=building_detail)
+                messages.error(request, _('Errors'))
         else:
+            errors = forms.errors.items()
             messages.error(request, _('Errors'))
 
     context = {
@@ -77,7 +84,8 @@ def show(request, building_id):
         'photos': photos,
         'forms': forms,
         'photos_form': photos_form,
-        'category': CATEGORY
+        'category': CATEGORY,
+        'errors': errors
     }
     return HttpResponse(template.render(context, request))
 
@@ -90,7 +98,10 @@ def add(request):
             building = Buildings(building_name=building_name)
             building = building.add(request)
             if building:
-                building.save()
+                try:
+                    building.save()
+                except:
+                    messages.error(request, 'Have problem')
                 messages.success(request, '{}{}'.format(_('Created building: '), building.building_name))
                 return redirect('buildings_show', building.id)
         else:

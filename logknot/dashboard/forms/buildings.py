@@ -7,14 +7,12 @@ import datetime
 
 CATEGORY = [
     ('', ''),
-    ('Category 1', 'Category 1'),
-    ('Category 2', 'Category 2')
+    ('カテゴリー1', 'カテゴリー1'),
+    ('カテゴリー2', 'カテゴリー2')
 ]
 
 DIRECTION = [
-    ('', ''),
-    ('Direction 1', 'Direction 1'),
-    ('Direction 2', 'Direction 2'),
+    ('南向き', '南向き'),
 ]
 
 ROOM_KIND = [

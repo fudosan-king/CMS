@@ -188,3 +188,5 @@ WAGTAIL_SITE_NAME = "logknot"
 BASE_URL = 'http://example.com'
 
 WAGTAILIMAGES_IMAGE_MODEL = 'home.BuildingImage'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

@@ -41,6 +41,19 @@ screen -c .screenrc.develop
 http://cms.localhost:5000/
 
 
+### Update locations and railroad
+
+```
+cd ~/project/wagtail
+. ./env/bin/activate
+cd logknot
+python3 manage.py locations -p ~/maf4c.txt
+python3 manage.py railroad
+
+```
+
+
+
 ### How to run shell
 
 ```

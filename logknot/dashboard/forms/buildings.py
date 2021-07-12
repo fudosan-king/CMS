@@ -54,7 +54,7 @@ class PhotosForm(EmbeddedDocumentForm):
 class BuildingsForm(DocumentForm):
     building_name = forms.CharField(
         label=__('物件名'),
-        max_length=254,
+        max_length=50,
         widget=forms.TextInput()
     )
     structure = forms.CharField(
@@ -111,19 +111,19 @@ class BuildingsForm(DocumentForm):
     )
     company = forms.CharField(
         label=__('分譲会社'),
-        max_length=254,
+        max_length=50,
         widget=forms.TextInput(),
         required=False
     )
     constructor_label = forms.CharField(
         label=__('施工会社'),
-        max_length=254,
+        max_length=50,
         widget=forms.TextInput(),
         required=True
     )
     design_club = forms.CharField(
         label=__('設計会社'),
-        max_length=254,
+        max_length=50,
         widget=forms.TextInput(),
         required=True
     )
@@ -135,7 +135,7 @@ class BuildingsForm(DocumentForm):
     )
     banners_1 = forms.CharField(
         label=__('物件画像（画像URL1）'),
-        max_length=254,
+        max_length=50,
         widget=forms.TextInput(),
         required=False
     )
@@ -195,13 +195,13 @@ class BuildingsForm(DocumentForm):
     )
     elementary_school_district = forms.CharField(
         label=__('小学校学区'),
-        max_length=254,
+        max_length=100,
         widget=forms.TextInput(),
         required=False
     )
     junior_high_school_district = forms.CharField(
         label=__('中学校学区'),
-        max_length=254,
+        max_length=100,
         widget=forms.TextInput(),
         required=False
     )
@@ -258,6 +258,7 @@ class BuildingsForm(DocumentForm):
     other_fee = forms.CharField(
         label=__('諸費用'),
         required=False,
+        max_length=50,
         widget=forms.TextInput()
     )
     when_to_move_in = forms.DateField(
@@ -292,7 +293,7 @@ class BuildingsForm(DocumentForm):
     )
     specification_description = forms.CharField(
         label=__('仕様説明'),
-        max_length=254,
+        max_length=1000,
         widget=forms.Textarea(),
         required=False
     )

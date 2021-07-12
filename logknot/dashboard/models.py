@@ -2,6 +2,7 @@ from django_mongoengine import Document, EmbeddedDocument, fields  # noqa
 import datetime
 from mongoengine.queryset.visitor import Q
 from django.core.validators import *  # noqa
+import html
 
 IGNORE = [
     'path',
@@ -19,7 +20,8 @@ IGNORE = [
     'initial-when_to_move_in',
     'built_date',
     'land_rights',
-    'limitations'
+    'limitations',
+    'google_map'
 ]
 
 
@@ -58,7 +60,7 @@ class Buildings(Document):
     rollback_by = fields.StringField(max_length=255, default='system', blank=True)
 
     # Update by form
-    building_name = fields.StringField(max_length=255)
+    building_name = fields.StringField(max_length=50)
     photos = fields.ListField(
         fields.EmbeddedDocumentField('Photos'),
         blank=True,
@@ -81,17 +83,17 @@ class Buildings(Document):
         default=[]
     )
     area_purpose = fields.StringField(max_length=255, blank=True)
-    company = fields.StringField(max_length=255, blank=False, default='')
-    constructor_label = fields.StringField(max_length=255, blank=False, default='')
-    design_club = fields.StringField(max_length=255, blank=False, default='')
-    management_company = fields.StringField(max_length=255, blank=True, defaul='')
+    company = fields.StringField(max_length=50, blank=False, default='')
+    constructor_label = fields.StringField(max_length=50, blank=False, default='')
+    design_club = fields.StringField(max_length=50, blank=False, default='')
+    management_company = fields.StringField(max_length=50, blank=True, defaul='')
     banners_1 = fields.StringField(max_length=255, blank=True)
     banners_2 = fields.StringField(max_length=255, blank=True)
     banners_3 = fields.StringField(max_length=255, blank=True)
     banners_4 = fields.StringField(max_length=255, blank=True)
-    google_map = fields.StringField(max_length=255, blank=True, default='')
-    google_map_lat = fields.StringField(max_length=255, blank=True)
-    google_map_lng = fields.StringField(max_length=255, blank=True)
+    google_map = fields.StringField(max_length=1000, blank=True, default='')
+    google_map_lat = fields.StringField(max_length=20, blank=True)
+    google_map_lng = fields.StringField(max_length=20, blank=True)
     google_map_yaw = fields.StringField(max_length=255, blank=True)
     google_map_pitch = fields.StringField(max_length=255, blank=True)
     google_map_zoom = fields.StringField(max_length=255, blank=True)
@@ -100,8 +102,8 @@ class Buildings(Document):
         blank=True,
         default=[]
     )
-    elementary_school_district = fields.StringField(max_length=255, blank=True)
-    junior_high_school_district = fields.StringField(max_length=255, blank=True)
+    elementary_school_district = fields.StringField(max_length=100, blank=True)
+    junior_high_school_district = fields.StringField(max_length=100, blank=True)
     price = fields.StringField(max_length=255, blank=True)
     tatemono_menseki = fields.StringField(max_length=255, blank=True)
     balcony_space = fields.IntField(blank=False, default=0)
@@ -111,7 +113,7 @@ class Buildings(Document):
     room_kind = fields.StringField(max_length=255, blank=True, default='')
     management_fee = fields.StringField(max_length=255, blank=True)
     repair_reserve_fee = fields.StringField(max_length=255, blank=True)
-    other_fee = fields.StringField(max_length=255, blank=True, default='')
+    other_fee = fields.StringField(max_length=50, blank=True, default='')
     when_to_move_in = fields.DateField(default=datetime.datetime.now, blank=True)
     limitations = fields.ListField(
         fields.StringField(max_length=255, blank=True),
@@ -121,7 +123,7 @@ class Buildings(Document):
     price_full_renovation = fields.StringField(max_length=255, blank=True)
     link_2d = fields.StringField(max_length=255, blank=True)
     link_3d = fields.StringField(max_length=255, blank=True)
-    specification_description = fields.StringField(max_length=255, blank=True)
+    specification_description = fields.StringField(max_length=1000, blank=True)
     one_stop_price = fields.StringField(max_length=255, blank=True)
     loan_borrowing = fields.StringField(max_length=255, blank=True)
     loan_interest_rate = fields.DecimalField(max_digits=2, decimal_places=2)
@@ -177,6 +179,10 @@ class Buildings(Document):
             for l in limitations:
                 self.limitations.append(l)
 
+        google_map = request.POST.get('google_map')
+        if google_map:
+            self.google_map = html.unescape(google_map)
+
         return self
 
     def remove(self, request):
@@ -207,6 +213,10 @@ class Buildings(Document):
             self.limitations = []
             for l in limitations:
                 self.limitations.append(l)
+
+        google_map = request.POST.get('google_map')
+        if google_map:
+            self.google_map = html.unescape(google_map)
 
         self.create_by = str(request.user)
         return self

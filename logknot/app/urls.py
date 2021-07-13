@@ -4,12 +4,14 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from search import views as search_views
 from .upload import UploadImages
+from .api import api_router
 
 
 urlpatterns = [
     path('dashboard/', include(wagtailadmin_urls)),
     path('search/', search_views.search, name='search'),
     path('images/upload/', UploadImages.as_view(), name='upload'),
+    path('api/', api_router.urls),
 ]
 
 

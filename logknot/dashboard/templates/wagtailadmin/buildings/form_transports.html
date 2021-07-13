@@ -2,25 +2,54 @@
 {% load wagtailimages_tags %}
 
 <div class="col4 field-building">
-    <span class="field-label">交通_{{ index }}_駅</span>
+    <span class="field-label">{% trans '交通' %}{{ index }}</span>
     <div>
-        <input type="text" name="station_name" value="" maxlength="254" id="id_station_name">
+        <select value="" id="id_pref_transports">
+            <option>↓(都道府県)</option>
+        </select>
         <span class="message-error"></span>
     </div>
 </div>
 
 <div class="col4 field-building">
-    <span class="field-label">交通_{{ index }}_手段</span>
+    <span class="field-label">&nbsp;</span>
     <div>
-        <input type="text" name="station_to" value="" maxlength="254" id="id_station_to">
+        <select name="station_name" value="" id="id_station_name">
+            <option>↓(沿線)</option>
+        </select>
         <span class="message-error"></span>
     </div>
 </div>
 
 <div class="col4 field-building">
-    <span class="field-label">交通_{{ index }}_時間(分)</span>
+    <span class="field-label">&nbsp;</span>
+    <div>
+        <select name="station_to" value="" id="id_station_to">
+            <option></option>
+        </select>
+        <span class="message-error"></span>
+    </div>
+</div>
+
+
+<div class="col2 field-building">
+    <span class="field-label">&nbsp;</span>
+    <div align="right">
+        <span class="description-field">{% trans '駅から...' %}</span>
+    </div>
+</div>
+
+<div class="col6 field-building">
+    <span class="field-label">&nbsp;</span>
     <div>
         <input type="text" name="walk_mins" value="" maxlength="254" id="id_walk_mins">
         <span class="message-error"></span>
+    </div>
+</div>
+
+<div class="col4 field-building fix-height">
+    <span class="field-label">&nbsp;</span>
+    <div>
+        <span class="description-field">{% trans '分' %}</span>
     </div>
 </div>

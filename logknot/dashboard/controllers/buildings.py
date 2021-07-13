@@ -9,6 +9,7 @@ from wagtail.images import get_image_model
 from wagtail.core import hooks
 from wagtail.admin import messages
 from django.utils.translation import gettext as _  # noqa
+from home.management.commands.locations import PREF_MAP
 
 
 def index(request):
@@ -73,10 +74,10 @@ def show(request, building_id):
             except:
                 errors = forms.errors.items()
                 forms = BuildingsForm(instance=building_detail)
-                messages.error(request, _('Errors'))
+                messages.error(request, _('Error'))
         else:
             errors = forms.errors.items()
-            messages.error(request, _('Errors'))
+            messages.error(request, _('Error'))
 
     context = {
         'action': '/dashboard/buildings/edit/{}/'.format(building_detail.id),
@@ -85,7 +86,8 @@ def show(request, building_id):
         'forms': forms,
         'photos_form': photos_form,
         'category': CATEGORY,
-        'errors': errors
+        'errors': errors,
+        'pref': PREF_MAP
     }
     return HttpResponse(template.render(context, request))
 

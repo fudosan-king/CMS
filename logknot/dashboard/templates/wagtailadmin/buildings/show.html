@@ -31,6 +31,7 @@
         {% csrf_token %}
         <ul class="tab-nav merged" data-tab-nav="">
             <li class="active"><a href="#information">{% trans '情報' %}</a></li>
+            <li><a href="#google">{% trans 'Google map 座標' %}</a></li>
             <li><a href="#room">{% trans 'ドアへの扉' %}</a></li>
             <li><a href="#renovation">{% trans 'リノベーション' %}</a></li>
             <li><a href="#fee">{% trans '費用' %}</a></li>
@@ -48,6 +49,7 @@
             {% endif %}
           {% endfor %}
         </ul>
+
 
         <div class="tab-content">
             <section id="information" class="active nice-padding">
@@ -88,15 +90,24 @@
                     </div>
                     <div class="col6 column-content">
 
-                        {% include 'wagtailadmin/buildings/form_address.html' with field=forms.address %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.land_rights col='col12' error=forms.errors.land_rights %}
+                        {% include 'wagtailadmin/buildings/form_address.html' with pref=pref data=building_detail.address %}
 
                         {% include 'wagtailadmin/buildings/form_transports.html' with index='1' %}
 
                         {% include 'wagtailadmin/buildings/form_transports.html' with index='2' %}
 
                         {% include 'wagtailadmin/buildings/form_transports.html' with index='3' %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.land_rights col='col12' error=forms.errors.land_rights %}
+
+                    <div>
+                </div>
+            </section>
+
+
+            <section id="google" class="nice-padding">
+                <div class="row">
+                    <div class="col6 column-content">
 
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.google_map col='col12' error=forms.errors.google_map %}
 
@@ -110,11 +121,14 @@
 
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.google_map_zoom col='col4' error=forms.errors.google_map_zoom %}
 
+                    </div>
+                    <div class="col6 column-content">
+
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.elementary_school_district col='col12' error=forms.errors.elementary_school_district %}
 
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.junior_high_school_district col='col12' error=forms.errors.junior_high_school_district %}
 
-                    <div>
+                    </div>
                 </div>
             </section>
 
@@ -347,6 +361,59 @@
             $('#id_when_to_move_in').datetimepicker({
               format: 'Y-m-d',
             });
+
+            // Set address
+            $('#id_pref').change(function() {
+                var pref = $('#id_pref').val();
+                $.ajax({
+                    method: 'GET',
+                    url: '/api/locations/' + pref + '/',
+                    }).done(function( data ) {
+                        $('#id_city option').remove();
+                        $('#id_ooaza option').remove();
+                        $('#id_tyoume option').remove();
+                        $('#id_hidden').val('');
+                        $('#id_city').append(new Option('↓(市区町村)', ''));
+                        $('#id_ooaza').append(new Option('↓(町域)', ''));
+                        $('#id_tyoume').append(new Option('↓(丁目)', ''));
+                        for (i=0; i<data.length; i++){
+                            $('#id_city').append(new Option(data[i], data[i]));
+                        }
+                    });
+            });
+            $('#id_city').change(function() {
+                var pref = $('#id_pref').val();
+                var id_city = $('#id_city').val();
+                $.ajax({
+                    method: 'GET',
+                    url: '/api/locations/' + pref + '/' + id_city + '/',
+                    }).done(function( data ) {
+                        $('#id_ooaza option').remove();
+                        $('#id_tyoume option').remove();
+                        $('#id_ooaza').append(new Option('↓(町域)', ''));
+                        $('#id_tyoume').append(new Option('↓(丁目)', ''));
+                        for (i=0; i<data.length; i++){
+                            $('#id_ooaza').append(new Option(data[i], data[i]));
+                        }
+                    });
+            });
+            $('#id_ooaza').change(function() {
+                var pref = $('#id_pref').val();
+                var id_city = $('#id_city').val();
+                var ooaza = $('#id_ooaza').val();
+                $.ajax({
+                    method: 'GET',
+                    url: '/api/locations/' + pref + '/' + id_city + '/' + ooaza + '/',
+                    }).done(function( data ) {
+                        $('#id_tyoume option').remove();
+                        $('#id_tyoume').append(new Option('↓(丁目)', ''));
+                        for (i=0; i<data.length; i++){
+                            $('#id_tyoume').append(new Option(data[i], data[i]));
+                        }
+                    });
+            });
+            // End set address
         });
+
     </script>
 {% endblock %}

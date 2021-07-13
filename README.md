@@ -54,8 +54,8 @@ python3 manage.py railroad
 
 ### API
 
-<a href="http://cms.localhost:5000/api/locations/%E6%9D%B1%E4%BA%AC%E9%83%BD/%E7%B7%B4%E9%A6%AC%E5%8C%BA/%E4%B8%AD%E6%9D%91%E5%8C%97/" target="_blank">Locations</a><br>
-<a href="http://cms.localhost:5000/api/railroad/%E6%9D%B1%E4%BA%AC%E9%83%BD/%E6%88%90%E7%94%B0%E3%82%B9%E3%82%AB%E3%82%A4%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9/" target="_blank"></a>
+<a href="http://cms.localhost:5000/api/locations/%E6%9D%B1%E4%BA%AC%E9%83%BD/%E7%B7%B4%E9%A6%AC%E5%8C%BA/%E4%B8%AD%E6%9D%91%E5%8C%97/">Locations</a><br>
+<a href="http://cms.localhost:5000/api/railroad/%E6%9D%B1%E4%BA%AC%E9%83%BD/%E6%88%90%E7%94%B0%E3%82%B9%E3%82%AB%E3%82%A4%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9/">Railroad</a>
 
 
 ### How to run shell

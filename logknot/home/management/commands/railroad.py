@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 import numpy
 import json
 import codecs
+from .locations import PREF_MAP
 
 
 # Example:
@@ -28,11 +29,12 @@ class Command(BaseCommand):
             # line[3] ~ station name
             # line[4] ~ pref
             for line in data:
-                if line[4] not in railroad:
-                    railroad[line[4]] = {}
-                if line[2] not in railroad[line[4]]:
-                    railroad[line[4]][line[2]] = []
-                railroad[line[4]][line[2]].append(line[3])
+                if line[4] in PREF_MAP:
+                    if line[4] not in railroad:
+                        railroad[line[4]] = {}
+                    if line[2] not in railroad[line[4]]:
+                        railroad[line[4]][line[2]] = []
+                    railroad[line[4]][line[2]].append(line[3])
         except:
             self.stdout.write(self.style.ERROR(
                 'Please check file SUUMO_ENSEN.dat')

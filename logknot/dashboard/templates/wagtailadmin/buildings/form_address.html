@@ -4,7 +4,12 @@
 <div class="col4 field-building">
     <span class="field-label">{% trans '住所' %}</span>
     <div>
-        <input type="text" name="pref" value="" maxlength="254" id="id_pref">
+        <select name="pref" value="" id="id_pref">
+            <option value="">↓(都道府県)</option>
+            {% for p in pref %}
+            <option value="{{ p }}" {% if data.pref == p %}selected{% endif %}>{{ p }}</option>
+            {% endfor %}
+        </select>
         <span class="message-error"></span>
     </div>
 </div>
@@ -12,7 +17,9 @@
 <div class="col4 field-building">
     <span class="field-label">&nbsp;</span>
     <div>
-        <input type="text" name="city" value="" maxlength="254" id="id_city">
+        <select name="city" value="" id="id_city">
+            <option value="{{ data.city }}">{% if data.city %}{{ data.city }}{% else %}↓(市区町村){% endif %}</option>
+        </select>
         <span class="message-error"></span>
     </div>
 </div>
@@ -20,7 +27,9 @@
 <div class="col4 field-building">
     <span class="field-label">&nbsp;</span>
     <div>
-        <input type="text" name="ooaza" value="" maxlength="254" id="id_ooaza">
+        <select name="ooaza" value="" id="id_ooaza">
+            <option value="{{ data.ooaza }}">{% if data.ooaza %}{{ data.ooaza }}{% else %}↓(町域){% endif %}</option>
+        </select>
         <span class="message-error"></span>
     </div>
 </div>
@@ -28,7 +37,9 @@
 <div class="col4 field-building">
     <span class="field-label">&nbsp;</span>
     <div>
-        <input type="text" name="tyoume" value="" maxlength="254" id="id_tyoume">
+        <select name="tyoume" value="" id="id_tyoume">
+            <option value="{{ data.tyoume }}">{% if data.tyoume %}{{ data.tyoume }}{% else %}↓(丁目){% endif %}</option>
+        </select>
         <span class="message-error"></span>
     </div>
 </div>
@@ -36,7 +47,7 @@
 <div class="col8 field-building">
     <span class="field-label">&nbsp;</span>
     <div>
-        <input type="text" name="hidden" value="" maxlength="254" id="id_hidden">
+        <input type="text" name="hidden" value="{{ data.hidden }}" maxlength="254" id="id_hidden" placeholder="街区・地番(非表示部分)">
         <span class="message-error"></span>
     </div>
 </div>

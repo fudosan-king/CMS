@@ -66,11 +66,7 @@ class Buildings(Document):
         blank=True,
         default=[]
     )
-    address = fields.DictField(
-        fields.EmbeddedDocumentField('Address'),
-        blank=True,
-        default={}
-    )
+    address = fields.DictField(blank=True, default={})
     structure = fields.StringField(max_length=255, blank=False, default='')
     ground_floors = fields.IntField(blank=False, default=0)
     underground_floors = fields.StringField(blank=True)
@@ -183,6 +179,20 @@ class Buildings(Document):
         if google_map:
             self.google_map = html.unescape(google_map)
 
+        address = Address()
+        address.pref = request.POST.get('pref', '')
+        address.city = request.POST.get('city', '')
+        address.ooaza = request.POST.get('ooaza', '')
+        address.tyoume = request.POST.get('tyoume', '')
+        address.hidden = request.POST.get('hidden', '')
+        self.address = {
+            'pref': address.pref,
+            'city': address.city,
+            'ooaza': address.ooaza,
+            'tyoume': address.tyoume,
+            'hidden': address.hidden,
+        }
+
         return self
 
     def remove(self, request):
@@ -217,6 +227,20 @@ class Buildings(Document):
         google_map = request.POST.get('google_map')
         if google_map:
             self.google_map = html.unescape(google_map)
+
+        address = Address()
+        address.pref = request.POST.get('pref', '')
+        address.city = request.POST.get('city', '')
+        address.ooaza = request.POST.get('ooaza', '')
+        address.tyoume = request.POST.get('tyoume', '')
+        address.hidden = request.POST.get('hidden', '')
+        self.address = {
+            'pref': address.pref,
+            'city': address.city,
+            'ooaza': address.ooaza,
+            'tyoume': address.tyoume,
+            'hidden': address.hidden,
+        }
 
         self.create_by = str(request.user)
         return self

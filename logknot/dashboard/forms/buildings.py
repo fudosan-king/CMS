@@ -5,6 +5,7 @@ from django.utils.translation import gettext as _  # noqa
 from django.utils.translation import gettext_lazy as __  # noqa
 import datetime
 
+
 CATEGORY = [
     ('', ''),
     ('カテゴリー1', 'カテゴリー1'),
@@ -12,11 +13,20 @@ CATEGORY = [
 ]
 
 DIRECTION = [
-    ('南向き', '南向き'),
+    ('北', '北'),
+    ('北東', '北東'),
+    ('東', '東'),
+    ('南東', '南東'),
+    ('南', '南'),
+    ('南西', '南西'),
+    ('西', '西'),
+    ('北西', '北西'),
 ]
 
 ROOM_KIND = [
+    ('K', 'K'),
     ('DK', 'DK'),
+    ('LK', 'LK'),
     ('LDK', 'LDK')
 ]
 
@@ -26,16 +36,31 @@ LIMITATIONS = [
 ]
 
 STRUCTURE = [
-    ('RC', 'RC')
+    ('木造', '木造'),
+    ('鉄骨', '鉄骨'),
+    ('RC', 'RC'),
+    ('SRC', 'SRC'),
+    ('PC', 'PC'),
+    ('HPC', 'HPC'),
+    ('軽量鉄骨', '軽量鉄骨'),
+    ('ALC', 'ALC'),
+    ('CFT', 'CFT'),
+    ('ブロック', 'ブロック'),
+    ('鉄筋ブロック', '鉄筋ブロック'),
+    ('その他', 'その他')
 ]
 
 
 MANAGEMENT_SCOPE = [
+    ('自主管理', '自主管理'),
+    ('一部委託', '一部委託'),
     ('全部委託', '全部委託')
 ]
 
 LAND_RIGHTS = [
-    ('所有権のみ', '所有権のみ')
+    ('所有権のみ', '所有権のみ'),
+    ('借地権のみ', '借地権のみ'),
+    ('所有権・借地権混在', '所有権・借地権混在')
 ]
 
 AREA_PURPOSE = [

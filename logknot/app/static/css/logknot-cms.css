@@ -94,8 +94,10 @@
   padding-left: 10px;
 }
 
-#id_limitations label {
-  width: 24%;
+#id_limitations li label,
+#id_land_rights li label {
+  width: 25%;
+  font-weight: normal;
 }
 
 .fix-height {
@@ -107,9 +109,19 @@
   top: 16px;
 }
 
-.field-label {
+.field-label,
+.building-show-header span {
   font-weight: bold;
-  font-size: 16px;
+  font-size: 14px;
+}
+
+.col-address,
+.col-transports {
+  margin-bottom: 60px;
+}
+
+.building-show-table {
+  border-right: 1px solid #e6e6e6;
 }
 
 @media only screen and (max-width: 600px) {
@@ -122,5 +134,9 @@
   }
   .button-save {
     width: 120px;
+  }
+  .col-address,
+  .col-transports {
+    margin-bottom: 20px;
   }
 }

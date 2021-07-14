@@ -113,6 +113,7 @@ def add(request):
     template = loader.get_template('wagtailadmin/buildings/show.html')
     context = {
         'action': '/dashboard/buildings/add/',
-        'forms': forms
+        'forms': forms,
+        'pref': PREF_MAP
     }
     return HttpResponse(template.render(context, request))

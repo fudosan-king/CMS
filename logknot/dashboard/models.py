@@ -193,6 +193,18 @@ class Buildings(Document):
             'hidden': address.hidden,
         }
 
+        self.transports = []
+        station_name = request.POST.getlist('station_name', [])
+        station_to = request.POST.getlist('station_to', [])
+        walk_mins = request.POST.getlist('walk_mins', [])
+        if station_name:
+            for i in range(0, len(station_name)):
+                transport = Transports()
+                transport.station_name = station_name[i]
+                transport.station_to = station_to[i]
+                transport.walk_mins = walk_mins[i]
+                self.transports.append(transport)
+
         return self
 
     def remove(self, request):
@@ -241,6 +253,18 @@ class Buildings(Document):
             'tyoume': address.tyoume,
             'hidden': address.hidden,
         }
+
+        self.transports = []
+        station_name = request.POST.getlist('station_name', [])
+        station_to = request.POST.getlist('station_to', [])
+        walk_mins = request.POST.getlist('walk_mins', [])
+        if station_name:
+            for i in range(0, len(station_name)):
+                transport = Transports()
+                transport.station_name = station_name[i]
+                transport.station_to = station_to[i]
+                transport.walk_mins = walk_mins[i]
+                self.transports.append(transport)
 
         self.create_by = str(request.user)
         return self

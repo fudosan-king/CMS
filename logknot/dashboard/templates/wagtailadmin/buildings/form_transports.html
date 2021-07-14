@@ -1,55 +1,128 @@
 {% load i18n wagtailadmin_tags %}
 {% load wagtailimages_tags %}
 
-<div class="col4 field-building">
-    <span class="field-label">{% trans '交通' %}{{ index }}</span>
-    <div>
-        <select value="" id="id_pref_transports">
-            <option>↓(都道府県)</option>
-        </select>
-        <span class="message-error"></span>
-    </div>
-</div>
+<div class="col12 col-transports">
+{% if data %}
+    {% for transport in data %}
+    <div class="col12 transports_{{ forloop.counter }}">
+        <div class="col4 field-building">
+            <span class="field-label">{% trans '交通' %}{{ forloop.counter }}</span>
+            <div>
+                <select value="" id="id_pref_transports">
+                    <option value="">↓(都道府県)</option>
+                    {% for p in pref %}
+                    <option value="{{ p }}">{{ p }}</option>
+                    {% endfor %}
+                </select>
+                <span class="message-error"></span>
+            </div>
+        </div>
 
-<div class="col4 field-building">
-    <span class="field-label">&nbsp;</span>
-    <div>
-        <select name="station_name" value="" id="id_station_name">
-            <option>↓(沿線)</option>
-        </select>
-        <span class="message-error"></span>
-    </div>
-</div>
+        <div class="col4 field-building">
+            <span class="field-label">&nbsp;</span>
+            <div>
+                <select name="station_name" value="" id="id_station_name">
+                    <option value="{{ transport.station_name }}">{% if transport.station_name %}{{ transport.station_name }}{% else %}↓(沿線){% endif %}</option>
+                </select>
+                <span class="message-error"></span>
+            </div>
+        </div>
 
-<div class="col4 field-building">
-    <span class="field-label">&nbsp;</span>
-    <div>
-        <select name="station_to" value="" id="id_station_to">
-            <option></option>
-        </select>
-        <span class="message-error"></span>
-    </div>
-</div>
+        <div class="col4 field-building">
+            <span class="field-label">&nbsp;</span>
+            <div>
+                <select name="station_to" value="" id="id_station_to">
+                    <option value="{{ transport.station_to }}">{% if transport.station_to %}{{ transport.station_to }}{% else %}↓(沿線){% endif %}</option>
+                </select>
+                <span class="message-error"></span>
+            </div>
+        </div>
 
 
-<div class="col2 field-building">
-    <span class="field-label">&nbsp;</span>
-    <div align="right">
-        <span class="description-field">{% trans '駅から...' %}</span>
-    </div>
-</div>
+        <div class="col2 field-building">
+            <span class="field-label">&nbsp;</span>
+            <div align="right">
+                <span class="description-field">{% trans '駅から...' %}</span>
+            </div>
+        </div>
 
-<div class="col6 field-building">
-    <span class="field-label">&nbsp;</span>
-    <div>
-        <input type="text" name="walk_mins" value="" maxlength="254" id="id_walk_mins">
-        <span class="message-error"></span>
-    </div>
-</div>
+        <div class="col6 field-building">
+            <span class="field-label">&nbsp;</span>
+            <div>
+                <input type="number" name="walk_mins" value="{{ transport.walk_mins }}" maxlength="254" id="id_walk_mins">
+                <span class="message-error"></span>
+            </div>
+        </div>
 
-<div class="col4 field-building fix-height">
-    <span class="field-label">&nbsp;</span>
-    <div>
-        <span class="description-field">{% trans '分' %}</span>
+        <div class="col4 field-building fix-height">
+            <span class="field-label">&nbsp;</span>
+            <div>
+                <span class="description-field">{% trans '分' %}</span>
+            </div>
+        </div>
     </div>
+    {% endfor %}
+
+{% else %}
+    {% for i in "x"|rjust:"3"|make_list %}
+    <div class="col12 transports_{{ forloop.counter }}">
+        <div class="col4 field-building">
+            <span class="field-label">{% trans '交通' %}{{ forloop.counter }}</span>
+            <div>
+                <select value="" id="id_pref_transports">
+                    <option value="">↓(都道府県)</option>
+                    {% for p in pref %}
+                    <option value="{{ p }}">{{ p }}</option>
+                    {% endfor %}
+                </select>
+                <span class="message-error"></span>
+            </div>
+        </div>
+
+        <div class="col4 field-building">
+            <span class="field-label">&nbsp;</span>
+            <div>
+                <select name="station_name" value="" id="id_station_name">
+                    <option value="">↓(沿線)</option>
+                </select>
+                <span class="message-error"></span>
+            </div>
+        </div>
+
+        <div class="col4 field-building">
+            <span class="field-label">&nbsp;</span>
+            <div>
+                <select name="station_to" value="" id="id_station_to">
+                    <option value="">↓(沿線)</option>
+                </select>
+                <span class="message-error"></span>
+            </div>
+        </div>
+
+
+        <div class="col2 field-building">
+            <span class="field-label">&nbsp;</span>
+            <div align="right">
+                <span class="description-field">{% trans '駅から...' %}</span>
+            </div>
+        </div>
+
+        <div class="col6 field-building">
+            <span class="field-label">&nbsp;</span>
+            <div>
+                <input type="number" name="walk_mins" value="" maxlength="254" id="id_walk_mins">
+                <span class="message-error"></span>
+            </div>
+        </div>
+
+        <div class="col4 field-building fix-height">
+            <span class="field-label">&nbsp;</span>
+            <div>
+                <span class="description-field">{% trans '分' %}</span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+{% endif %}
 </div>

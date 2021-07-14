@@ -37,13 +37,32 @@
             </div>
         </div>
     </header>
-
+    <div class="row building-show-header">
+        <div class="col5 building-show-table" align="center">
+            <span>物件名</span>
+        </div>
+        <div class="col3 building-show-table" align="center">
+            <span>作成した</span>
+        </div>
+        <div class="col3 building-show-table" align="center">
+            <span>編集</span>
+        </div>
+        <div class="col1">
+        </div>
+    </div>
+    <hr>
     {% for building in buildings %}
     <div class="row building-show">
-        <div class="col11">
+        <div class="col5 building-show-table">
             <a href="{% url 'buildings_show' building.id %}">
             <span>{{ building.building_name }}</span>
             </a>
+        </div>
+        <div class="col3 building-show-table">
+            <span>ユーザー: {{ building.create_by }} ({{ building.created_at }})</span>
+        </div>
+        <div class="col3 building-show-table">
+            <span>ユーザー: {{ building.update_by }} ({{ building.last_time_update }})</span>
         </div>
         <div class="col1">
         <form method="post" action="{% url 'buildings_show' building.id %}">

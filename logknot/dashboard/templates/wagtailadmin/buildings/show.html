@@ -92,11 +92,7 @@
 
                         {% include 'wagtailadmin/buildings/form_address.html' with pref=pref data=building_detail.address %}
 
-                        {% include 'wagtailadmin/buildings/form_transports.html' with index='1' %}
-
-                        {% include 'wagtailadmin/buildings/form_transports.html' with index='2' %}
-
-                        {% include 'wagtailadmin/buildings/form_transports.html' with index='3' %}
+                        {% include 'wagtailadmin/buildings/form_transports.html' with pref=pref data=building_detail.transports %}
 
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.land_rights col='col12' error=forms.errors.land_rights %}
 
@@ -296,7 +292,7 @@
     <script>
         $('#listPhotos').modal('hidden');
 
-        // Div photo
+        // Function add div photo
         function insertPhoto(){
             var random = Math.floor(Math.random() * 200) + 100;
             $('.photos-building').append(`
@@ -363,56 +359,103 @@
             });
 
             // Set address
-            $('#id_pref').change(function() {
+            $('[id=id_pref]').change(function() {
                 var pref = $('#id_pref').val();
-                $.ajax({
+                $('#id_city option').remove();
+                $('#id_ooaza option').remove();
+                $('#id_tyoume option').remove();
+                $('#id_hidden').val('');
+                $('#id_city').append(new Option('↓(市区町村)', ''));
+                $('#id_ooaza').append(new Option('↓(町域)', ''));
+                $('#id_tyoume').append(new Option('↓(丁目)', ''));
+                if (pref) {
+                    $.ajax({
                     method: 'GET',
                     url: '/api/locations/' + pref + '/',
-                    }).done(function( data ) {
-                        $('#id_city option').remove();
-                        $('#id_ooaza option').remove();
-                        $('#id_tyoume option').remove();
-                        $('#id_hidden').val('');
-                        $('#id_city').append(new Option('↓(市区町村)', ''));
-                        $('#id_ooaza').append(new Option('↓(町域)', ''));
-                        $('#id_tyoume').append(new Option('↓(丁目)', ''));
+                    }).done(function(data) {
                         for (i=0; i<data.length; i++){
                             $('#id_city').append(new Option(data[i], data[i]));
                         }
                     });
+                }
+
             });
-            $('#id_city').change(function() {
+            $('[id=id_city]').change(function() {
                 var pref = $('#id_pref').val();
-                var id_city = $('#id_city').val();
-                $.ajax({
+                var city = $('#id_city').val();
+                $('#id_ooaza option').remove();
+                $('#id_tyoume option').remove();
+                if (pref && city){
+                    $.ajax({
                     method: 'GET',
-                    url: '/api/locations/' + pref + '/' + id_city + '/',
-                    }).done(function( data ) {
-                        $('#id_ooaza option').remove();
-                        $('#id_tyoume option').remove();
+                    url: '/api/locations/' + pref + '/' + city + '/',
+                    }).done(function(data) {
                         $('#id_ooaza').append(new Option('↓(町域)', ''));
                         $('#id_tyoume').append(new Option('↓(丁目)', ''));
                         for (i=0; i<data.length; i++){
                             $('#id_ooaza').append(new Option(data[i], data[i]));
                         }
                     });
+                }
+
             });
-            $('#id_ooaza').change(function() {
+            $('[id=id_ooaza]').change(function() {
                 var pref = $('#id_pref').val();
-                var id_city = $('#id_city').val();
+                var city = $('#id_city').val();
                 var ooaza = $('#id_ooaza').val();
-                $.ajax({
+                $('#id_tyoume option').remove();
+                if (pref && city && ooaza){
+                    $.ajax({
                     method: 'GET',
-                    url: '/api/locations/' + pref + '/' + id_city + '/' + ooaza + '/',
-                    }).done(function( data ) {
-                        $('#id_tyoume option').remove();
+                    url: '/api/locations/' + pref + '/' + city + '/' + ooaza + '/',
+                    }).done(function(data) {
                         $('#id_tyoume').append(new Option('↓(丁目)', ''));
                         for (i=0; i<data.length; i++){
                             $('#id_tyoume').append(new Option(data[i], data[i]));
                         }
                     });
+                }
+
             });
             // End set address
+
+            // Set transports
+            $('[id=id_pref_transports]').change(function() {
+                var pref = $(this).val();
+                var transport = $(this).parent().parent().parent();
+                transport.find('#id_station_name option').remove();
+                transport.find('#id_station_to option').remove();
+                transport.find('#id_walk_mins').val('');
+                if (pref) {
+                    $.ajax({
+                    method: 'GET',
+                    url: '/api/railroad/' + pref + '/',
+                    }).done(function(data) {
+                        for (i=0; i<data.length; i++){
+                            transport.find('#id_station_name').append(new Option(data[i], data[i]));
+                        }
+                    });
+                }
+            });
+            $('[id=id_station_name]').change(function() {
+                var station_name = $(this).val();
+                var transport = $(this).parent().parent().parent();
+                var pref = transport.find('#id_pref_transports').val();
+                transport.find('#id_station_to option').remove();
+                transport.find('#id_walk_mins').val('');
+                if (pref && station_name) {
+                    $.ajax({
+                    method: 'GET',
+                    url: '/api/railroad/' + pref + '/' + station_name + '/',
+                    }).done(function(data) {
+                        for (i=0; i<data.length; i++){
+                            transport.find('#id_station_to').append(new Option(data[i], data[i]));
+                        }
+                    });
+                }
+            });
+            // End set transports
+
         });
 
     </script>

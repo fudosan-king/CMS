@@ -77,6 +77,16 @@ python3 manage.py
 
 ```
 
+Test import csv
+
+```
+cd ~/project/wagtail
+. ./env/bin/activate
+cd logknot
+python3 manage.py import_csv
+
+```
+
 
 
 ### Document

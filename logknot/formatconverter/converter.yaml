@@ -1,0 +1,22 @@
+#       Left  CSV
+#       Right Database
+
+direction: l2r
+helper_module: formatconverter.converter
+allow_crlf: 2
+maps:
+
+rules:
+  - pass
+  - pass
+  - pass
+  - pass
+  - pass
+  - pass
+  - pass
+  - pass
+  - pass
+  - check_index: 9
+    key: building_name
+    converter: converter_building_name
+

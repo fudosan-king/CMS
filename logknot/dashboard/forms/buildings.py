@@ -13,6 +13,7 @@ CATEGORY = [
 ]
 
 DIRECTION = [
+    ('', ''),
     ('北', '北'),
     ('北東', '北東'),
     ('東', '東'),
@@ -24,10 +25,16 @@ DIRECTION = [
 ]
 
 ROOM_KIND = [
+    ('', ''),
     ('K', 'K'),
+    ('R', 'R'),
     ('DK', 'DK'),
     ('LK', 'LK'),
-    ('LDK', 'LDK')
+    ('SK', 'SK'),
+    ('LDK', 'LDK'),
+    ('SDK', 'SDK'),
+    ('SLDK', 'SLDK'),
+    ('間取り最大', '間取り最大')
 ]
 
 LIMITATIONS = [
@@ -36,34 +43,35 @@ LIMITATIONS = [
 ]
 
 STRUCTURE = [
-    ('木造', '木造'),
-    ('鉄骨', '鉄骨'),
-    ('RC', 'RC'),
-    ('SRC', 'SRC'),
+    ('', ''),
     ('PC', 'PC'),
-    ('HPC', 'HPC'),
-    ('軽量鉄骨', '軽量鉄骨'),
-    ('ALC', 'ALC'),
-    ('CFT', 'CFT'),
-    ('ブロック', 'ブロック'),
-    ('鉄筋ブロック', '鉄筋ブロック'),
+    ('RC', 'RC'),
+    ('RC一部SRC', 'RC一部SRC'),
+    ('SRC', 'SRC'),
+    ('SRC一部RC', 'SRC一部RC'),
+    ('SRC一部S', 'SRC一部S'),
+    ('軽量鉄骨造', '軽量鉄骨造'),
+    ('鉄骨造', '鉄骨造'),
     ('その他', 'その他')
 ]
 
 
 MANAGEMENT_SCOPE = [
+    ('', ''),
     ('自主管理', '自主管理'),
     ('一部委託', '一部委託'),
     ('全部委託', '全部委託')
 ]
 
 LAND_RIGHTS = [
-    ('所有権のみ', '所有権のみ'),
-    ('借地権のみ', '借地権のみ'),
-    ('所有権・借地権混在', '所有権・借地権混在')
+    ('借地権', '借地権'),
+    ('地上権', '地上権'),
+    ('所有権', '所有権'),
+    ('定期借地権', '定期借地権')
 ]
 
 AREA_PURPOSE = [
+    ('', ''),
     ('庭', '庭'),
     ('プール', 'プール'),
 ]
@@ -96,15 +104,28 @@ class BuildingsForm(DocumentForm):
         widget=forms.NumberInput()
     )
     underground_floors = forms.IntegerField(
-        label=__('階建て（地下）'),
+        label=__('階建て (地下)'),
         required=False,
         widget=forms.NumberInput()
     )
-    built_date = forms.DateField(
+    built_date_year = forms.IntegerField(
         label=__('築年月'),
         required=True,
-        initial=datetime.datetime.now,
-        widget=forms.DateInput()
+        initial=datetime.datetime.now().year,
+        widget=forms.NumberInput(),
+        min_value=1950,
+        max_value=datetime.datetime.now().year
+    )
+    built_date_month = forms.IntegerField(
+        label=__(''),
+        required=False,
+        initial=datetime.datetime.now().month,
+        widget=forms.Select(
+            choices=[
+                (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7),
+                (8, 8), (9, 9), (10, 10), (11, 11), (12, 12)
+            ]
+        ),
     )
     total_houses = forms.IntegerField(
         label=__('総戸数'),
@@ -144,13 +165,13 @@ class BuildingsForm(DocumentForm):
         label=__('施工会社'),
         max_length=50,
         widget=forms.TextInput(),
-        required=True
+        required=False
     )
     design_club = forms.CharField(
         label=__('設計会社'),
         max_length=50,
         widget=forms.TextInput(),
-        required=True
+        required=False
     )
     management_company = forms.CharField(
         label=__('管理会社'),

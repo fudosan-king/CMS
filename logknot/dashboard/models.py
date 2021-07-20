@@ -18,7 +18,6 @@ IGNORE = [
     'walk_mins',
     'csrfmiddlewaretoken',
     'initial-when_to_move_in',
-    'built_date',
     'land_rights',
     'limitations',
     'google_map'
@@ -58,6 +57,7 @@ class Buildings(Document):
     update_by = fields.StringField(max_length=255, default='system', blank=True)
     last_time_rollback = fields.DateTimeField(default=datetime.datetime.now, blank=True)
     rollback_by = fields.StringField(max_length=255, default='system', blank=True)
+    import_date = fields.DateTimeField(blank=True)
 
     # Update by form
     building_name = fields.StringField(max_length=50)
@@ -70,7 +70,8 @@ class Buildings(Document):
     structure = fields.StringField(max_length=255, blank=False, default='')
     ground_floors = fields.IntField(blank=False, default=0)
     underground_floors = fields.StringField(blank=True)
-    built_date = fields.DateField(blank=False, default=datetime.datetime.now)
+    built_date_year = fields.IntField(blank=False, default=datetime.datetime.now().year)
+    built_date_month = fields.IntField(blank=False, default=datetime.datetime.now().month)
     total_houses = fields.StringField(max_length=255, blank=True)
     management_scope = fields.StringField(max_length=255, blank=True)
     land_rights = fields.ListField(
@@ -80,8 +81,8 @@ class Buildings(Document):
     )
     area_purpose = fields.StringField(max_length=255, blank=True)
     company = fields.StringField(max_length=50, blank=False, default='')
-    constructor_label = fields.StringField(max_length=50, blank=False, default='')
-    design_club = fields.StringField(max_length=50, blank=False, default='')
+    constructor_label = fields.StringField(max_length=50, blank=True)
+    design_club = fields.StringField(max_length=50, blank=True)
     management_company = fields.StringField(max_length=50, blank=True, defaul='')
     banners_1 = fields.StringField(max_length=255, blank=True)
     banners_2 = fields.StringField(max_length=255, blank=True)
@@ -217,12 +218,6 @@ class Buildings(Document):
         for k, v in request.POST.items():
             if k not in IGNORE:
                 self.__setitem__(k, request.POST.get(k))
-
-        if request.POST.get('built_date'):
-            self.built_date = datetime.datetime.strptime(
-                '{}'.format(request.POST.get('built_date')),
-                '%Y-%m-%d'
-            )
 
         land_rights = request.POST.getlist('land_rights')
         if land_rights:

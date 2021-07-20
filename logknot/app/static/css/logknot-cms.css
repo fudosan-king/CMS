@@ -124,6 +124,11 @@
   border-right: 1px solid #e6e6e6;
 }
 
+.built-date {
+  position: relative;
+  top: 34px;
+}
+
 @media only screen and (max-width: 600px) {
   .merged.nice-padding {
     padding-left: 60px;

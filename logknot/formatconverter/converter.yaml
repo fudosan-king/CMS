@@ -7,16 +7,30 @@ allow_crlf: 2
 maps:
 
 rules:
-  - pass
-  - pass
-  - pass
-  - pass
-  - pass
-  - pass
-  - pass
-  - pass
-  - pass
-  - check_index: 9
+  - index: 0
     key: building_name
     converter: converter_building_name
-
+  - pass
+  - processor: process_address
+  - index: 6
+    key: structure
+    converter: converter_structure
+  - index: 7
+    key: ground_floors
+  - index: 8
+    key: underground_floors
+  - processor: processor_built_date
+  - index: 10
+    key: total_houses
+  - index: 11
+    key: management_scope
+  - index: 12
+    key: land_rights
+    converter: converter_land_rights
+  - index: 13
+    key: management_company
+  - pass
+  - pass
+  - pass
+  - processor: process_room
+  - processor: process_transports

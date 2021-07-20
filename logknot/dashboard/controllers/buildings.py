@@ -14,7 +14,7 @@ from home.management.commands.locations import PREF_MAP
 
 def index(request):
     query = Buildings().query(request, False)
-    buildings = Buildings.objects().filter(query)
+    buildings = Buildings.objects().filter(query).order_by('-id')
 
     try:
         page = int(request.GET.get('page', 1))
@@ -36,7 +36,7 @@ def index(request):
     context = {
         'paginator': paginator,
         'page': page,
-        'limit': limit,
+        'limit': per_page,
         'buildings': buildings,
     }
     template = loader.get_template('wagtailadmin/buildings/index.html')

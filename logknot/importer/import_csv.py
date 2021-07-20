@@ -1,6 +1,9 @@
 import os
 import csv
 from formatconverter.converter import FromCSVConverter
+from dashboard.models import Buildings
+import datetime
+from mongoengine.queryset.visitor import Q
 
 
 def import_csv(dirpath, dry_run=True):
@@ -24,13 +27,12 @@ class CSVLoader(object):
             it = iter(csv.reader(fp))
 
             header = next(it)
-            if len(header) == 9:
-                assert header[0] == 'header'
-                assert header[1] == '4.1.0'
-                assert header[2] == '0'
+            if len(header) != 58:
+                print('Please check file csv (only 58 column)')
+                assert False
 
             for idx, row in enumerate(it):
-                building_name = row[9]
+                building_name = row[0]
                 if not building_name:
                     continue
 
@@ -58,4 +60,17 @@ class CSVImporter(object):
                 continue
 
     def save_building(self, building):
-        print(building)
+        query = Q(building_name=building.get('building_name'))
+        query &= Q(address__pref=building.get('address', {}).get('pref'))
+        query &= Q(address__city=building.get('address', {}).get('city'))
+        query &= Q(address__ooaza=building.get('address', {}).get('ooaza'))
+        building_query = Buildings.objects().filter(query).first()
+
+        if not building_query:
+            import_building = Buildings(building_name=building.get('building_name'))
+            for k, v in building.items():
+                if k != 'building_name':
+                    import_building[k] = v
+            import_building.loan_interest_rate = 2.0
+            import_building.import_date = datetime.datetime.now
+            import_building.save()

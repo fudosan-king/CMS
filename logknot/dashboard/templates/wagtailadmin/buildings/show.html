@@ -63,7 +63,15 @@
 
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.underground_floors col='col6' error=forms.errors.underground_floors %}
 
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.built_date col='col6' error=forms.errors.built_date %}
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.built_date_year col='col2' error=forms.errors.built_date_year %}
+                        <div class="col1 field-building ">
+                            <span class="built-date">年</span>
+                        </div>
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.built_date_month col='col2' error=forms.errors.built_date_month %}
+                        <div class="col1 field-building ">
+                            <span class="built-date">月</span>
+                        </div>
 
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.total_houses col='col6' error=forms.errors.total_houses %}
 

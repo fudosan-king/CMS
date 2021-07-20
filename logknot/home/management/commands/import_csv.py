@@ -8,8 +8,8 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         try:
             import_csv('test/import')
-            self.stdout.write(self.style.SUCCESS('Import success'))
+            self.stdout.write(self.style.SUCCESS('Import done!'))
         except:
             self.stdout.write(self.style.ERROR(
-                'Import fail')
+                'Import fail!')
             )

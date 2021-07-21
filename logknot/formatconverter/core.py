@@ -47,14 +47,6 @@ class InvalidDataException(Exception):
     pass
 
 
-class UnsupportedEstate(Exception):
-    pass
-
-
-class SkipError(Exception):
-    pass
-
-
 class DataConverterBase(object):
     def convert_l2r(self, val, left, right, rule):
         raise NotImplementedError
@@ -296,10 +288,6 @@ class RightBuilder(dict):
         d.setdefault(key[-1], [])
         d[key[-1]].append(val)
 
-    # TODO: unko
-    def is_base_estate_type(self, type):
-        return self['estate_type'] == type
-
 
 class Ruleset(object):
     def __init__(self, filename):
@@ -462,7 +450,6 @@ class ConverterBase(object):
                 elif 'check' in rule:
                     self.process_check(rule, left, right)
                 else:
-                    # とりあえずAdhocな対応
                     if 'index' in rule:
                         if self.direction == 'r2l':
                             left.cursor += 1
@@ -508,17 +495,14 @@ class ConverterBase(object):
         rules = None
         good, bad = True, False
         if 'true' in rule or 'false' in rule:
-            # レガシー対応
             warnings.warn("'true' or 'false' is deprecated in `if` rule", DeprecationWarning)
             good, bad = 'true', 'false'
 
         if good in rule or bad in rule:
-            # True, Falseがあればそれを実行
             rules = rule.get(good if ifresult else bad, [])
             for rule in rules:
                 self.process_rule(rule, left, right)
         else:
-            # なければそのルールを実行
             r = rule.copy()
             del r['if']
             if ifresult:
@@ -811,11 +795,6 @@ class ToXMLConverter(Right2LeftConverterBase):
 
         left.finalize()
         return left, left.media
-
-
-class ImageDummy(object):
-    def __init__(self, url):
-        self.url = url
 
 
 class DefaultIfHandlers(object):

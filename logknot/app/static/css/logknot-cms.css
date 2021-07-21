@@ -131,9 +131,14 @@
 }
 
 .upload-csv  {
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 
+.dry-run {
+  margin-bottom: 20px;
+}
+
+.dry-run label,
 .upload-csv label {
   width: 100%;
 }

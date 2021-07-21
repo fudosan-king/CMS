@@ -35,6 +35,12 @@
                             <input id="fileupload" type="file" name="files" data-url="{% url 'buildings_import' %}" required accept=".csv">
                             <label for="fileupload">{% trans 'csvをアップロードするにはクリックしてください' %}</label>
                         </div>
+                        <div class="col12 dry-run">
+                            <label for="dry_run">
+                                <input type="checkbox" name="dry_run" id="dry_run" checked>
+                                ドライラン
+                            </label>
+                        </div>
                         <div class="col12">
                             <button class="button bicolor button--icon">
                                 <span class="icon-wrapper">
@@ -44,6 +50,32 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+        <div class="col12 drop-zone" align="left">
+            <div class="col4 report-import">
+                <h1>{% trans '完了' %}: {{ done|length }}</h1>
+                {% if done %}
+                    {% for k in done %}
+                        <p align="left">{{ k }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="col4 report-import center">
+                <h1>{% trans '無視する' %}: {{ ignore|length }}</h1>
+                {% if ignore %}
+                    {% for k, v in ignore.items %}
+                        <p align="left"><a href="{{ v }}" target="_blank">{{ k }}</a></p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="col4 report-import">
+                <h1>{% trans '不合格' %}: {{ fail|length }}</h1>
+                {% if fail %}
+                    {% for k in fail %}
+                        <p align="left">>{{ k }}</p>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>

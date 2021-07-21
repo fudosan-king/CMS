@@ -20,6 +20,9 @@ MAX_UPLOAD_SIZE = 2097152
 
 def index(request):
     errors = []
+    done = {}
+    ignore = {}
+    fail = []
     if request.method == 'POST':
         try:
             file = request.FILES['files']
@@ -49,12 +52,22 @@ def index(request):
                     for chunk in file.chunks():
                         destination.write(chunk)
                 try:
-                    import_csv(new_path)
+                    dry_run = request.POST.get('dry_run')
+                    if not dry_run:
+                        dry_run = False
+                        import_csv(new_path, dry_run=dry_run)
+                    else:
+                        dry_run = True
+                        done, ignore, fail = import_csv(new_path, dry_run=dry_run)
                 except Exception as e:
                     errors.append('インポートできません: {}'.format(e))
 
     template = loader.get_template('wagtailadmin/import_buildings/index.html')
+    print(type(ignore))
     context = {
-        'errors': errors
+        'errors': errors,
+        'done': done,
+        'ignore': ignore,
+        'fail': fail
     }
     return HttpResponse(template.render(context, request))

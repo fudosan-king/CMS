@@ -2,6 +2,10 @@ from .core import Left2RightConverterBase
 from dashboard.models import Transports
 
 
+class NotFoundError(Exception):
+    pass
+
+
 class FromCSVConverter(Left2RightConverterBase):
     def __init__(self):
         super(FromCSVConverter, self).__init__(self.__ruleset__)

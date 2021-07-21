@@ -1,28 +1,53 @@
 {% extends "wagtailadmin/base.html" %}
 {% load i18n wagtailadmin_tags %}
 
-{% block titletag %}{% trans "Import Buildings" %}{% endblock %}
+{% block titletag %}{% trans '建物の輸入' %}{% endblock %}
 
 {% block content %}
-<header class="merged nice-padding">
-    <div class="row">
-        <h1>
-        	<svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-folder-open-inverse"></use></svg>
-                {% trans 'Import Buildings' %}
-        </h1>
-        <div class="col9">
+    <header class="merged nice-padding">
+        <div class="row">
+            <h1>
+            	<svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-folder-open-inverse"></use></svg>
+                    {% trans '建物の輸入' %}
+            </h1>
+            <div class="col9">
+            </div>
+        </div>
+    </header>
+
+    <div style="padding-top:40px"></div>
+
+    <div class="nice-padding">
+        <div class="col12 drop-zone">
+            <div class="col12">
+                {% for error in errors %}
+                    <p class="message-import-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <div class="col4">
+                &nbsp;
+            </div>
+            <div class="col4">
+                <form action="{% url 'buildings_import' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="replace-file-input">
+                        <div class="col12 upload-csv" align="center">
+                            <input id="fileupload" type="file" name="files" data-url="{% url 'buildings_import' %}" required accept=".csv">
+                            <label for="fileupload">{% trans 'csvをアップロードするにはクリックしてください' %}</label>
+                        </div>
+                        <div class="col12">
+                            <button class="button bicolor button--icon">
+                                <span class="icon-wrapper">
+                                    <svg class="icon icon-plus icon" aria-hidden="true" focusable="false"><use href="#icon-plus"></use></svg>
+                                </span>{% trans 'インポート' %}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</header>
-<h1>{{ method }}</h1>
-{% if request.method == 'GET' %}
-<form method="post" action="/dashboard/import/">
-    {% csrf_token %}
-    <div align="center">
-        <button type="submit" class="button" style="width: 200px;">SUBMIT</button>
-    </div>
-</form>
-{% endif %}
+
 {% endblock %}
 
 {% block extra_css %}

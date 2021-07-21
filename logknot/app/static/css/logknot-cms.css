@@ -64,7 +64,8 @@
   padding-bottom: 20px;
 }
 
-.message-error .errorlist li {
+.message-error .errorlist li,
+.message-import-error {
   color: #cd3238;
 }
 
@@ -127,6 +128,14 @@
 .built-date {
   position: relative;
   top: 34px;
+}
+
+.upload-csv  {
+  margin-bottom: 60px;
+}
+
+.upload-csv label {
+  width: 100%;
 }
 
 @media only screen and (max-width: 600px) {

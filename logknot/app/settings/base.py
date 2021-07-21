@@ -179,6 +179,8 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+IMPORT_ROOT = os.path.join(BASE_DIR, 'www', 'import')
+
 
 # Wagtail settings
 

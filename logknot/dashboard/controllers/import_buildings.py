@@ -55,15 +55,14 @@ def index(request):
                     dry_run = request.POST.get('dry_run')
                     if not dry_run:
                         dry_run = False
-                        import_csv(new_path, dry_run=dry_run)
+                        import_csv(new_path, dry_run=dry_run, user=str(request.user))
                     else:
                         dry_run = True
-                        done, ignore, fail = import_csv(new_path, dry_run=dry_run)
+                        done, ignore, fail = import_csv(new_path, dry_run=dry_run, user=str(request.user))
                 except Exception as e:
                     errors.append('インポートできません: {}'.format(e))
 
     template = loader.get_template('wagtailadmin/import_buildings/index.html')
-    print(type(ignore))
     context = {
         'errors': errors,
         'done': done,

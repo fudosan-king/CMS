@@ -10,8 +10,8 @@ from django.urls import reverse
 COL_CSV = 58
 
 
-def import_csv(dirpath, dry_run=True):
-    importer = CSVImporter(dry_run)
+def import_csv(dirpath, dry_run=True, user='system'):
+    importer = CSVImporter(dry_run, user)
 
     try:
         importer.import_buildings(dirpath)
@@ -54,11 +54,12 @@ class CSVLoader(object):
 
 
 class CSVImporter(object):
-    def __init__(self, dry_run=True):
+    def __init__(self, dry_run=True, user='system'):
         self.dry_run = dry_run
         self.import_done = {}
         self.ignore_buildings = {}
         self.import_fail = []
+        self.user = user
 
     def import_buildings(self, dirpath):
         loader = CSVLoader(dirpath)
@@ -81,6 +82,7 @@ class CSVImporter(object):
         logs.import_done = self.import_done
         logs.ignore_buildings = self.ignore_buildings
         logs.import_fail = self.import_fail
+        logs.import_by = self.user
         logs.save()
 
     def get_log(self):

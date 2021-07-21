@@ -471,8 +471,8 @@ class ConverterBase(object):
                             left.cursor += 1
                     else:
                         raise ValueError
-            except Exception as e:
-                print('Have problem: {}'.format(e))
+            except Exception:
+                raise ValueError('invalid rule {!r}'.format(rule))
 
     def process_if(self, rule, left, right):
         if_settings = []

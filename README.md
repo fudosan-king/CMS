@@ -83,7 +83,7 @@ Test import csv
 cd ~/project/wagtail
 . ./env/bin/activate
 cd logknot
-python3 manage.py import_csv
+python3 manage.py import_csv -d True
 
 ```
 

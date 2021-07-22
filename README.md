@@ -94,3 +94,9 @@ http://docs.mongoengine.org/ <br>
 https://docs.wagtail.io/en/stable/ <br>
 https://docs.wagtail.io/en/stable/reference/contrib/forms/customisation.html <br>
 https://github.com/spapas/wagtail-multi-upload <br>
+
+
+```
+from dashboard.models import *  # Connect to mongoDB
+from home.models import *  # Connect to mySQL
+```

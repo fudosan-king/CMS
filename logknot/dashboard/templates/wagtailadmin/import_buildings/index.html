@@ -34,6 +34,9 @@
                         <div class="col12 upload-csv" align="center">
                             <input id="fileupload" type="file" name="files" data-url="{% url 'buildings_import' %}" required accept=".csv">
                             <label for="fileupload">{% trans 'csvをアップロードするにはクリックしてください' %}</label>
+                            {% if total %}
+                                <label>合計: {{ total }}</label>
+                            {% endif %}
                         </div>
                         <div class="col12 dry-run">
                             <label for="dry_run">

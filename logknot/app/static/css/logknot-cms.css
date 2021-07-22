@@ -180,6 +180,11 @@
   margin-top: 60px;
 }
 
+.table-logs td,
+.table-logs th {
+  width: 33%;
+}
+
 @media only screen and (max-width: 600px) {
   .merged.nice-padding {
     padding-left: 60px;

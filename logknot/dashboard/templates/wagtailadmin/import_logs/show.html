@@ -1,1 +1,71 @@
-Show
+{% extends "wagtailadmin/base.html" %}
+{% load i18n wagtailadmin_tags %}
+
+{% block titletag %}{% trans "データログ - " %}{{ log.created_at }}{% endblock %}
+
+{% block content %}
+    <header class="hasform">
+        <div class="row nice-padding">
+            <div class="col11">
+                <h1>
+                	<svg class="icon icon-doc-full header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-doc-full"></use></svg>
+                        {% trans 'データログ - ' %}{{ log.created_at }}
+                </h1>
+            </div>
+            <div class="col1">
+                <div class="actionbutton">
+                    <a href="{% url 'import_logs' %}" class="button bicolor button--icon"><span class="icon-wrapper"><svg class="icon icon-arrow-left icon" aria-hidden="true" focusable="false"><use href="#icon-arrow-left"></use></svg></span>{% trans '戻る' %}</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <table class="listing table-logs">
+        <thead>
+            <tr>
+                <th>
+                    {% trans '完了' %}: {{ log.import_done.keys|length }}
+                </th>
+                <th>
+                    {% trans '無視する' %}: {{ log.ignore_buildings.keys|length }}
+                </th>
+                <th>
+                    {% trans '不合格' %}: {{ log.import_fail|length }}
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    {% for k, v in log.import_done.items %}
+                        <p align="left"><a href="{{ v }}" target="_blank">{{ k }}</a></p>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for k, v in log.ignore_buildings.items %}
+                        <p align="left"><a href="{{ v }}" target="_blank">{{ k }}</a></p>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for k in log.import_fail %}
+                        <p align="left">{{ k }}</p>
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="col12">
+        <div class="row" align="right">
+            <h2>によるインポート: {{ log.import_by }} - 合計: {{ total }}</h2>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}

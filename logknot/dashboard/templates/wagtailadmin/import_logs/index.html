@@ -1,1 +1,83 @@
-Index
+{% extends "wagtailadmin/base.html" %}
+{% load i18n wagtailadmin_tags %}
+
+{% block titletag %}{% trans "データログ" %}{% endblock %}
+
+{% block content %}
+    <header class="hasform">
+        <div class="row nice-padding">
+            <div class="col2">
+                <h1>
+                	<svg class="icon icon-doc-full header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-doc-full"></use></svg>
+                        {% trans 'データログ' %}
+                </h1>
+            </div>
+            <div class="col9">
+
+            </div>
+        </div>
+    </header>
+
+    <table class="listing">
+        <thead>
+            <tr>
+                <th>
+                    {% trans '時間' %}
+                </th>
+                <th>
+                    {% trans '完了' %}
+                </th>
+                <th>
+                    {% trans '無視する' %}
+                </th>
+                <th>
+                    {% trans '不合格' %}
+                </th>
+                <th>
+                    {% trans 'によるインポート' %}
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+        	{% for log in logs %}
+            <tr>
+                <td class="title" valign="top" align="center">
+                    <a href="{% url 'import_logs_id' log.id %}">{{ log.created_at }}</a>
+                </td>
+                <td align="center">
+                	{{ log.import_done.keys|length }}
+                </td>
+                <td align="center">
+                	{{ log.ignore_buildings.keys|length }}
+                </td>
+                <td align="center">
+                	{{ log.import_fail|length }}
+                </td>
+                <td align="center">
+                	{{ log.import_by }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div align="center">
+    {% if paginator %}
+        {% if paginator.has_previous %}
+            <a href="{% url 'import_logs' %}?page={{ paginator.previous_page_number }}&amp;limit={{ limit }}">{% trans 'Previous' %}</a>
+        {% endif %}
+        {{ paginator }}
+        {% if paginator.has_next %}
+            <a href="{% url 'import_logs' %}?page={{ paginator.next_page_number }}&amp;limit={{ limit }}">{% trans 'Next' %}</a>
+        {% endif %}
+    {% endif %}
+    </div>
+
+{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}

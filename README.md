@@ -94,6 +94,7 @@ http://docs.mongoengine.org/ <br>
 https://docs.wagtail.io/en/stable/ <br>
 https://docs.wagtail.io/en/stable/reference/contrib/forms/customisation.html <br>
 https://github.com/spapas/wagtail-multi-upload <br>
+https://jossingram.wordpress.com/2015/04/22/a-list-of-wagtails-streamfield-icons/ <br>
 
 
 ```

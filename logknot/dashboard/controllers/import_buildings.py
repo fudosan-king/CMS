@@ -24,6 +24,7 @@ def index(request):
     done = {}
     ignore = {}
     fail = []
+    total = 0
     if request.method == 'POST':
         try:
             file = request.FILES['files']
@@ -61,6 +62,7 @@ def index(request):
                     else:
                         dry_run = True
                         done, ignore, fail = import_csv(new_path, dry_run=dry_run, user=str(request.user))
+                        total = len(done.keys()) + len(ignore.keys()) + len(fail)
                 except Exception as e:
                     errors.append('インポートできません: {}'.format(e))
 
@@ -69,6 +71,7 @@ def index(request):
         'errors': errors,
         'done': done,
         'ignore': ignore,
-        'fail': fail
+        'fail': fail,
+        'total': total
     }
     return HttpResponse(template.render(context, request))

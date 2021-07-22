@@ -95,24 +95,25 @@ class CSVImporter(object):
         building_query = Buildings.objects().filter(query).first()
 
         if not building_query:
-            import_building = Buildings(building_name=building.get('building_name'))
+            import_building = Buildings()
             for k, v in building.items():
-                if k != 'building_name':
-                    import_building[k] = v
+                import_building[k] = v
             import_building.loan_interest_rate = 2.0
             import_building.import_date = datetime.datetime.now
+            _ok = False
             if not self.dry_run:
                 try:
                     import_building.save()
+                    _ok = True
                 except:
                     self.import_fail.append(building.get('building_name'))
-
-            self.import_done[import_building.building_name] = reverse(
-                'buildings_show',
-                args=(import_building.id,)
-            )
+            if _ok or self.dry_run:
+                self.import_done[import_building.building_name] = reverse(
+                    'buildings_show',
+                    args=(import_building.id,)
+                )
         else:
-            if (building_query.removed):
+            if building_query.removed:
                 self.ignore_buildings[building_query.building_name] = reverse(
                     'buildings_removed_show',
                     args=(building_query.id,)

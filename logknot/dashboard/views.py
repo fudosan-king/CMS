@@ -1,6 +1,6 @@
 from django.urls import path
 from wagtail.core import hooks
-from dashboard.controllers import buildings, import_buildings, removed
+from dashboard.controllers import buildings, import_buildings, removed, import_logs
 
 
 @hooks.register('register_admin_urls')
@@ -28,6 +28,20 @@ def buildings_show():
 def buildings_import():
     return [
         path('import/', import_buildings.index, name='buildings_import'),
+    ]
+
+
+@hooks.register('register_admin_urls')
+def buildings_import_logs():
+    return [
+        path('import/logs/', import_logs.index, name='import_logs'),
+    ]
+
+
+@hooks.register('register_admin_urls')
+def buildings_import_logs_id():
+    return [
+        path('import/logs/<log_id>/', import_logs.show, name='import_logs_id'),
     ]
 
 

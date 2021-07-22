@@ -4,6 +4,7 @@ from importer.import_csv import import_csv
 import os
 from django.conf import settings
 import datetime
+from django.shortcuts import redirect
 
 # 1MB - 1048576
 # 2MB - 2097152
@@ -56,6 +57,7 @@ def index(request):
                     if not dry_run:
                         dry_run = False
                         import_csv(new_path, dry_run=dry_run, user=str(request.user))
+                        return redirect('import_logs')
                     else:
                         dry_run = True
                         done, ignore, fail = import_csv(new_path, dry_run=dry_run, user=str(request.user))

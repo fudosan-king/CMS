@@ -113,4 +113,13 @@ class CSVImporter(object):
                 args=(import_building.id,)
             )
         else:
-            self.ignore_buildings[building_query.building_name] = reverse('buildings_show', args=(building_query.id,))
+            if (building_query.removed):
+                self.ignore_buildings[building_query.building_name] = reverse(
+                    'buildings_removed_show',
+                    args=(building_query.id,)
+                )
+            else:
+                self.ignore_buildings[building_query.building_name] = reverse(
+                    'buildings_show',
+                    args=(building_query.id,)
+                )

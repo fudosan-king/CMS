@@ -16,12 +16,12 @@ class WelcomePanel:
             <ul class="stats">
                 <li class="icon icon-doc-full-inverse">
                     <a href="/dashboard/buildings/">
-                        <span>{}</span> Buildings <span class="visuallyhidden">created in logknot</span>
+                        <span>{}</span> 建物 <span class="visuallyhidden">created in logknot</span>
                     </a>
                 </li>
                 <li class="icon icon-doc-full-inverse">
                     <a href="/dashboard/removed/">
-                        <span>{}</span> Removed<span class="visuallyhidden">created in logknot</span>
+                        <span>{}</span> 削除する<span class="visuallyhidden">created in logknot</span>
                     </a>
                 </li>
             </ul>

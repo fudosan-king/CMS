@@ -1,7 +1,7 @@
 {% extends "wagtailadmin/base.html" %}
 {% load i18n wagtailadmin_tags %}
 
-{% block titletag %}{% trans "Buildings Removed" %}{% endblock %}
+{% block titletag %}{% trans "削除された建物" %}{% endblock %}
 
 {% block content %}
     <header class="hasform">
@@ -9,7 +9,7 @@
             <div class="col2">
                 <h1>
                 	<svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-image"></use></svg>
-                        {% trans 'Buildings Removed' %}
+                        {% trans '削除された建物' %}
                 </h1>
             </div>
             <div class="col9">
@@ -17,10 +17,10 @@
                     <ul class="fields">
                         <li class="required">
                         <div class="field char_field text_input field-small iconfield" data-contentpath="building_name">
-                            <label for="building_name">Search term:</label>
+                            <label for="building_name">{% trans 'Search' %}</label>
                             <div class="field-content">
                                 <div class="input icon-search ">
-                                        <input type="text" name="building_name" placeholder="Search buildings" required="" id="building_name">
+                                        <input type="text" name="building_name" placeholder="{% trans '削除された建物の検索' %}" required="" id="building_name">
                                     <span></span>
                                 </div>
                             </div>
@@ -33,48 +33,50 @@
         </div>
     </header>
 
-    <div class="row building-show-header">
-        <div class="col5 building-show-table" align="center">
-            <span>物件名</span>
-        </div>
-        <div class="col5 building-show-table" align="center">
-            <span>削除されました</span>
-        </div>
-        <div class="col2">
-        </div>
-    </div>
-    <hr>
+    <table class="listing">
+        <thead>
+            <tr>
+                <th>
+                    {% trans '物件名' %}
+                </th>
+                <th>
+                    {% trans '削除されました' %}
+                </th>
+                <th>
+                    {% trans '' %}
+                </th>
+            </tr>
+        </thead>
 
-    {% for building in buildings %}
-    <div class="row building-show">
-        <div class="col5 building-show-table">
-            <a href="{% url 'buildings_removed_show' building.id %}">
-                <span>{{ building.building_name }}</span>
-            </a>
-        </div>
-        <div class="col5 building-show-table">
-            <span>ユーザー: {{ building.remove_by }} ({{ building.last_time_remove }})</span>
-        </div>
-        <div class="col2">
-            <form method="post" action="{% url 'buildings_removed_show' building.id %}" style="width: 50px; float: right;">
-                {% csrf_token %}
-                <input type="hidden" name="rollback" value="{{ building.id }}">
-                <button class="button" type="submit" style="background-color: hsl(180.4761904762,100%,24.7058823529%); float: right; margin-right: 20px;" onclick="return confirm('Are you sure you want to rollback this item?');">{% trans 'Rollback' %}</button>
-            </form>
-        </div>
-        <br>
-    </div>
-    <hr>
-    {% endfor %}
+        <tbody>
+        {% for building in buildings %}
+            <tr>
+                <td class="title" valign="top">
+                    <a href="{% url 'buildings_removed_show' building.id %}">{{ building.building_name }}</a>
+                </td>
+                <td class="create-readable-date" title="{{ building.remove_by }}">
+                    {{ building.last_time_remove }}
+                </td>
+                <td>
+                    <form method="post" action="{% url 'buildings_removed_show' building.id %}" class="buildings-removed-action">
+                        {% csrf_token %}
+                        <input type="hidden" name="rollback" value="{{ building.id }}">
+                        <button class="button button-rollback" type="submit" onclick="return confirm('このアイテムをロールバックしてもよろしいですか？');">{% trans 'ロールバック' %}</button>
+                </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
     <div align="center">
     {% if paginator %}
         {% if paginator.has_previous %}
-            <a href="{% url 'buildings_removed' %}?building_name={{ building_name }}&amp;page={{ paginator.previous_page_number }}&amp;limit={{ limit }}">Previous</a>
+            <a href="{% url 'buildings_removed' %}?building_name={{ building_name }}&amp;page={{ paginator.previous_page_number }}&amp;limit={{ limit }}">{% trans 'Previous' %}</a>
         {% endif %}
         {{ paginator }}
         {% if paginator.has_next %}
-            <a href="{% url 'buildings_removed' %}?building_name={{ building_name }}&amp;page={{ paginator.next_page_number }}&amp;limit={{ limit }}">Next</a>
+            <a href="{% url 'buildings_removed' %}?building_name={{ building_name }}&amp;page={{ paginator.next_page_number }}&amp;limit={{ limit }}">{% trans 'Next' %}</a>
         {% endif %}
     {% endif %}
     </div>

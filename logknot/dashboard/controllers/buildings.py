@@ -18,10 +18,10 @@ def index(request):
 
     try:
         page = int(request.GET.get('page', 1))
-        per_page = int(request.GET.get('limit', 10))
+        per_page = int(request.GET.get('limit', 20))
     except:
         page = 1
-        per_page = 10
+        per_page = 20
 
     paginator_result = Paginator(buildings, per_page)
     try:

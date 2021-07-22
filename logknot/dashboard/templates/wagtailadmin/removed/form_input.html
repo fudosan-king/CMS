@@ -1,0 +1,7 @@
+{% load i18n wagtailadmin_tags %}
+{% load wagtailimages_tags %}
+
+<div class="{{ col }} field-building">
+    <span class="field-label">{% if not field.label %}&nbsp;{% else %}{{ field.label }}{% endif %}</span>
+    {{ field }}
+</div>

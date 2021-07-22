@@ -20,7 +20,7 @@
                             <label for="building_name">Search term:</label>
                             <div class="field-content">
                                 <div class="input icon-search ">
-                                        <input type="text" name="building_name" placeholder="Search buildings" required="" id="building_name">
+                                        <input type="text" name="building_name" placeholder="{% trans '建物を検索する' %}" required="" id="building_name">
                                     <span></span>
                                 </div>
                             </div>
@@ -37,52 +37,57 @@
             </div>
         </div>
     </header>
-    <div class="row building-show-header">
-        <div class="col5 building-show-table" align="center">
-            <span>物件名</span>
-        </div>
-        <div class="col3 building-show-table" align="center">
-            <span>作成した</span>
-        </div>
-        <div class="col3 building-show-table" align="center">
-            <span>編集</span>
-        </div>
-        <div class="col1">
-        </div>
-    </div>
-    <hr>
-    {% for building in buildings %}
-    <div class="row building-show">
-        <div class="col5 building-show-table">
-            <a href="{% url 'buildings_show' building.id %}">
-            <span>{{ building.building_name }}</span>
-            </a>
-        </div>
-        <div class="col3 building-show-table">
-            <span>ユーザー: {{ building.create_by }} ({{ building.created_at }})</span>
-        </div>
-        <div class="col3 building-show-table">
-            <span>ユーザー: {{ building.update_by }} ({{ building.last_time_update }})</span>
-        </div>
-        <div class="col1">
-        <form method="post" action="{% url 'buildings_show' building.id %}">
-            {% csrf_token %}
-            <input type="hidden" name="remove" value="{{ building.id }}">
-            <button class="button button-remove" type="submit" onclick="return confirm('Are you sure you want to remove this item?');">{% trans 'Remove' %}</button>
-        </form>
-        </div>
-    </div>
-    <hr>
-    {% endfor %}
+
+    <table class="listing">
+        <thead>
+            <tr>
+                <th>
+                    {% trans '物件名' %}
+                </th>
+                <th>
+                    {% trans '作成した' %}
+                </th>
+                <th>
+                    {% trans '編集' %}
+                </th>
+                <th>
+                    {% trans '' %}
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for building in buildings %}
+            <tr>
+                <td class="title" valign="top">
+                    <a href="{% url 'buildings_show' building.id %}">{{ building.building_name }}</a>
+                </td>
+                <td class="create-readable-date" title="{{ building.create_by }}">
+                    {{ building.created_at }}
+                </td>
+                <td class="update-readable-date" title="{{ building.update_by }}">
+                    {{ building.last_time_update }}
+                </td>
+                <td>
+                    <form method="post" action="{% url 'buildings_show' building.id %}" class="buildings-action">
+                        {% csrf_token %}
+                        <input type="hidden" name="remove" value="{{ building.id }}">
+                        <button class="button button-remove" type="submit" onclick="return confirm('このアイテムを削除してもよろしいですか？');">{% trans 'Remove' %}</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
     <div align="center">
     {% if paginator %}
         {% if paginator.has_previous %}
-            <a href="{% url 'buildings' %}?building_name={{ building_name }}&amp;page={{ paginator.previous_page_number }}&amp;limit={{ limit }}">Previous</a>
+            <a href="{% url 'buildings' %}?building_name={{ building_name }}&amp;page={{ paginator.previous_page_number }}&amp;limit={{ limit }}">{% trans 'Previous' %}</a>
         {% endif %}
         {{ paginator }}
         {% if paginator.has_next %}
-            <a href="{% url 'buildings' %}?building_name={{ building_name }}&amp;page={{ paginator.next_page_number }}&amp;limit={{ limit }}">Next</a>
+            <a href="{% url 'buildings' %}?building_name={{ building_name }}&amp;page={{ paginator.next_page_number }}&amp;limit={{ limit }}">{% trans 'Next' %}</a>
         {% endif %}
     {% endif %}
     </div>

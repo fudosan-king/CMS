@@ -143,6 +143,43 @@
   width: 100%;
 }
 
+.listing thead th {
+  font-weight: bold;
+  text-align: center;
+}
+
+.create-readable-date:before,
+.update-readable-date:before {
+  position: absolute;
+  display: none;
+  content: attr(title);
+}
+
+.create-readable-date:hover,
+.update-readable-date:hover {
+  visibility: hidden
+}
+
+.create-readable-date:hover:before,
+.update-readable-date:hover:before {
+  visibility: visible;
+  display: block
+}
+
+.button-rollback {
+  background-color: hsl(180.4761904762,100%,24.7058823529%);
+}
+
+.buildings-removed-action,
+.buildings-action {
+  text-align: right;
+}
+
+.buildings-removed-content {
+  text-align: center;
+  margin-top: 60px;
+}
+
 @media only screen and (max-width: 600px) {
   .merged.nice-padding {
     padding-left: 60px;

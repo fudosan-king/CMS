@@ -1,52 +1,78 @@
 {% extends "wagtailadmin/base.html" %}
 {% load i18n wagtailadmin_tags %}
 
-{% block titletag %}{% trans "Building Detail" %}{% endblock %}
+{% block titletag %}{% trans "建物が削除されました" %}{% endblock %}
 
 {% block content %}
     <header class="merged nice-padding">
         <div class="row">
             <h1>
             	<svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-image"></use></svg>
-                    {% trans 'Building Detail' %}
+                    {% trans '建物が削除されました' %}
             </h1>
             <div class="col9">
             </div>
         </div>
     </header>
-    <form method="post" action="{{ action }}">
+    <form method="post" action="{{ action }}" class="form-removed">
         {% csrf_token %}
         <ul class="tab-nav merged" data-tab-nav="">
-            <li class="active"><a href="#infomation">Infomation</a></li>
-            <li><a href="#photos">Photos</a></li>
+            <li class="active"><a href="#infomation">{% trans '情報' %}</a></li>
+            <li><a href="#photos">{% trans '写真' %}</a></li>
         </ul>
 
-        <div class="tab-content" style="height: 700px">
+        <div class="tab-content">
             <section id="infomation" class="active nice-padding">
-                <li class="required">
-                    <div class="field char_field text_input" data-contentpath="buidingName">
-                        <label class="required" for="building_name">Building Name:</label>
-                        <div class="field-content">
-                            <div class="input  ">
-                                    <input type="text" name="building_name" value="{{ building_detail.building_name }}" maxlength="150" required="" id="building_name">
-                                <span></span>
-                            </div>
+                <div class="row">
+                    <div class="col6 column-content">
+                        {% include 'wagtailadmin/removed/form_input.html' with field=forms.building_name col='col12' %}
+
+                        {% include 'wagtailadmin/removed/form_input.html' with field=forms.built_date_year col='col2' error=forms.errors.built_date_year %}
+                        <div class="col1 field-building ">
+                            <span class="built-date">年</span>
                         </div>
+
+                        {% include 'wagtailadmin/removed/form_input.html' with field=forms.built_date_month col='col2' error=forms.errors.built_date_month %}
+                        <div class="col1 field-building ">
+                            <span class="built-date">月</span>
+                        </div>
+
+                        {% include 'wagtailadmin/removed/form_input.html' with field=forms.structure col='col6' %}
+
+                        {% include 'wagtailadmin/removed/form_input.html' with field=forms.ground_floors col='col6' %}
+
+                        {% include 'wagtailadmin/removed/form_input.html' with field=forms.remove_by col='col6' %}
+
+                        {% include 'wagtailadmin/removed/form_input.html' with field=forms.last_time_remove col='col6' %}
                     </div>
-                </li>
+                    <div class="col6 column-content">
+                        {% include 'wagtailadmin/removed/form_address.html' with data=building_removed.address %}
+
+                        {% include 'wagtailadmin/removed/form_transports.html' with data=building_removed.transports %}
+                    </div>
+                </div>
             </section>
             <section id="photos" class="nice-padding">
-                {% for image in media %}
-                     <img src="{{ image }}" width="60">
-                {% endfor %}
+                <div class="row">
+                    {% for photo in building_removed.photos %}
+                        <div class="col3" id="item-photo">
+                            <div class="photo">
+                                <img src="{% if photo.path %}{{ photo.path }}{% else %}/static/images/no-image.png{% endif %}">
+                            </div>
+                            <input type="hidden" name="path" value="{{ photo.path }}">
+                            <input type="text" name="category" value="{{ photo.category }}">
+                            <textarea name="comment">{{ photo.comment }}</textarea>
+                        </div>
+                    {% endfor %}
+                </div>
             </section>
         </div>
     </form>
 
-    <form method="post" action="{% url 'buildings_removed_show' building_detail.id %}" style="position: relative; top: -39px; left: 760px; width: 30px;">
+    <form method="post" action="{% url 'buildings_removed_show' building_removed.id %}" class="buildings-removed-content">
         {% csrf_token %}
-        <input type="hidden" name="rollback" value="{{ building_detail.id }}">
-        <button class="button" type="submit" style="background-color: hsl(180.4761904762,100%,24.7058823529%);" onclick="return confirm('Are you sure you want to rollback this item?');">{% trans 'Rollback' %}</button>
+        <input type="hidden" name="rollback" value="{{ building_removed.id }}">
+        <button class="button button-rollback" type="submit" onclick="return confirm('このアイテムをロールバックしてもよろしいですか？');">{% trans 'ロールバック' %}</button>
     </form>
 
 {% endblock %}
@@ -55,4 +81,11 @@
 {% endblock %}
 
 {% block extra_js %}
+<script type="text/javascript">
+    $(function () {
+        $('.form-removed select').prop('disabled', true);
+        $('input').prop('readonly', true);
+        $('textarea').prop('readonly', true);
+    });
+</script>
 {% endblock %}

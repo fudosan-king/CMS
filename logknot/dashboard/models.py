@@ -263,3 +263,13 @@ class Buildings(Document):
 
         self.create_by = str(request.user)
         return self
+
+
+class LogsImport(Document):
+    created_at = fields.DateTimeField(
+        default=datetime.datetime.now, editable=False,
+    )
+    import_done = fields.DictField(blank=True, default={})
+    ignore_buildings = fields.DictField(blank=True, default={})
+    import_fail = fields.ListField(blank=True, default=[])
+    import_by = fields.StringField(max_length=255, blank=True, defaul='system')

@@ -1,8 +1,7 @@
 import os
 import csv
 from formatconverter.converter import FromCSVConverter
-from dashboard.models import Buildings
-from .models import LogsImport
+from dashboard.models import Buildings, LogsImport
 import datetime
 from mongoengine.queryset.visitor import Q
 from django.urls import reverse

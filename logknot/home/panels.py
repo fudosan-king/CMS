@@ -26,7 +26,7 @@ class WelcomePanel:
                     </a>
                 </li>
                 <li class="icon icon-folder-open-1">
-                    <a href="/dashboard/import/logs/">
+                    <a href="/dashboard/reports/logs/">
                         <span>{}</span> データログ<span class="visuallyhidden">created in logknot</span>
                     </a>
                 </li>

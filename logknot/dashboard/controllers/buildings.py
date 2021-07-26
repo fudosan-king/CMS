@@ -56,28 +56,37 @@ def show(request, building_id):
     photos_form = PhotosForm(parent_document=building_detail)
     errors = []
     if request.method == 'POST':
+        user = request.user
         _id = request.POST.get('remove', None)
-        if _id and str(building_detail.id) == _id and request.user:
-            building_detail = building_detail.remove(request)
-            if building_detail:
-                building_detail.save()
-                return redirect('buildings')
-            return Http404
-        forms = BuildingsForm(request.POST)
 
-        if forms.is_valid():
-            building_detail = building_detail.update(request)
-            try:
-                building_detail.save()
-                messages.success(request, _('Updated'))
-
-            except:
-                errors = forms.errors.items()
-                forms = BuildingsForm(instance=building_detail)
-                messages.error(request, _('Error'))
+        if _id and str(building_detail.id) == _id:
+            if user and user.has_perms(['buildinggroup.delete_building']):
+                building_detail = building_detail.remove(request)
+                if building_detail:
+                    building_detail.save()
+                    return redirect('buildings')
+                return Http404
+            else:
+                messages.error(request, _('Sorry, you do not have permission to access this area.'))
         else:
-            errors = forms.errors.items()
-            messages.error(request, _('Error'))
+            if user and user.has_perms(['buildinggroup.change_building']):
+                forms = BuildingsForm(request.POST)
+
+                if forms.is_valid():
+                    building_detail = building_detail.update(request)
+                    try:
+                        building_detail.save()
+                        messages.success(request, _('Updated'))
+
+                    except:
+                        errors = forms.errors.items()
+                        forms = BuildingsForm(instance=building_detail)
+                        messages.error(request, _('Error'))
+                else:
+                    errors = forms.errors.items()
+                    messages.error(request, _('Error'))
+            else:
+                messages.error(request, _('Sorry, you do not have permission to access this area.'))
 
     context = {
         'action': '/dashboard/buildings/edit/{}/'.format(building_detail.id),
@@ -95,19 +104,23 @@ def show(request, building_id):
 @hooks.register('after_create_page')
 def add(request):
     if request.method == 'POST':
-        building_name = request.POST.get('building_name', None)
-        if building_name:
-            building = Buildings(building_name=building_name)
-            building = building.add(request)
-            if building:
-                try:
-                    building.save()
-                except:
-                    messages.error(request, 'Have problem')
-                messages.success(request, '{}{}'.format(_('Created building: '), building.building_name))
-                return redirect('buildings_show', building.id)
+        user = request.user
+        if user and user.has_perms(['buildinggroup.add_building']):
+            building_name = request.POST.get('building_name', None)
+            if building_name:
+                building = Buildings(building_name=building_name)
+                building = building.add(request)
+                if building:
+                    try:
+                        building.save()
+                    except:
+                        messages.error(request, 'Have problem')
+                    messages.success(request, '{}{}'.format(_('Created building: '), building.building_name))
+                    return redirect('buildings_show', building.id)
+            else:
+                raise Http404
         else:
-            raise Http404
+            messages.error(request, _('Sorry, you do not have permission to access this area.'))
 
     forms = BuildingsForm()
     template = loader.get_template('wagtailadmin/buildings/show.html')

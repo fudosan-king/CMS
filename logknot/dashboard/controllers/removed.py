@@ -6,6 +6,8 @@ from django.shortcuts import redirect
 from django.http import Http404
 import datetime
 from django.core.paginator import Paginator
+from wagtail.admin import messages
+from django.utils.translation import gettext as _  # noqa
 
 
 def index(request):
@@ -46,12 +48,16 @@ def show(request, building_id):
         raise Http404
 
     if request.method == 'POST':
-        if request.POST.get('rollback', None):
+        user = request.user
+        rollback = request.POST.get('rollback', None)
+        if user and user.has_perms(['removedgroup.change_removed']) and rollback:
             building_removed.removed = False
             building_removed.last_time_rollback = datetime.datetime.now
             building_removed.rollback_by = str(request.user)
             building_removed.save()
             return redirect('buildings_removed')
+        else:
+            messages.error(request, _('Sorry, you do not have permission to access this area.'))
 
     forms = RemovedBuildingsForm(instance=building_removed)
     template = loader.get_template('wagtailadmin/removed/show.html')

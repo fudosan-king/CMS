@@ -52,6 +52,19 @@ python3 manage.py railroad
 
 ```
 
+
+### Wagtail languages:
+
+```
+cd ~/project/wagtail
+. ./env/bin/activate
+cd logknot/<sub-page>
+django-admin makemessages -l ja
+django-admin compilemessages -l ja
+
+```
+
+
 ### API
 
 <a href="http://cms.localhost:5000/api/locations/%E6%9D%B1%E4%BA%AC%E9%83%BD/%E7%B7%B4%E9%A6%AC%E5%8C%BA/%E4%B8%AD%E6%9D%91%E5%8C%97/">Locations</a><br>

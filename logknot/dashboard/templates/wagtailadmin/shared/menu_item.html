@@ -1,0 +1,12 @@
+{% load wagtailadmin_tags %}
+
+{% if icon_name not in 'image,page-doc-full-inverse,lock,tasks,thumbtack,history,site,page-folder-open-1,redirect' %}
+<li class="menu-item{% if active %} menu-active{% endif %} page-{{ icon_name }}">
+    <a href="{{ url }}"
+       class="{{ classnames }}"
+       {{ attr_string }}>
+        {% if icon_name %}{% icon icon_name 'icon--menuitem' %}{% endif %}
+        {{ label }}
+    </a>
+</li>
+{% endif %}

@@ -1,7 +1,9 @@
 from django.contrib.auth.models import Permission
 from wagtail.core import hooks
-from django.urls import path
+from django.urls import path, reverse
 from dashboard.controllers import buildings, import_buildings, removed, import_logs
+from wagtail.admin.menu import MenuItem
+from django.utils.translation import gettext as _  # noqa
 
 
 @hooks.register('register_permissions')
@@ -12,20 +14,40 @@ def register_building_permissions():
     )
 
 
+@hooks.register('register_admin_menu_item')
+def register_building_menu_item():
+    return MenuItem(_('Buildings'), reverse('buildings'), icon_name='view', order=2)
+
+
 @hooks.register('register_permissions')
 def register_removed_permissions():
     return Permission.objects.filter(
         content_type__app_label='removedgroup',
-        codename__in=['add_removed', 'change_removed', 'delete_removed']
+        codename__in=['change_removed']
     )
+
+
+@hooks.register('register_admin_menu_item')
+def register_removed_menu_item():
+    return MenuItem(_('Remove'), reverse('buildings_removed'), icon_name='cross', order=3)
 
 
 @hooks.register('register_permissions')
 def register_import_permissions():
     return Permission.objects.filter(
         content_type__app_label='importgroup',
-        codename__in=['add_import', 'change_import', 'delete_import']
+        codename__in=['add_import']
     )
+
+
+@hooks.register('register_admin_menu_item')
+def register_import_menu_item():
+    return MenuItem(_('Import'), reverse('buildings_import'), icon_name='download', order=4)
+
+
+@hooks.register('register_reports_menu_item')
+def register_report_import_menu_item():
+    return MenuItem(_('Import logs'), reverse('import_logs'), icon_name='list-ul', order=5)
 
 
 @hooks.register('register_admin_urls')
@@ -59,7 +81,7 @@ def buildings_import():
 @hooks.register('register_admin_urls')
 def buildings_import_logs():
     return [
-        path('import/logs/', import_logs.index, name='import_logs'),
+        path('reports/logs/', import_logs.index, name='import_logs'),
     ]
 
 

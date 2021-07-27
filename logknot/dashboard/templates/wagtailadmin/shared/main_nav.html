@@ -8,68 +8,8 @@
                 {% trans 'Dashboard' %}
             </a>
         </li>
-        <li class="menu-item {% if request.path|slice:':21' == '/dashboard/buildings/' or request.path|slice:':15' == '/images/upload/' %}menu-active{% endif %}">
-            <a href="/dashboard/buildings/" class="">
-                <svg class="icon icon-form icon--menuitem" aria-hidden="true" focusable="false"><use href="#icon-form"></use></svg>
-                {% trans '建物' %}
-            </a>
-        </li>
-        <li class="menu-item {% if request.path|slice:':18' == '/dashboard/import/' %}menu-active{% endif %}">
-            <a href="#" data-nav-primary-submenu-trigger="" class="">
-                <svg class="icon icon-grip icon--menuitem" aria-hidden="true" focusable="false"><use href="#icon-grip"></use></svg>
-                {% trans 'Import' %}
-                <svg class="icon icon-arrow-right icon--submenu-trigger" aria-hidden="true" focusable="false"><use href="#icon-arrow-right"></use></svg>
-            </a>
 
-            <div class="nav-submenu">
-                <h2 id="nav-submenu-settings-title" class="">
-                    <svg class="icon icon-folder-inverse icon--submenu-header" aria-hidden="true" focusable="false"><use href="#icon-folder-inverse"></use></svg>
-                    {% trans 'Import' %}
-                </h2>
-                <ul class="nav-submenu__list" aria-labelledby="nav-submenu-settings-title">
-                    <li class="menu-item">
-                        <a href="/dashboard/import/" class="">
-                            <svg class="icon icon-folder-open-1 icon--menuitem" aria-hidden="true" focusable="false"><use href="#icon-folder-open-1"></use></svg>
-                            {% trans 'Import' %}
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="/dashboard/import/logs/" class="">
-                            <svg class="icon icon-doc-full icon--menuitem" aria-hidden="true" focusable="false"><use href="#icon-doc-full"></use></svg>
-                            {% trans 'データログ' %}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-
-        <li class="menu-item {% if request.path == '/dashboard/users/' or request.path == '/dashboard/groups/' or request.path == '/dashboard/account/' %}menu-active{% endif %}">
-            <a href="#" data-nav-primary-submenu-trigger="" class="">
-                <svg class="icon icon-cogs icon--menuitem" aria-hidden="true" focusable="false"><use href="#icon-cogs"></use></svg>
-                {% trans 'Settings' %}
-                <svg class="icon icon-arrow-right icon--submenu-trigger" aria-hidden="true" focusable="false"><use href="#icon-arrow-right"></use></svg>
-            </a>
-            <div class="nav-submenu">
-                <h2 id="nav-submenu-settings-title" class="">
-                    <svg class="icon icon-cogs icon--submenu-header" aria-hidden="true" focusable="false"><use href="#icon-cogs"></use></svg>
-                    {% trans 'Settings' %}
-                </h2>
-                <ul class="nav-submenu__list" aria-labelledby="nav-submenu-settings-title">
-                    <li class="menu-item">
-                        <a href="/dashboard/users/" class="">
-                            <svg class="icon icon-user icon--menuitem" aria-hidden="true" focusable="false"><use href="#icon-user"></use></svg>
-                            {% trans 'Users' %}
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="/dashboard/groups/" class="">
-                            <svg class="icon icon-group icon--menuitem" aria-hidden="true" focusable="false"><use href="#icon-group"></use></svg>
-                            {% trans 'Groups' %}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
+        {{ menu_html }}
 
         <li class="nav-footer" id="footer">
             <div class="account" id="account-settings" title="{% trans 'Edit your account' %}">

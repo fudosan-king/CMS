@@ -15,17 +15,17 @@ class WelcomePanel:
         <section class="panel summary nice-padding">
             <h2 class="visuallyhidden">Site summary</h2>
             <ul class="stats">
-                <li class="icon icon-doc-full-inverse">
+                <li class="icon icon-view">
                     <a href="/dashboard/buildings/">
                         <span>{}</span> 建物 <span class="visuallyhidden">created in logknot</span>
                     </a>
                 </li>
-                <li class="icon icon-doc-full-inverse">
+                <li class="icon icon-cross">
                     <a href="/dashboard/removed/">
                         <span>{}</span> 削除する<span class="visuallyhidden">created in logknot</span>
                     </a>
                 </li>
-                <li class="icon icon-folder-open-1">
+                <li class="icon icon-download">
                     <a href="/dashboard/reports/logs/">
                         <span>{}</span> データログ<span class="visuallyhidden">created in logknot</span>
                     </a>

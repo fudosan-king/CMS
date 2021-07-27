@@ -23,20 +23,20 @@ def register_building_menu_item():
 def register_removed_permissions():
     return Permission.objects.filter(
         content_type__app_label='removedgroup',
-        codename__in=['add_removed', 'change_removed', 'delete_removed']
+        codename__in=['change_removed']
     )
 
 
 @hooks.register('register_admin_menu_item')
 def register_removed_menu_item():
-    return MenuItem(_('Removed'), reverse('buildings_removed'), icon_name='cross', order=3)
+    return MenuItem(_('Remove'), reverse('buildings_removed'), icon_name='cross', order=3)
 
 
 @hooks.register('register_permissions')
 def register_import_permissions():
     return Permission.objects.filter(
         content_type__app_label='importgroup',
-        codename__in=['add_import', 'change_import', 'delete_import']
+        codename__in=['add_import']
     )
 
 
@@ -47,7 +47,7 @@ def register_import_menu_item():
 
 @hooks.register('register_reports_menu_item')
 def register_report_import_menu_item():
-    return MenuItem(_('Import Logs'), reverse('import_logs'), icon_name='list-ul', order=5)
+    return MenuItem(_('Import logs'), reverse('import_logs'), icon_name='list-ul', order=5)
 
 
 @hooks.register('register_admin_urls')

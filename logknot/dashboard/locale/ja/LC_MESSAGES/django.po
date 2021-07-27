@@ -1,0 +1,557 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-07-27 09:15+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: controllers/buildings.py:70 controllers/buildings.py:89
+#: controllers/buildings.py:123 controllers/import_buildings.py:74
+#: controllers/removed.py:60
+msgid "Sorry, you do not have permission to access this area."
+msgstr ""
+
+#: controllers/buildings.py:79
+msgid "Updated"
+msgstr ""
+
+#: controllers/buildings.py:84 controllers/buildings.py:87
+msgid "Error"
+msgstr ""
+
+#: controllers/buildings.py:118
+msgid "Created building: "
+msgstr ""
+
+#: templates/wagtailadmin/base.html:7 templates/wagtailadmin/home.html:3
+#: templates/wagtailadmin/shared/main_nav.html:8
+msgid "Dashboard"
+msgstr ""
+
+#: templates/wagtailadmin/base.html:55
+msgid "Menu"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/form_address.html:6
+#: templates/wagtailadmin/removed/form_address.html:6
+msgid "住所"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/form_address.html:6
+#: templates/wagtailadmin/buildings/form_input.html:5
+msgid "required"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/form_transports.html:9
+#: templates/wagtailadmin/buildings/form_transports.html:70
+#: templates/wagtailadmin/removed/form_transports.html:8
+msgid "交通"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/form_transports.html:45
+#: templates/wagtailadmin/buildings/form_transports.html:106
+#: templates/wagtailadmin/removed/form_transports.html:25
+msgid "駅から..."
+msgstr ""
+
+#: templates/wagtailadmin/buildings/form_transports.html:60
+#: templates/wagtailadmin/buildings/form_transports.html:121
+#: templates/wagtailadmin/removed/form_transports.html:39
+msgid "分"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/index.html:4
+#: templates/wagtailadmin/buildings/index.html:12
+msgid "建物"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/index.html:23
+msgid "建物を検索する"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/index.html:35
+#: templates/wagtailadmin/buildings/show.html:14
+#: templates/wagtailusers/groups/includes/formatted_permissions.html:14
+msgid "Add"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/index.html:45
+#: templates/wagtailadmin/removed/index.html:40
+msgid "物件名"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/index.html:48
+msgid "作成した"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/index.html:51
+msgid "編集"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/index.html:74
+#: templates/wagtailadmin/buildings/show.html:267 wagtail_hooks.py:32
+msgid "Remove"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/index.html:85
+#: templates/wagtailadmin/import_logs/index.html:68
+#: templates/wagtailadmin/removed/index.html:74
+msgid "Previous"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/index.html:89
+#: templates/wagtailadmin/import_logs/index.html:72
+#: templates/wagtailadmin/removed/index.html:78
+msgid "Next"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/show.html:23
+#: templates/wagtailimages/upload/add.html:21
+msgid "Upload"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/show.html:33
+#: templates/wagtailadmin/removed/show.html:20
+msgid "情報"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/show.html:34
+msgid "Google map 座標"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/show.html:35
+msgid "ドアへの扉"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/show.html:36
+msgid "リノベーション"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/show.html:37
+msgid "費用"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/show.html:39
+#: templates/wagtailadmin/removed/show.html:21
+msgid "写真"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/show.html:254
+#: templates/wagtailusers/groups/edit.html:39
+#: templates/wagtailusers/users/edit.html:41
+#: templates/wagtailusers/users/edit.html:56
+msgid "Save"
+msgstr ""
+
+#: templates/wagtailadmin/buildings/show.html:258
+msgid "作成する"
+msgstr ""
+
+#: templates/wagtailadmin/home.html:18
+msgid "Welcome to the LogKnot CMS "
+msgstr ""
+
+#: templates/wagtailadmin/home.html:31
+msgid ""
+"This is your dashboard on which helpful information about content you've "
+"created will be displayed."
+msgstr ""
+
+#: templates/wagtailadmin/import_buildings/index.html:4
+#: templates/wagtailadmin/import_buildings/index.html:11
+msgid "建物の輸入"
+msgstr ""
+
+#: templates/wagtailadmin/import_buildings/index.html:36
+msgid "csvをアップロードするにはクリックしてください"
+msgstr ""
+
+#: templates/wagtailadmin/import_buildings/index.html:51
+msgid "インポート"
+msgstr ""
+
+#: templates/wagtailadmin/import_buildings/index.html:60
+#: templates/wagtailadmin/import_logs/index.html:28
+#: templates/wagtailadmin/import_logs/show.html:27
+msgid "完了"
+msgstr ""
+
+#: templates/wagtailadmin/import_buildings/index.html:68
+#: templates/wagtailadmin/import_logs/index.html:31
+#: templates/wagtailadmin/import_logs/show.html:30
+msgid "無視する"
+msgstr ""
+
+#: templates/wagtailadmin/import_buildings/index.html:76
+#: templates/wagtailadmin/import_logs/index.html:34
+#: templates/wagtailadmin/import_logs/show.html:33
+msgid "不合格"
+msgstr ""
+
+#: templates/wagtailadmin/import_logs/index.html:4
+#: templates/wagtailadmin/import_logs/index.html:12
+msgid "データログ"
+msgstr ""
+
+#: templates/wagtailadmin/import_logs/index.html:25
+msgid "時間"
+msgstr ""
+
+#: templates/wagtailadmin/import_logs/index.html:37
+msgid "によるインポート"
+msgstr ""
+
+#: templates/wagtailadmin/import_logs/show.html:4
+#: templates/wagtailadmin/import_logs/show.html:12
+msgid "データログ - "
+msgstr ""
+
+#: templates/wagtailadmin/import_logs/show.html:17
+#: templates/wagtailimages/upload/add.html:30
+msgid "戻る"
+msgstr ""
+
+#: templates/wagtailadmin/login.html:3 templates/wagtailadmin/login.html:36
+#: templates/wagtailadmin/login.html:80
+msgid "Sign in"
+msgstr ""
+
+#: templates/wagtailadmin/login.html:18
+#, python-format
+msgid "Your %(username_field)s and password didn't match. Please try again."
+msgstr ""
+
+#: templates/wagtailadmin/login.html:80
+msgid "Signing in…"
+msgstr ""
+
+#: templates/wagtailadmin/login.html:86
+msgid "Reset your password"
+msgstr ""
+
+#: templates/wagtailadmin/login.html:86
+msgid "Forgotten it?"
+msgstr ""
+
+#: templates/wagtailadmin/removed/index.html:4
+#: templates/wagtailadmin/removed/index.html:12
+msgid "削除された建物"
+msgstr ""
+
+#: templates/wagtailadmin/removed/index.html:20
+msgid "Search"
+msgstr ""
+
+#: templates/wagtailadmin/removed/index.html:23
+msgid "削除された建物の検索"
+msgstr ""
+
+#: templates/wagtailadmin/removed/index.html:43
+msgid "削除されました"
+msgstr ""
+
+#: templates/wagtailadmin/removed/index.html:63
+#: templates/wagtailadmin/removed/show.html:75
+msgid "ロールバック"
+msgstr ""
+
+#: templates/wagtailadmin/removed/show.html:4
+#: templates/wagtailadmin/removed/show.html:11
+msgid "建物が削除されました"
+msgstr ""
+
+#: templates/wagtailadmin/shared/main_nav.html:15
+msgid "Edit your account"
+msgstr ""
+
+#: templates/wagtailadmin/shared/main_nav.html:23
+msgid "Account settings"
+msgstr ""
+
+#: templates/wagtailadmin/shared/main_nav.html:24
+msgid "Log out"
+msgstr ""
+
+#: templates/wagtailimages/upload/add.html:5
+msgid "Add multiple images"
+msgstr ""
+
+#: templates/wagtailimages/upload/add.html:15
+msgid "Add images"
+msgstr ""
+
+#: templates/wagtailimages/upload/add.html:39
+msgid "Drag and drop images into this area to upload immediately."
+msgstr ""
+
+#: templates/wagtailimages/upload/add.html:44
+msgid "Or choose from your computer"
+msgstr ""
+
+#: templates/wagtailimages/upload/add.html:51
+msgid "Add to collection:"
+msgstr ""
+
+#: templates/wagtailimages/upload/add.html:91
+msgid ""
+"Upload successful. Please update this image with a more appropriate title, "
+"if necessary. You may also delete the image completely if the upload wasn't "
+"required."
+msgstr ""
+
+#: templates/wagtailimages/upload/add.html:92
+msgid "Sorry, upload failed."
+msgstr ""
+
+#: templates/wagtailimages/upload/add.html:94
+msgid "Server Error"
+msgstr ""
+
+#: templates/wagtailimages/upload/add.html:95
+msgid "Report this error to your webmaster with the following information:"
+msgstr ""
+
+#: templates/wagtailimages/upload/add.html:98
+msgid "Image updated."
+msgstr ""
+
+#: templates/wagtailusers/groups/confirm_delete.html:3
+#: templates/wagtailusers/groups/confirm_delete.html:6
+#: templates/wagtailusers/groups/edit.html:42
+msgid "Delete group"
+msgstr ""
+
+#: templates/wagtailusers/groups/confirm_delete.html:11
+#, python-format
+msgid ""
+"\n"
+"                The group '%(group_name)s' has <strong>%(group_user_count)s</"
+"strong> member.\n"
+"            "
+msgid_plural ""
+"\n"
+"                The group '%(group_name)s' has <strong>%(group_user_count)s</"
+"strong> members.\n"
+"            "
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/wagtailusers/groups/confirm_delete.html:19
+msgid ""
+"Deleting this group will revoke this group's permissions from all member "
+"users."
+msgstr ""
+
+#: templates/wagtailusers/groups/confirm_delete.html:23
+msgid "Are you sure you want to delete this group?"
+msgstr ""
+
+#: templates/wagtailusers/groups/confirm_delete.html:26
+#: templates/wagtailusers/users/confirm_delete.html:13
+msgid "Yes, delete"
+msgstr ""
+
+#: templates/wagtailusers/groups/create.html:4
+#: templates/wagtailusers/groups/create.html:15
+#: templates/wagtailusers/groups/create.html:36
+msgid "Add group"
+msgstr ""
+
+#: templates/wagtailusers/groups/edit.html:4
+#: templates/wagtailusers/groups/edit.html:15
+#: templates/wagtailusers/users/edit.html:4
+#: templates/wagtailusers/users/edit.html:7
+msgid "Editing"
+msgstr ""
+
+#: templates/wagtailusers/groups/edit.html:16
+msgid "View users in this group"
+msgstr ""
+
+#: templates/wagtailusers/groups/includes/formatted_permissions.html:4
+msgid "Permissions"
+msgstr ""
+
+#: templates/wagtailusers/groups/includes/formatted_permissions.html:5
+msgid "Object permissions"
+msgstr ""
+
+#: templates/wagtailusers/groups/includes/formatted_permissions.html:13
+#: templates/wagtailusers/groups/includes/formatted_permissions.html:52
+#: templates/wagtailusers/groups/list.html:6
+#: templates/wagtailusers/users/list.html:6
+msgid "Name"
+msgstr ""
+
+#: templates/wagtailusers/groups/includes/formatted_permissions.html:15
+msgid "Change"
+msgstr ""
+
+#: templates/wagtailusers/groups/includes/formatted_permissions.html:16
+#: templates/wagtailusers/groups/includes/page_permissions_form.html:13
+msgid "Delete"
+msgstr ""
+
+#: templates/wagtailusers/groups/includes/formatted_permissions.html:46
+msgid "Other permissions"
+msgstr ""
+
+#: templates/wagtailusers/groups/includes/page_permissions_formset.html:2
+msgid "Page permissions"
+msgstr ""
+
+#: templates/wagtailusers/groups/includes/page_permissions_formset.html:22
+msgid "Page"
+msgstr ""
+
+#: templates/wagtailusers/groups/includes/page_permissions_formset.html:54
+msgid "Add a page permission"
+msgstr ""
+
+#: templates/wagtailusers/groups/index.html:3
+#: templates/wagtailusers/groups/index.html:16
+msgid "groups"
+msgstr ""
+
+#: templates/wagtailusers/groups/index.html:17
+msgid "Add a group"
+msgstr ""
+
+#: templates/wagtailusers/groups/results.html:8
+#, python-format
+msgid "Sorry, no groups match \"%(query)s\""
+msgstr ""
+
+#: templates/wagtailusers/groups/results.html:11
+#, python-format
+msgid ""
+"There are no groups configured. Why not <a href="
+"\"%(wagtailusers_create_group_url)s\">add some</a>?"
+msgstr ""
+
+#: templates/wagtailusers/users/confirm_delete.html:3
+#: templates/wagtailusers/users/confirm_delete.html:6
+#: templates/wagtailusers/users/edit.html:43
+#: templates/wagtailusers/users/edit.html:58
+msgid "Delete user"
+msgstr ""
+
+#: templates/wagtailusers/users/confirm_delete.html:10
+msgid "Are you sure you want to delete this user?"
+msgstr ""
+
+#: templates/wagtailusers/users/create.html:4
+#: templates/wagtailusers/users/create.html:7
+#: templates/wagtailusers/users/create.html:43
+msgid "Add user"
+msgstr ""
+
+#: templates/wagtailusers/users/create.html:11
+#: templates/wagtailusers/users/edit.html:11
+msgid "Account"
+msgstr ""
+
+#: templates/wagtailusers/users/create.html:12
+#: templates/wagtailusers/users/create.html:36
+#: templates/wagtailusers/users/edit.html:12
+msgid "Roles"
+msgstr ""
+
+#: templates/wagtailusers/users/index.html:3
+#: templates/wagtailusers/users/index.html:20
+msgid "Users"
+msgstr ""
+
+#: templates/wagtailusers/users/index.html:21
+msgid "Add a user"
+msgstr ""
+
+#: templates/wagtailusers/users/list.html:11
+#: templates/wagtailusers/users/list.html:15
+msgid "Username"
+msgstr ""
+
+#: templates/wagtailusers/users/list.html:19
+msgid "Admin"
+msgstr ""
+
+#: templates/wagtailusers/users/list.html:20
+msgid "Status"
+msgstr ""
+
+#: templates/wagtailusers/users/list.html:21
+msgid "Last Login"
+msgstr ""
+
+#: templates/wagtailusers/users/list.html:38
+msgid "Active"
+msgstr ""
+
+#: templates/wagtailusers/users/list.html:38
+msgid "Inactive"
+msgstr ""
+
+#: templates/wagtailusers/users/list.html:39
+#, python-format
+msgid "%(time_period)s ago"
+msgstr ""
+
+#: templates/wagtailusers/users/results.html:5
+#, python-format
+msgid ""
+"\n"
+"            There is %(counter)s match\n"
+"        "
+msgid_plural ""
+"\n"
+"            There are %(counter)s matches\n"
+"        "
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/wagtailusers/users/results.html:21
+#, python-format
+msgid "Sorry, no users match \"<em>%(query_string)s</em>\""
+msgstr ""
+
+#: templates/wagtailusers/users/results.html:28
+#, python-format
+msgid ""
+"The %(group_name)s group has no users configured. Why not <a href="
+"\"%(wagtailusers_add_url)s\">add some</a>?"
+msgstr ""
+
+#: templates/wagtailusers/users/results.html:31
+#, python-format
+msgid ""
+"There are no users configured. Why not <a href=\"%(wagtailusers_add_url)s"
+"\">add some</a>?"
+msgstr ""
+
+#: wagtail_hooks.py:19
+msgid "Buildings"
+msgstr "建物"
+
+#: wagtail_hooks.py:45
+msgid "Import"
+msgstr ""
+
+#: wagtail_hooks.py:50
+msgid "Import logs"
+msgstr "ログのインポート"
+
+msgid "Reports"
+msgstr "レポート"

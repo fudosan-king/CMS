@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     'dashboard',
     'search',
     'blog',
+    'page',
+    'building',
 
     'wagtail_multi_upload',
     'wagtail.contrib.forms',

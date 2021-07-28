@@ -10,9 +10,12 @@ from wagtail.admin.edit_handlers import (
 from wagtail.images.edit_handlers import ImageChooserPanel
 from django import forms
 from django.utils.translation import gettext as _  # noqa
+from dashboard.models import Buildings
+from wagtail.contrib.routable_page.models import RoutablePageMixin, route
+from django.shortcuts import render
 
 
-class HomePage(Page):
+class HomePage(RoutablePageMixin, Page):
     description = models.CharField(max_length=255, default='', blank=True, verbose_name=_('Description'))
     keyword = models.CharField(max_length=255, default='', blank=True, verbose_name=_('Keyword'))
 
@@ -49,6 +52,14 @@ class HomePage(Page):
         ImageChooserPanel('og_image'),
         StreamFieldPanel('content')
     ]
+
+    def get_buildings(self, *args, **kwargs):
+        return Buildings.objects().filter(removed=False, homepage=True, recommend=True).all()
+
+    @route(r'^company/', name='company')
+    def company_page(self, request):
+        context = self.get_context(request)
+        return render(request, 'www/company.html', context)
 
 
 class BuildingImage(AbstractImage):

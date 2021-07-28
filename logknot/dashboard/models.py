@@ -50,6 +50,8 @@ class Buildings(Document):
         default=datetime.datetime.now, editable=False,
     )
     removed = fields.BooleanField(default=False, blank=True)
+    homepage = fields.BooleanField(default=False, blank=True)
+    recommend = fields.BooleanField(default=False, blank=True)
     create_by = fields.StringField(max_length=255, default='system', blank=True)
     last_time_remove = fields.DateTimeField(default=datetime.datetime.now, blank=True)
     remove_by = fields.StringField(max_length=255, default='system', blank=True)

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags %}
+{% load i18n wagtailadmin_tags %}
+
+
+{% block body_class %}template-company{% endblock %}
+
+{% block title %}Company{% endblock %}
+
+{% block seo %}
+    <meta name="description" content="description" />
+    <meta name="keyword" content="keyword" />
+    <meta name="og:title" content="og_title" />
+    <meta name="og:url" content="og_url" />
+    <meta name="og:description" content="og_description" />
+{% endblock %}
+
+{% block content %}
+    <h1>Company</h1>
+{% endblock %}

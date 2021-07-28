@@ -9,21 +9,23 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.images.edit_handlers import ImageChooserPanel
 from django import forms
+from django.utils.translation import gettext as _  # noqa
 
 
 class HomePage(Page):
-    description = models.CharField(max_length=255, default='', blank=True)
-    keyword = models.CharField(max_length=255, default='', blank=True)
+    description = models.CharField(max_length=255, default='', blank=True, verbose_name=_('Description'))
+    keyword = models.CharField(max_length=255, default='', blank=True, verbose_name=_('Keyword'))
 
-    og_title = models.CharField(max_length=255, default='', blank=True)
-    og_url = models.URLField(max_length=255, default='', blank=True)
-    og_description = models.CharField(max_length=255, default='', blank=True)
+    og_title = models.CharField(max_length=255, default='', blank=True, verbose_name=_('OG Title'))
+    og_description = models.CharField(max_length=255, default='', blank=True, verbose_name=_('OG Description'))
+    og_url = models.URLField(max_length=255, default='', blank=True, verbose_name=_('OG URL'))
     og_image = models.ForeignKey(
         'home.BuildingImage',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name='+'
+        related_name='+',
+        verbose_name=_('OG image')
     )
 
     content = StreamField(
@@ -35,6 +37,7 @@ class HomePage(Page):
         null=True,
         blank=True,
         default='',
+        verbose_name=_('Content')
     )
 
     content_panels = Page.content_panels + [

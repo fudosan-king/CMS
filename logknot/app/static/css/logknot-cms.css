@@ -185,6 +185,13 @@
   width: 33%;
 }
 
+.model_choice_field .admin_snippet_chooser .field-content,
+.model_multiple_choice_field .checkbox_select_multiple .field-content {
+  padding-top: 30px;
+  position: relative;
+  left: -40px;
+}
+
 @media only screen and (max-width: 600px) {
   .merged.nice-padding {
     padding-left: 60px;

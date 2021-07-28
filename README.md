@@ -11,14 +11,9 @@ mongoDB >= 4.0
 mySQL >= 5.7
 ```
 
-
 ### How to install?
 
 ```
-sudo mkdir /var/log/uwsgi
-sudo mkdir /var/log/nginx
-sudo chmod 777 /var/log/uwsgi
-sudo chmod 777 /var/log/nginx
 cd ~/project/wagtail
 virtualenv env
 . ./env/bin/activate
@@ -27,7 +22,6 @@ pip3 install -r requirements.txt
 python3 manage.py migrate
 python3 manage.py createsuperuser
 ```
-
 
 
 ### How to run?
@@ -39,6 +33,7 @@ cd logknot
 screen -c .screenrc.develop
 ````
 http://cms.localhost:5000/
+
 
 
 ### Update locations and railroad
@@ -61,6 +56,18 @@ cd ~/project/wagtail
 cd logknot/<sub-page>
 django-admin makemessages -l ja
 django-admin compilemessages -l ja
+
+```
+
+
+### Migrations:
+
+```
+cd ~/project/wagtail
+. ./env/bin/activate
+cd logknot
+python3 manage.py makemigrations
+python3 manage.py migrate
 
 ```
 
@@ -108,6 +115,7 @@ https://docs.wagtail.io/en/stable/ <br>
 https://docs.wagtail.io/en/stable/reference/contrib/forms/customisation.html <br>
 https://github.com/spapas/wagtail-multi-upload <br>
 https://jossingram.wordpress.com/2015/04/22/a-list-of-wagtails-streamfield-icons/ <br>
+https://github.com/CodingForEverybody/learn-wagtail <br>
 
 
 ```

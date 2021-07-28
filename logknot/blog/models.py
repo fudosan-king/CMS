@@ -24,6 +24,7 @@ from wagtail.images.api.fields import ImageRenditionField
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.snippets.models import register_snippet
 from streams import blocks
+from django.utils.translation import gettext as _  # noqa
 
 
 class ImageSerializedField(Field):
@@ -115,8 +116,8 @@ class BlogAuthor(models.Model):
         return self.name
 
     class Meta:  # noqa
-        verbose_name = 'Blog Author'
-        verbose_name_plural = 'Blog Authors'
+        verbose_name = _('Blog Author')
+        verbose_name_plural = _('Blog Authors')
 
 
 register_snippet(BlogAuthor)
@@ -139,8 +140,8 @@ class BlogCategory(models.Model):
     ]
 
     class Meta:
-        verbose_name = 'Blog Category'
-        verbose_name_plural = 'Blog Categories'
+        verbose_name = _('Blog Category')
+        verbose_name_plural = _('Blog Categories')
         ordering = ['name']
 
     def __str__(self):
@@ -187,7 +188,7 @@ class BlogListingPage(RoutablePageMixin, Page):
         max_length=100,
         blank=False,
         null=False,
-        help_text='Overwrites the default title',
+        verbose_name=_('Custom title')
     )
 
     content_panels = Page.content_panels + [
@@ -313,7 +314,7 @@ class BlogDetailPage(Page):
         max_length=100,
         blank=False,
         null=False,
-        help_text='Overwrites the default title',
+        verbose_name=_('Custom title')
     )
     banner_image = models.ForeignKey(
         'home.BuildingImage',
@@ -321,6 +322,7 @@ class BlogDetailPage(Page):
         null=True,
         related_name='+',
         on_delete=models.SET_NULL,
+        verbose_name=_('Banner image')
     )
 
     categories = ParentalManyToManyField('blog.BlogCategory', blank=True)
@@ -335,6 +337,7 @@ class BlogDetailPage(Page):
         ],
         null=True,
         blank=True,
+        verbose_name=_('Content')
     )
 
     content_panels = Page.content_panels + [
@@ -343,15 +346,15 @@ class BlogDetailPage(Page):
         ImageChooserPanel('banner_image'),
         MultiFieldPanel(
             [
-                InlinePanel('blog_authors', label='Author', min_num=1, max_num=4)
+                InlinePanel('blog_authors', label=_('Author'), min_num=1, max_num=4)
             ],
-            heading='Author(s)'
+            heading=_('Author(s)')
         ),
         MultiFieldPanel(
             [
                 FieldPanel('categories', widget=forms.CheckboxSelectMultiple)
             ],
-            heading='Categories'
+            heading=_('Categories')
         ),
         StreamFieldPanel('content'),
     ]
@@ -381,14 +384,15 @@ class ArticleBlogPage(BlogDetailPage):
     subtitle = models.CharField(
         max_length=100,
         blank=True,
-        null=True
+        null=True,
+        verbose_name=_('Subtitle')
     )
     intro_image = models.ForeignKey(
         'home.BuildingImage',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-        help_text='Best size for this image will be 1400x400'
+        verbose_name=_('Intro image')
     )
 
     content_panels = Page.content_panels + [
@@ -399,15 +403,15 @@ class ArticleBlogPage(BlogDetailPage):
         ImageChooserPanel('intro_image'),
         MultiFieldPanel(
             [
-                InlinePanel('blog_authors', label='Author', min_num=1, max_num=4)
+                InlinePanel('blog_authors', label=_('Author'), min_num=1, max_num=4)
             ],
-            heading='Author(s)'
+            heading=_('Author(s)')
         ),
         MultiFieldPanel(
             [
                 FieldPanel('categories', widget=forms.CheckboxSelectMultiple)
             ],
-            heading='Categories'
+            heading=_('Categories')
         ),
         StreamFieldPanel('content'),
     ]
@@ -427,15 +431,15 @@ class VideoBlogPage(BlogDetailPage):
         ImageChooserPanel('banner_image'),
         MultiFieldPanel(
             [
-                InlinePanel('blog_authors', label='Author', min_num=1, max_num=4)
+                InlinePanel('blog_authors', label=_('Author'), min_num=1, max_num=4)
             ],
-            heading='Author(s)'
+            heading=_('Author(s)')
         ),
         MultiFieldPanel(
             [
                 FieldPanel('categories', widget=forms.CheckboxSelectMultiple)
             ],
-            heading='Categories'
+            heading=_('Categories')
         ),
         FieldPanel('youtube_video_id'),
         StreamFieldPanel('content'),

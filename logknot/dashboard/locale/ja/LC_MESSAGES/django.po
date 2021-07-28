@@ -547,7 +547,7 @@ msgstr "建物"
 
 #: wagtail_hooks.py:45
 msgid "Import"
-msgstr ""
+msgstr "輸入"
 
 #: wagtail_hooks.py:50
 msgid "Import logs"
@@ -555,3 +555,9 @@ msgstr "ログのインポート"
 
 msgid "Reports"
 msgstr "レポート"
+
+msgid "Building"
+msgstr "建物"
+
+msgid "Removed"
+msgstr "削除する"

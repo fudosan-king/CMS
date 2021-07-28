@@ -1,38 +1,51 @@
 {% extends "base.html" %}
 {% load static wagtailcore_tags %}
+{% load i18n wagtailadmin_tags %}
+
 
 {% block body_class %}template-searchresults{% endblock %}
 
 {% block title %}Search{% endblock %}
 
+{% block seo %}
+    <meta name="description" content="description" />
+    <meta name="keyword" content="keyword" />
+    <meta name="og:title" content="og_title" />
+    <meta name="og:url" content="og_url" />
+    <meta name="og:description" content="og_description" />
+{% endblock %}
+
 {% block content %}
     <h1>Search</h1>
 
     <form action="{% url 'search' %}" method="get">
-        <input type="text" name="query"{% if search_query %} value="{{ search_query }}"{% endif %}>
+        <input type="text" name="building_name">
         <input type="submit" value="Search" class="button">
     </form>
 
-    {% if search_results %}
+    {% if buildings %}
         <ul>
-            {% for result in search_results %}
+            {% for building in buildings %}
                 <li>
-                    <h4><a href="{% pageurl result %}">{{ result }}</a></h4>
-                    {% if result.search_description %}
-                        {{ result.search_description }}
-                    {% endif %}
+                   <a href="{% url 'building' building.id %}" target="_blank">{{ building.building_name }}</a>
                 </li>
             {% endfor %}
         </ul>
 
-        {% if search_results.has_previous %}
-            <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">Previous</a>
-        {% endif %}
-
-        {% if search_results.has_next %}
-            <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Next</a>
-        {% endif %}
     {% elif search_query %}
         No results found
     {% endif %}
+
+    <div align="center">
+    {% if paginator %}
+        {% if paginator.has_previous %}
+            <a href="{% url 'search' %}?page={{ paginator.previous_page_number }}&amp;limit={{ limit }}">{% trans 'Previous' %}</a>
+        {% endif %}
+        {{ paginator }}
+        {% if paginator.has_next %}
+            <a href="{% url 'search' %}?page={{ paginator.next_page_number }}&amp;limit={{ limit }}">{% trans 'Next' %}</a>
+        {% endif %}
+    {% endif %}
+    </div>
+
 {% endblock %}

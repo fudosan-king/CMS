@@ -4,19 +4,20 @@
 {% block body_class %}template-homepage{% endblock %}
 
 {% block extra_css %}
-
-{% comment %}
-Delete the line below if you're just getting started and want to remove the welcome screen!
-{% endcomment %}
 <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
 {% endblock extra_css %}
 
 {% block content %}
-
-<h1 style="padding-top: 400px;">Comming soon ...</h1>
-{% comment %}
-Delete the line below if you're just getting started and want to remove the welcome screen!
-{% endcomment %}
-
-
+	<div class="row" style="padding-top: 400px;">
+		<div class="col12">
+			<div class="col4"></div>
+			<div class="col4">{{ self.content }}</div>
+			<div class="col4"></div>
+		</div>
+		<div class="col12">
+			{% for building in self.get_buildings %}
+				<div class="col4">{{ building.building_name }}</div>
+			{% endfor %}
+		</div>
+	</div>
 {% endblock content %}

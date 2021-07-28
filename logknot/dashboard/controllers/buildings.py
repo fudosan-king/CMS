@@ -6,7 +6,6 @@ from django.http import Http404
 from django.core.paginator import Paginator
 from dashboard.forms.buildings import BuildingsForm, PhotosForm, CATEGORY
 from wagtail.images import get_image_model
-from wagtail.core import hooks
 from wagtail.admin import messages
 from django.utils.translation import gettext as _  # noqa
 from home.management.commands.locations import PREF_MAP
@@ -43,7 +42,6 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 
-@hooks.register('after_edit_page')
 def show(request, building_id):
     building_detail = Buildings.objects(id=building_id, removed=False).first()
     if not building_detail:
@@ -101,7 +99,6 @@ def show(request, building_id):
     return HttpResponse(template.render(context, request))
 
 
-@hooks.register('after_create_page')
 def add(request):
     if request.method == 'POST':
         user = request.user

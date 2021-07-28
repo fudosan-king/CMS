@@ -1,5 +1,6 @@
 from .base import *  # noqa
 
+# DEBUG_PROPAGATE_EXCEPTIONS = True
 DEBUG = False
 
 # mySQL setting
@@ -28,9 +29,11 @@ MONGODB_DATABASES = {
     }
 }
 
+LANGUAGE_CODE = 'ja-jp'
+
 SECRET_KEY = 'django-insecure-2=j#c64aq8xu5@%^0@9k=q=ogo)!)7w5wcla(*i&u_xh2+2(6k'
 
-LANGUAGE_CODE = 'ja-jp'
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'cms.localhost']  # noqa
 
 try:
     from .local import *  # noqa

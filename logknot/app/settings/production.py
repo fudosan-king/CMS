@@ -33,7 +33,9 @@ LANGUAGE_CODE = 'ja-jp'
 
 SECRET_KEY = 'django-insecure-2=j#c64aq8xu5@%^0@9k=q=ogo)!)7w5wcla(*i&u_xh2+2(6k'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'cms.localhost']  # noqa
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'fudosan-king.xyz']  # noqa
+
+BASE_URL = 'http://fudosan-king.xyz'
 
 try:
     from .local import *  # noqa

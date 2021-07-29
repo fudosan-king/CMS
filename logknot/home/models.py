@@ -2,7 +2,7 @@ from django.db import models  # noqa
 from wagtail.core.models import Page
 from wagtail.images.models import Image, AbstractImage, AbstractRendition
 from wagtail.core.fields import StreamField
-from streams import blocks
+from home.streams import blocks
 from wagtail.admin.edit_handlers import (
     FieldPanel,
     StreamFieldPanel

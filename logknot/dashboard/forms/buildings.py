@@ -90,6 +90,11 @@ class BuildingsForm(DocumentForm):
         max_length=50,
         widget=forms.TextInput()
     )
+    recommend = forms.BooleanField(
+        label=__('お勧め'),
+        required=False,
+        widget=forms.CheckboxInput()
+    )
     structure = forms.CharField(
         label=__('構造'),
         max_length=254,

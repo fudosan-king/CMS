@@ -53,8 +53,11 @@ class HomePage(RoutablePageMixin, Page):
         StreamFieldPanel('content')
     ]
 
-    def get_buildings(self, *args, **kwargs):
-        return Buildings.objects().filter(removed=False, homepage=True, recommend=True).all()
+    def get_buildings_recommend(self, *args, **kwargs):
+        return Buildings.objects().filter(removed=False, recommend=True).all()
+
+    def get_buildings_new(self, *args, **kwargs):
+        return Buildings.objects().filter(removed=False).order_by('-created_at')[:16]
 
     @route(r'^company/', name='company')
     def company_page(self, request):

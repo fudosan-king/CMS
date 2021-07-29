@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "home_base.html" %}
 
 {% load wagtailimages_tags wagtailroutablepage_tags cache %}
 
 {% block content %}
-
+<section>
     <a href="{% routablepageurl page "latest_posts" %}">View Latest Posts Only</a>
 
     <h2>
@@ -79,5 +79,5 @@
     {% endif %}
 
 
-
+</section>
 {% endblock content %}

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "home_base.html" %}
 {% load static wagtailcore_tags %}
 {% load i18n wagtailadmin_tags %}
 
@@ -15,9 +15,100 @@
     <meta name="og:description" content="og_description" />
 {% endblock %}
 
+{% block header %}
+    {% include 'header2.html' %}
+{% endblock %}
+
 {% block content %}
-    <h1>Building: {{ building.building_name }}</h1>
+    <div class="box_template">
+        <section class="p-0">
+            <div class="box_top mb-0">
+                <div class="container">
+                    <h2 class="title mb-2">{{ building.building_name }}</h2>
+                    <p class="subtitle mb-2">
+                        <small>{% for k, address in building.address.items %}{{ address }}{% endfor %}<br>
+                    </p>
+                </div>
+            </div>
+        </section>
 
-    Address: {% for k, v in building.address.items %}{{ v }}{% endfor %} <br>
+        <section class="p-0 section_carousel">
+            <div class="carousel_property">
+                <div class="carousel carousel-main"
+                data-flickity='{"contain": true, "prevNextButtons": false, "pageDots": false }'>
+                    {% for photo in building.photos %}
+                    <div class="carousel-cell">
+                        <img src="{{ photo.path }}" alt="" class="img-fluid">
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="carousel carousel-nav"
+                    data-flickity='{"asNavFor": ".carousel-main", "contain": true, "prevNextButtons": false, "pageDots": false }'>
+                    {% for photo in building.photos %}
+                    <div class="carousel-cell">
+                        <img src="{{ photo.path }}" alt="" class="img-fluid">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
 
+        <section class="section_property_main">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-12">
+                        <div class="box_renovation_specifications">
+                            <div class="renovation_specifications_table">
+                                <table class="table">
+                                    <tr>
+                                        <th width="45%">構造</th>
+                                        <td>{{ building.structure }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>階建て</th>
+                                        <td>{{ building.ground_floors }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>階建て (地下)</th>
+                                        <td>{{ building.underground_floors }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>築年月</th>
+                                        <td>{{ building.built_date_year }}年{{ building.built_date_month }}月 </td>
+                                    </tr>
+                                    <tr>
+                                        <th>総戸数</th>
+                                        <td>{{ building.total_houses }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>構造・階段・所在階・方角</th>
+                                        <td>
+                                        {% for transport in building.transports %}
+                                            {{ transport.station_name }} - {{ transport.station_to }} {{ transport.walk_mins }}分<br>
+                                        {% endfor %}
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <div class="map">
+                                    <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCAtwN6hoZdj7sUBvvO_rBLe3o300qqBnM&q={% for k, address in building.address.items %}{{ address }}{% endfor %}" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                    <div class="row">
+                                        <div class="col-8 col-lg-8">
+                                            <p>{% for k, address in building.address.items %}{{ address }}{% endfor %}</p>
+                                        </div>
+                                        <div class="col-4 col-lg-4">
+                                            <p class="text-right"><a target="_blank" class="btn_viewmap" href="#">マップで見る</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
 {% endblock %}

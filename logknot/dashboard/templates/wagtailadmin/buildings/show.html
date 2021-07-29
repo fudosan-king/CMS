@@ -57,13 +57,20 @@
                     <div class="col6 column-content">
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.building_name col='col12' error=forms.errors.building_name %}
 
+                        <div class="col12 field-building {% if forms.recommend.error %}error{% endif %}">
+                            <div class="field-checkbox">
+                                <span class="field-label">{{ forms.recommend.label }}</span>{{ forms.recommend }}
+                            </div>
+                            <span class="message-error">{{ forms.recommend.error }}</span>
+                        </div>
+
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.structure col='col6' error=forms.errors.structure %}
 
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.ground_floors col='col6' error=forms.errors.ground_floors %}
 
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.underground_floors col='col6' error=forms.errors.underground_floors %}
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.underground_floors col='col5' error=forms.errors.underground_floors %}
 
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.built_date_year col='col2' error=forms.errors.built_date_year %}
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.built_date_year col='col3' error=forms.errors.built_date_year %}
                         <div class="col1 field-building ">
                             <span class="built-date">年</span>
                         </div>

@@ -1,5 +1,6 @@
 {% extends "wagtailadmin/base.html" %}
 {% load i18n wagtailadmin_tags %}
+{% load home_tags %}
 
 {% block titletag %}{% trans "削除された建物" %}{% endblock %}
 
@@ -71,11 +72,11 @@
     <div align="center">
     {% if paginator %}
         {% if paginator.has_previous %}
-            <a href="{% url 'buildings_removed' %}?building_name={{ building_name }}&amp;page={{ paginator.previous_page_number }}&amp;limit={{ limit }}">{% trans 'Previous' %}</a>
+            <a href="{% url 'buildings_removed' %}?{% url_replace page=paginator.previous_page_number limit=limit %}">{% trans 'Previous' %}</a>
         {% endif %}
         {{ paginator }}
         {% if paginator.has_next %}
-            <a href="{% url 'buildings_removed' %}?building_name={{ building_name }}&amp;page={{ paginator.next_page_number }}&amp;limit={{ limit }}">{% trans 'Next' %}</a>
+            <a href="{% url 'buildings_removed' %}?{% url_replace page=paginator.next_page_number limit=limit %}">{% trans 'Next' %}</a>
         {% endif %}
     {% endif %}
     </div>

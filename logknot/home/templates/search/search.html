@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "home_base.html" %}
 {% load static wagtailcore_tags %}
 {% load i18n wagtailadmin_tags %}
 
@@ -15,37 +15,171 @@
     <meta name="og:description" content="og_description" />
 {% endblock %}
 
+{% block header %}
+    {% include 'header2.html' %}
+{% endblock %}
+
 {% block content %}
-    <h1>Search</h1>
+    <div class="box_template">
+        <section class="p-0">
+            <div class="box_top mb-0">
+                <div class="container">
+                    <h2 class="title mb-3">メルマガ配信希望条件</h2>
+                    <p class="subtitle mb-2">
+                        <small>ご希望の条件にチェックを付けてください。<br>
+                        希望条件にあった物件をメールでお送りします。</small>
+                    </p>
+                </div>
+            </div>
+        </section>
 
-    <form action="{% url 'search' %}" method="get">
-        <input type="text" name="building_name">
-        <input type="submit" value="Search" class="button">
-    </form>
+        <section class="section_accinfo bg-white pt-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-12">
+                        <form class="frm_accinfo" action="{% url 'result' %}" method="GET">
+                            <h4>物件名</h4>
+                            <input type="text" name="building_name" class="form-control">
 
-    {% if buildings %}
-        <ul>
-            {% for building in buildings %}
-                <li>
-                   <a href="{% url 'building' building.id %}" target="_blank">{{ building.building_name }}</a>
-                </li>
-            {% endfor %}
-        </ul>
+                            <h4>エリアから探す</h4>
+                            <div class="row">
+                                <div class="col-2 col-lg-2">
+                                    <label>領域</label>
+                                </div>
+                                <div class="col-10 col-lg-10">
+                                    <select name="pref" id="id_pref" class="custom-select">
+                                        {% for p in pref %}
+                                        <option value="{{ p }}" {% if p == '東京都' %}selected{% endif %}>{{ p }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="height: 20px;">
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-lg-12">
+                                    <ul class="list_area" id="id_city">
+                                    </ul>
+                                </div>
+                            </div>
 
-    {% elif search_query %}
-        No results found
-    {% endif %}
+                            <h4>沿線から探す</h4>
+                            <div style="height: 20px;">
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-lg-12">
+                                    <ul class="list_area" id="id_station_name">
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- <h4>価格（万円）</h4>
+                            <div class="row">
+                                <div class="col-6 col-lg-6">
+                                    <div class="box_select">
+                                        <select name="" class="custom-select">
+                                            <option>3,000</option>
+                                            <option>3,500</option>
+                                            <option>4,000</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-6">
+                                    <select name="" class="custom-select">
+                                        <option>3,500</option>
+                                        <option>4,500</option>
+                                        <option>4,500</option>
+                                    </select>
+                                </div>
+                            </div>
 
-    <div align="center">
-    {% if paginator %}
-        {% if paginator.has_previous %}
-            <a href="{% url 'search' %}?page={{ paginator.previous_page_number }}&amp;limit={{ limit }}">{% trans 'Previous' %}</a>
-        {% endif %}
-        {{ paginator }}
-        {% if paginator.has_next %}
-            <a href="{% url 'search' %}?page={{ paginator.next_page_number }}&amp;limit={{ limit }}">{% trans 'Next' %}</a>
-        {% endif %}
-    {% endif %}
+                            <h4>広さ（m2）</h4>
+                            <div class="row">
+                                <div class="col-6 col-lg-6">
+                                    <div class="box_select">
+                                        <select name="" class="custom-select">
+                                            <option>65</option>
+                                            <option>70</option>
+                                            <option>75</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-6">
+                                    <select name="" class="custom-select">
+                                        <option>0</option>
+                                        <option>20</option>
+                                        <option>80</option>
+                                    </select>
+                                </div>
+                            </div> -->
+
+                            <button type="submit" class="btn btnsave my-lg-5">保存</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </div>
 
 {% endblock %}
+
+{% block extra_js %}
+    <script type="text/javascript">
+        function set_city(pref) {
+            $.ajax({
+            method: 'GET',
+            url: '/api/locations/' + pref + '/',
+            }).done(function(data) {
+                for (i=0; i<data.length; i++){
+                    $('#id_city').append(
+                        `
+                        <li>
+                            <div class="custom-control custom-checkbox">
+                                <input name="city" type="checkbox" class="custom-control-input" id="area_` + i + `" value="` + data[i] + `">
+                                <label class="custom-control-label" for="area_` + i + `">` + data[i] + `</label>
+                            </div>
+                        </li>
+                        `
+                    );
+                }
+            });
+        }
+
+        function set_station_name(pref) {
+            $.ajax({
+            method: 'GET',
+            url: '/api/railroad/' + pref + '/',
+            }).done(function(data) {
+                for (i=0; i<data.length; i++){
+                    $('#id_station_name').append(
+                        `
+                        <li>
+                            <div class="custom-control custom-checkbox">
+                                <input name="station_name" type="checkbox" class="custom-control-input" id="station` + i + `" value="` + data[i] + `">
+                                <label class="custom-control-label" for="station` + i + `">` + data[i] + `</label>
+                            </div>
+                        </li>
+                        `
+                    );
+                }
+            });
+        }
+        $(function(){
+            var pref = $('#id_pref').val();
+            if (pref) {
+                set_city(pref);
+                set_station_name(pref);
+            }
+            $('[id=id_pref]').change(function() {
+                $('#id_city li').remove();
+                $('#id_station_name li').remove();
+                var pref = $(this).val();
+                if (pref) {
+                    set_city(pref);
+                    set_station_name(pref);
+                }
+            })
+        });
+    </script>
+{% endblock %}
+

@@ -23,7 +23,7 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images.api.fields import ImageRenditionField
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.snippets.models import register_snippet
-from streams import blocks
+from home.streams import blocks
 from django.utils.translation import gettext as _  # noqa
 
 

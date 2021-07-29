@@ -1,9 +1,8 @@
-from django.http import HttpResponse
-from django.template import loader
 from dashboard.models import LogsImport
 from django.http import Http404
 from django.core.paginator import Paginator
 from bson import ObjectId
+from django.template.response import TemplateResponse
 
 
 def index(request):
@@ -25,14 +24,14 @@ def index(request):
     limit = index + per_page
     logs = logs[index:limit]
 
-    template = loader.get_template('wagtailadmin/import_logs/index.html')
     context = {
         'logs': logs,
         'paginator': paginator,
         'page': page,
         'limit': per_page,
     }
-    return HttpResponse(template.render(context, request))
+
+    return TemplateResponse(request, 'wagtailadmin/import_logs/index.html', context)
 
 
 def show(request, log_id):
@@ -46,9 +45,9 @@ def show(request, log_id):
         raise Http404
 
     total = len(log.import_done.keys()) + len(log.ignore_buildings.keys()) + len(log.import_fail)
-    template = loader.get_template('wagtailadmin/import_logs/show.html')
     context = {
         'log': log,
         'total': total
     }
-    return HttpResponse(template.render(context, request))
+
+    return TemplateResponse(request, 'wagtailadmin/import_logs/show.html', context)

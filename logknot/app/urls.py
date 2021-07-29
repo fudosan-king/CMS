@@ -2,20 +2,19 @@ from django.conf import settings
 from django.urls import include, path
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
-from page import views as search_pages
-from search import views as search_buidlings
-from building import views as building
+from home.search import urls as search_urls
+from home.building import urls as building_urls
 from .upload import UploadImages
 from .api import api_router
+# from page import views as search_pages
 
 
 urlpatterns = [
     path('dashboard/', include(wagtailadmin_urls)),
-    path('page/', search_pages.search, name='page'),
-    path('search/', search_buidlings.search, name='search'),
-    path('building/<building_id>/', building.index, name='building'),
-    path('images/upload/', UploadImages.as_view(), name='upload'),
+    path('search/', include(search_urls)),
+    path('building/', include(building_urls)),
     path('api/', api_router.urls),
+    path('images/upload/', UploadImages.as_view(), name='upload'),
 ]
 
 

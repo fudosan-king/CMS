@@ -1,5 +1,3 @@
-from django.http import HttpResponse
-from django.template import loader
 from importer.import_csv import import_csv
 import os
 from django.conf import settings
@@ -7,6 +5,7 @@ import datetime
 from django.shortcuts import redirect
 from wagtail.admin import messages
 from django.utils.translation import gettext as _  # noqa
+from django.template.response import TemplateResponse
 
 
 # 1MB - 1048576
@@ -73,7 +72,6 @@ def index(request):
         else:
             messages.error(request, _('Sorry, you do not have permission to access this area.'))
 
-    template = loader.get_template('wagtailadmin/import_buildings/index.html')
     context = {
         'errors': errors,
         'done': done,
@@ -81,4 +79,5 @@ def index(request):
         'fail': fail,
         'total': total
     }
-    return HttpResponse(template.render(context, request))
+
+    return TemplateResponse(request, 'wagtailadmin/import_buildings/index.html', context)

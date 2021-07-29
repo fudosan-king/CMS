@@ -1,5 +1,3 @@
-from django.http import HttpResponse
-from django.template import loader
 from dashboard.models import Buildings
 from dashboard.forms.removed import RemovedBuildingsForm
 from django.shortcuts import redirect
@@ -8,6 +6,7 @@ import datetime
 from django.core.paginator import Paginator
 from wagtail.admin import messages
 from django.utils.translation import gettext as _  # noqa
+from django.template.response import TemplateResponse
 
 
 def index(request):
@@ -31,15 +30,14 @@ def index(request):
     limit = index + per_page
     buildings = buildings[index:limit]
 
-    template = loader.get_template('wagtailadmin/removed/index.html')
-
     context = {
         'paginator': paginator,
         'page': page,
         'limit': limit,
         'buildings': buildings
     }
-    return HttpResponse(template.render(context, request))
+
+    return TemplateResponse(request, 'wagtailadmin/removed/index.html', context)
 
 
 def show(request, building_id):
@@ -60,10 +58,10 @@ def show(request, building_id):
             messages.error(request, _('Sorry, you do not have permission to access this area.'))
 
     forms = RemovedBuildingsForm(instance=building_removed)
-    template = loader.get_template('wagtailadmin/removed/show.html')
     context = {
         'action': '/dashboard/removed/{}/'.format(building_removed.id),
         'building_removed': building_removed,
         'forms': forms
     }
-    return HttpResponse(template.render(context, request))
+
+    return TemplateResponse(request, 'wagtailadmin/removed/show.html', context)

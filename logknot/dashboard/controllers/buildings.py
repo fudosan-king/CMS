@@ -1,5 +1,3 @@
-from django.http import HttpResponse
-from django.template import loader
 from dashboard.models import Buildings
 from django.shortcuts import redirect
 from django.http import Http404
@@ -9,6 +7,7 @@ from wagtail.images import get_image_model
 from wagtail.admin import messages
 from django.utils.translation import gettext as _  # noqa
 from home.management.commands.locations import PREF_MAP
+from django.template.response import TemplateResponse
 
 
 def index(request):
@@ -38,8 +37,8 @@ def index(request):
         'limit': per_page,
         'buildings': buildings,
     }
-    template = loader.get_template('wagtailadmin/buildings/index.html')
-    return HttpResponse(template.render(context, request))
+
+    return TemplateResponse(request, 'wagtailadmin/buildings/index.html', context)
 
 
 def show(request, building_id):
@@ -47,7 +46,6 @@ def show(request, building_id):
     if not building_detail:
         raise Http404
 
-    template = loader.get_template('wagtailadmin/buildings/show.html')
     photos = get_image_model().objects.filter(building_id=building_id)
 
     forms = BuildingsForm(instance=building_detail)
@@ -96,7 +94,8 @@ def show(request, building_id):
         'errors': errors,
         'pref': PREF_MAP
     }
-    return HttpResponse(template.render(context, request))
+
+    return TemplateResponse(request, 'wagtailadmin/buildings/show.html', context)
 
 
 def add(request):
@@ -120,10 +119,10 @@ def add(request):
             messages.error(request, _('Sorry, you do not have permission to access this area.'))
 
     forms = BuildingsForm()
-    template = loader.get_template('wagtailadmin/buildings/show.html')
     context = {
         'action': '/dashboard/buildings/add/',
         'forms': forms,
         'pref': PREF_MAP
     }
-    return HttpResponse(template.render(context, request))
+
+    return TemplateResponse(request, 'wagtailadmin/buildings/show.html', context)

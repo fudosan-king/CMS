@@ -1,0 +1,77 @@
+{% load static wagtailuserbar %}
+{% load wagtailimages_tags wagtailcore_tags %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            {% block title %}
+                {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+                {% with self.get_site.site_name as site_name %}
+                    {% if site_name %}- {{ site_name }}{% endif %}
+                {% endwith %}
+            {% endblock %}
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+        {% block seo %}
+            <meta name="description" content="{{ self.description }}" />
+            <meta name="keyword" content="{{ self.keyword }}" />
+            <meta name="og:title" content="{{ self.og_title }}" />
+            <meta name="og:url" content="{{ self.og_url }}" />
+            <meta name="og:description" content="{{ self.og_description }}" />
+            {% image self.og_image fill-1200x300 as og_image %}
+            <meta name="og:image" content="{{ og_image.url }}" />
+        {% endblock %}
+
+        {# Global stylesheets #}
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon.png' %}">
+        <link rel="stylesheet" href="/static/css/bootstrap-datepicker.min.css" type="text/css">
+        <link rel="stylesheet" href="/static/css/bootstrap-datepicker.standalone.min.css" type="text/css">
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+
+        <link rel="stylesheet" href="/static/css/animate.min.css" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/css/flickity.min.css">
+        <link rel="stylesheet" href="/static/css/styles.css" type="text/css">
+
+        {% block extra_css %}
+            {# Override this in templates to add extra stylesheets #}
+        {% endblock %}
+    </head>
+
+    <body class="{% block body_class %}{% endblock %}">
+        {% block header %}
+            {% include 'header.html' %}
+        {% endblock %}
+
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+
+        {% block footer %}
+            {% include 'footer.html' %}
+        {% endblock %}
+
+        {# Global javascript #}
+        <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/js/bootstrap.bundle.min.js"></script>
+        <script src="/static/js/bootstrap-datepicker.js"></script>
+        <script src="/static/js/bootstrap-datepicker.ja.min.js"></script>
+        <script src="/static/js/Chart.bundle.min.js"></script>
+        <script src="/static/js/chartjs-plugin-labels.js"></script>
+        <script src="/static/js/flickity.pkgd.min.js"></script>
+        <script src="/static/js/ion.rangeSlider.min.js"></script>
+        <script src="/static/js/functions.js"></script>
+
+        {% block extra_js %}
+            {# Override this in templates to add extra javascript #}
+        {% endblock %}
+    </body>
+</html>

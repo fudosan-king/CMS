@@ -20,7 +20,8 @@ IGNORE = [
     'initial-when_to_move_in',
     'land_rights',
     'limitations',
-    'google_map'
+    'google_map',
+    'recommend'
 ]
 
 
@@ -208,6 +209,12 @@ class Buildings(Document):
                 transport.walk_mins = walk_mins[i]
                 self.transports.append(transport)
 
+        recommend = request.POST.get('recommend')
+        if recommend:
+            self.recommend = True
+        else:
+            self.recommend = False
+
         return self
 
     def remove(self, request):
@@ -263,8 +270,20 @@ class Buildings(Document):
                 transport.walk_mins = walk_mins[i]
                 self.transports.append(transport)
 
+        recommend = request.POST.get('recommend')
+        if recommend:
+            self.recommend = True
+        else:
+            self.recommend = False
+
         self.create_by = str(request.user)
         return self
+
+    def get_photo_first(self):
+        for photo in self.photos:
+            if photo and photo.path:
+                return photo.path
+        return '/static/images/no-image.png'
 
 
 class LogsImport(Document):

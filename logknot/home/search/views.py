@@ -4,6 +4,7 @@ from dashboard.models import Buildings
 from mongoengine.queryset.visitor import Q
 from wagtail.core.models import Page
 from wagtail.search.models import Query
+from home.management.commands.locations import PREF_MAP
 
 
 def search(request):
@@ -35,9 +36,80 @@ def search(request):
         'page': page,
         'limit': per_page,
         'buildings': buildings,
+        'pref': PREF_MAP
     }
 
     return TemplateResponse(request, 'search/search.html', context)
+
+
+def search_all(request):
+    q = Q(removed=False)
+    buildings = Buildings.objects().filter(q).order_by('-created_at')
+
+    try:
+        page = int(request.GET.get('page', 1))
+        per_page = int(request.GET.get('limit', 40))
+    except:
+        page = 1
+        per_page = 20
+
+    paginator_result = Paginator(buildings, per_page)
+    try:
+        paginator = paginator_result.page(page)
+    except:
+        return TemplateResponse(request, '404.html', {})
+
+    index = (page - 1) * per_page
+    limit = index + per_page
+    buildings = buildings[index:limit]
+
+    context = {
+        'paginator': paginator,
+        'page': page,
+        'limit': per_page,
+        'buildings': buildings
+    }
+
+    return TemplateResponse(request, 'search/result.html', context)
+
+
+def result(request):
+    q = Q(removed=False)
+    if request.GET.get('building_name', None):
+        q &= Q(building_name=request.GET.get('building_name', None))
+    if request.GET.get('pref', []):
+        q &= Q(address__pref=request.GET.get('pref'))
+    if request.GET.getlist('city', []):
+        q &= Q(address__city__in=request.GET.getlist('city'))
+    if request.GET.getlist('station_name', []):
+        q &= Q(transports__station_name__in=request.GET.getlist('station_name'))
+
+    buildings = Buildings.objects().filter(q).order_by('-created_at')
+
+    try:
+        page = int(request.GET.get('page', 1))
+        per_page = int(request.GET.get('limit', 40))
+    except:
+        page = 1
+        per_page = 20
+
+    paginator_result = Paginator(buildings, per_page)
+    try:
+        paginator = paginator_result.page(page)
+    except:
+        return TemplateResponse(request, '404.html', {})
+
+    index = (page - 1) * per_page
+    limit = index + per_page
+    buildings = buildings[index:limit]
+
+    context = {
+        'paginator': paginator,
+        'page': page,
+        'limit': per_page,
+        'buildings': buildings,
+    }
+    return TemplateResponse(request, 'search/result.html', context)
 
 
 def page(request):

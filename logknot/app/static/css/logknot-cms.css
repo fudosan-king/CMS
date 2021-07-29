@@ -192,6 +192,19 @@
   left: -40px;
 }
 
+.field-checkbox {
+  height: 30px;
+  padding-top: 10px;
+}
+
+.field-checkbox span {
+  padding-right: 30px;
+}
+
+.table-logs td {
+  vertical-align: top;
+}
+
 @media only screen and (max-width: 600px) {
   .merged.nice-padding {
     padding-left: 60px;

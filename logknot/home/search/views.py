@@ -21,11 +21,14 @@ def search(request):
         page = 1
         per_page = 20
 
-    paginator_result = Paginator(buildings, per_page)
-    try:
-        paginator = paginator_result.page(page)
-    except:
-        return TemplateResponse(request, '404.html', {})
+    if buildings:
+        paginator_result = Paginator(buildings, per_page)
+        try:
+            paginator = paginator_result.page(page)
+        except:
+            return TemplateResponse(request, '404.html', {})
+    else:
+        paginator = None
 
     index = (page - 1) * per_page
     limit = index + per_page
@@ -52,12 +55,14 @@ def search_all(request):
     except:
         page = 1
         per_page = 20
-
-    paginator_result = Paginator(buildings, per_page)
-    try:
-        paginator = paginator_result.page(page)
-    except:
-        return TemplateResponse(request, '404.html', {})
+    if buildings:
+        paginator_result = Paginator(buildings, per_page)
+        try:
+            paginator = paginator_result.page(page)
+        except:
+            return TemplateResponse(request, '404.html', {})
+    else:
+        paginator = None
 
     index = (page - 1) * per_page
     limit = index + per_page
@@ -93,11 +98,14 @@ def result(request):
         page = 1
         per_page = 20
 
-    paginator_result = Paginator(buildings, per_page)
-    try:
-        paginator = paginator_result.page(page)
-    except:
-        return TemplateResponse(request, '404.html', {})
+    if buildings:
+        paginator_result = Paginator(buildings, per_page)
+        try:
+            paginator = paginator_result.page(page)
+        except:
+            return TemplateResponse(request, '404.html', {})
+    else:
+        paginator = None
 
     index = (page - 1) * per_page
     limit = index + per_page

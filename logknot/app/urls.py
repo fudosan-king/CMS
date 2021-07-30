@@ -6,7 +6,8 @@ from home.search import urls as search_urls
 from home.building import urls as building_urls
 from .upload import UploadImages
 from .api import api_router
-# from page import views as search_pages
+from django.views.static import serve
+from django.conf.urls import url
 
 
 urlpatterns = [
@@ -15,16 +16,9 @@ urlpatterns = [
     path('building/', include(building_urls)),
     path('api/', api_router.urls),
     path('images/upload/', UploadImages.as_view(), name='upload'),
+    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
 ]
-
-
-if settings.DEBUG:
-    from django.conf.urls.static import static
-    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-
-    # Serve static and media files from development server
-    urlpatterns += staticfiles_urlpatterns()
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns = urlpatterns + [
     # For anything not caught by a more specific rule above, hand over to

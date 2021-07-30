@@ -1,6 +1,6 @@
 from .base import *  # noqa
 
-DEBUG_PROPAGATE_EXCEPTIONS = True
+DEBUG = False
 
 # mySQL setting
 DATABASES = {

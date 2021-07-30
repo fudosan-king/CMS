@@ -20,11 +20,14 @@ def index(request):
         page = 1
         per_page = 20
 
-    paginator_result = Paginator(buildings, per_page)
-    try:
-        paginator = paginator_result.page(page)
-    except:
-        raise Http404
+    if buildings:
+        paginator_result = Paginator(buildings, per_page)
+        try:
+            paginator = paginator_result.page(page)
+        except:
+            raise Http404
+    else:
+        paginator = None
 
     index = (page - 1) * per_page
     limit = index + per_page

@@ -58,6 +58,7 @@ def build_replace_map(start, end, to):
         m[chr(code)] = chr(code + delta)
     return m
 
+
 ALPHA_Z2H = build_replace_map(u'Ａ', u'Ｚ', u'A')
 
 
@@ -66,7 +67,7 @@ def sanitize_dict(d):
     rv = {}
     for k, v in d.iteritems():
         if not isinstance(k, str):
-            k = unicode(k)
+            k = unicode(k)  # noqa
         rv[k] = v
     return rv
 

@@ -5,7 +5,7 @@ import sys
 import itertools
 import os
 import warnings
-from .helpers import *  # noqa
+from .helpers import sanitize_dict, invert_dict
 
 basepath = os.path.dirname(os.path.abspath(__file__))
 
@@ -26,7 +26,7 @@ ALLOW_CRLF_WINDOWS = 4
 
 def trim_string(source, encoding, maxlength, append_tail_ellipsis=False):
     assert isinstance(maxlength, int)
-    if not isinstance(source, unicode):
+    if not isinstance(source, unicode):  # noqa
         source = source.decode(encoding)
 
     s = source
@@ -164,6 +164,7 @@ class RegexConverter(DataConverterBase):
             val = str(val).format(*mo.groups())
         return val
 
+
 type_converters = {
     'default': DefaultConverter(),
     'boolean': BoolConverter(),
@@ -205,7 +206,7 @@ class FlexRow(list):
                     # replace '\n' -> '\r\n'
                     val = val.replace(u'\r\n', u'\n').replace(u'\n', u'\r\n')
 
-        if isinstance(val, unicode):
+        if isinstance(val, unicode):  # noqa
             val = val.strip().encode(self.encoding, 'replace')
         elif isinstance(val, str):
             val = val.strip()
@@ -356,7 +357,7 @@ class JSonRow(list):
                 elif self.allow_crlf == CLEAR_CRLF:
                     val = val.replace(u'\r\n', u' ').replace(u'\n', u' ')
 
-        if isinstance(val, unicode):
+        if isinstance(val, unicode):  # noqa
             val = val.strip().encode(self.encoding, 'replace')
         elif isinstance(val, str):
             val = val.strip()
@@ -665,7 +666,7 @@ class Right2LeftConverterBase(ConverterBase):
     def sanitize(self, x):
         if x is None:
             x = ''
-        elif isinstance(x, unicode):
+        elif isinstance(x, unicode):  # noqa
             x = x.encode(self.ruleset.encoding)
         elif not isinstance(x, str):
             x = str(x)
@@ -711,7 +712,7 @@ class Right2LeftConverterBase(ConverterBase):
             val = rule[True] if rule['has'] in val else rule[False]
 
         # 改行コードをエスケープする
-        if isinstance(val, (int, long)):
+        if isinstance(val, (int, long)):  # noqa
             val = '%d' % val
 
         # checkers

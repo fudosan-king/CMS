@@ -21,7 +21,7 @@ class Command(BaseCommand):
                 import_csv('test/import', dry_run=False)
 
             self.stdout.write(self.style.SUCCESS('Import done!'))
-        except:
+        except Exception as e:
             self.stdout.write(self.style.ERROR(
-                'Import fail!')
+                'Import fail!: {}'.format(e))
             )

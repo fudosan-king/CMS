@@ -8,3 +8,4 @@ mysqlclient>=2.0.3
 git+https://github.com/spapas/wagtail-multi-upload.git
 numpy>=1.21.0
 PyYAML>=5.4.1
+flake8>=3.9.0

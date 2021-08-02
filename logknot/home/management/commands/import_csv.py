@@ -13,7 +13,7 @@ class Command(BaseCommand):
 
         try:
             if dry_run == 'True':
-                done, ignore, fail = import_csv('test/import', dry_run=True)
+                done, ignore, fail = import_csv('tests/import', dry_run=True)
                 print('Done: {}'.format(len(done.keys())))
                 print('ignore: {}'.format(len(ignore.keys())))
                 print('Fail: {}'.format(len(fail)))

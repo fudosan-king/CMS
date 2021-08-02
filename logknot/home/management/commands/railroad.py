@@ -35,9 +35,9 @@ class Command(BaseCommand):
                     if line[2] not in railroad[line[4]]:
                         railroad[line[4]][line[2]] = []
                     railroad[line[4]][line[2]].append(line[3])
-        except:
+        except Exception as e:
             self.stdout.write(self.style.ERROR(
-                'Please check file SUUMO_ENSEN.dat')
+                'Please check file SUUMO_ENSEN.dat: {}'.format(e))
             )
 
         if railroad:

@@ -172,8 +172,8 @@ class Command(BaseCommand):
 
                         # update prefdata2
                         data[root_code]['prefdata2'][code[:-3]].append((furigana, name, code))
-        except:
-            self.stdout.write(self.style.WARNING('No such file or directory: {}'.format(codefilename)))
+        except Exception as e:
+            self.stdout.write(self.style.WARNING('No such file or directory: {} - {}'.format(codefilename, e)))
 
         if data:
             locations = {}

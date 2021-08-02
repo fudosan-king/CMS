@@ -1,7 +1,7 @@
 from django_mongoengine import Document, EmbeddedDocument, fields  # noqa
 import datetime
 from mongoengine.queryset.visitor import Q
-from django.core.validators import *  # noqa
+from django.core.validators import ValidationError
 import html
 
 IGNORE = [
@@ -170,14 +170,14 @@ class Buildings(Document):
         land_rights = request.POST.getlist('land_rights')
         self.land_rights = []
         if land_rights:
-            for l in land_rights:
-                self.land_rights.append(l)
+            for land in land_rights:
+                self.land_rights.append(land)
 
         limitations = request.POST.getlist('limitations')
         self.limitations = []
         if limitations:
-            for l in limitations:
-                self.limitations.append(l)
+            for land in limitations:
+                self.limitations.append(land)
 
         google_map = request.POST.get('google_map')
         if google_map:
@@ -231,14 +231,14 @@ class Buildings(Document):
         land_rights = request.POST.getlist('land_rights')
         if land_rights:
             self.land_rights = []
-            for l in land_rights:
-                self.land_rights.append(l)
+            for land in land_rights:
+                self.land_rights.append(land)
 
         limitations = request.POST.getlist('limitations')
         if limitations:
             self.limitations = []
-            for l in limitations:
-                self.limitations.append(l)
+            for land in limitations:
+                self.limitations.append(land)
 
         google_map = request.POST.get('google_map')
         if google_map:

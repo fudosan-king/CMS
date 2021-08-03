@@ -211,6 +211,20 @@
   z-index: 100;
 }
 
+.listing .image-room {
+  object-fit: cover;
+  height: 200px;
+  width: 100%;
+}
+
+.listing.table-room thead th {
+  text-align: left;
+}
+
+.active-room {
+  color: #cd3238;
+}
+
 @media only screen and (max-width: 600px) {
   .merged.nice-padding {
     padding-left: 60px;

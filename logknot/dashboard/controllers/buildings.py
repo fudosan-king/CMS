@@ -87,6 +87,10 @@ def show(request, building_id):
             else:
                 messages.error(request, _('Sorry, you do not have permission to access this area.'))
 
+    total_room = 11
+    active_room = 2
+    rooms = [''] * 10
+
     context = {
         'action': '/dashboard/buildings/edit/{}/'.format(building_detail.id),
         'building_detail': building_detail,
@@ -95,7 +99,10 @@ def show(request, building_id):
         'photos_form': photos_form,
         'category': CATEGORY,
         'errors': errors,
-        'pref': PREF_MAP
+        'pref': PREF_MAP,
+        'total_room': total_room,
+        'active_room': active_room,
+        'rooms': rooms
     }
 
     return TemplateResponse(request, 'wagtailadmin/buildings/show.html', context)

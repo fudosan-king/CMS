@@ -348,51 +348,6 @@ class BuildingsForm(DocumentForm):
         widget=forms.Textarea(),
         required=False
     )
-    one_stop_price = forms.IntegerField(
-        label=__('ワンストップ価格'),
-        required=False,
-        widget=forms.NumberInput()
-    )
-    loan_borrowing = forms.IntegerField(
-        label=__('ローン借り入れ金額'),
-        required=False,
-        widget=forms.NumberInput()
-    )
-    loan_interest_rate = forms.FloatField(
-        label=__('ローン金利'),
-        required=False,
-        min_value=0,
-        max_value=30,
-        initial=2.0,
-        widget=forms.NumberInput(
-            attrs={'step': '0.01'}
-        )
-    )
-    loan_repayment_method = forms.CharField(
-        label=__('ローン返済方式'),
-        max_length=254,
-        widget=forms.TextInput(),
-        required=False
-    )
-    repayment_period = forms.IntegerField(
-        label=__('返済期間'),
-        required=False,
-        min_value=0,
-        max_value=100,
-        initial=25,
-        widget=forms.NumberInput()
-    )
-    monthly_payment = forms.FloatField(
-        label=__('月々支払い'),
-        required=False,
-        widget=forms.NumberInput()
-    )
-    bonus_payment = forms.FloatField(
-        label=__('ボーナス払い'),
-        required=False,
-        initial=0,
-        widget=forms.NumberInput()
-    )
 
     class Meta:
         document = Buildings

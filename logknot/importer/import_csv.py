@@ -98,7 +98,6 @@ class CSVImporter(object):
             import_building = Buildings()
             for k, v in building.items():
                 import_building[k] = v
-            import_building.loan_interest_rate = 2.0
             import_building.import_date = datetime.datetime.now
             _ok = False
             if not self.dry_run:

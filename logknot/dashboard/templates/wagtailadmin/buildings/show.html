@@ -34,7 +34,6 @@
             <li><a href="#google">{% trans 'Google map 座標' %}</a></li>
             <li><a href="#room">{% trans 'ドアへの扉' %}</a></li>
             <li><a href="#renovation">{% trans 'リノベーション' %}</a></li>
-            <li><a href="#fee">{% trans '費用' %}</a></li>
             {% if building_detail %}
             <li><a href="#photos">{% trans '写真' %}</a></li>
             {% endif %}
@@ -195,33 +194,6 @@
                     <div class="col6 column-content">
 
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.specification_description col='col12' error=forms.errors.specification_description %}
-
-                    </div>
-                </div>
-            </section>
-
-
-            <section id="fee" class="nice-padding">
-                <div class="row">
-                    <div class="col6 column-content">
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.one_stop_price col='col6' error=forms.errors.one_stop_price %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.loan_borrowing col='col6' error=forms.errors.loan_borrowing %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.loan_interest_rate col='col6' error=forms.errors.loan_interest_rate %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.loan_repayment_method col='col6' error=forms.errors.loan_repayment_method %}
-
-                    </div>
-
-                    <div class="col6 column-content">
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.repayment_period col='col6' error=forms.errors.repayment_period %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.monthly_payment col='col6' error=forms.errors.monthly_payment %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.bonus_payment col='col6' error=forms.errors.bonus_payment %}
 
                     </div>
                 </div>

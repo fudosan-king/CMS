@@ -124,13 +124,6 @@ class Buildings(Document):
     link_2d = fields.StringField(max_length=255, blank=True)
     link_3d = fields.StringField(max_length=255, blank=True)
     specification_description = fields.StringField(max_length=1000, blank=True)
-    one_stop_price = fields.StringField(max_length=255, blank=True)
-    loan_borrowing = fields.StringField(max_length=255, blank=True)
-    loan_interest_rate = fields.DecimalField(max_digits=2, decimal_places=2)
-    loan_repayment_method = fields.StringField(max_length=255, blank=True)
-    repayment_period = fields.IntField(blank=False, default=25)
-    monthly_payment = fields.StringField(max_length=255, blank=True)
-    bonus_payment = fields.StringField(max_length=255, blank=True)
 
     @staticmethod
     def building_name_validation(building_name):

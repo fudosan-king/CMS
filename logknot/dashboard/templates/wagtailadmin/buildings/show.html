@@ -32,7 +32,7 @@
         <ul class="tab-nav merged" data-tab-nav="">
             <li class="active"><a href="#information">{% trans '情報' %}</a></li>
             <li><a href="#google">{% trans 'Google map 座標' %}</a></li>
-            <li><a href="#room">{% trans 'ドアへの扉' %}</a></li>
+            <li><a href="#room">{% trans '部屋' %}</a></li>
             <li><a href="#renovation">{% trans 'リノベーション' %}</a></li>
             {% if building_detail %}
             <li><a href="#photos">{% trans '写真' %}</a></li>
@@ -144,7 +144,7 @@
 
 
             <section id="room" class="nice-padding">
-                <div class="row">
+                <div class="row u-hidden">
                     <div class="col6 column-content">
 
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.price col='col6' error=forms.errors.price %}
@@ -176,7 +176,47 @@
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.limitations col='col12' error=forms.errors.limitations %}
 
                     </div>
+                </div>
+
+                <div class="row">
+                    <div class="col6"><h2>部屋情報</h2></div>
+                    <div class="col6" align="right"><h2>全{{ total_room }}件算隻中<span class="active-room">{{ active_room }}</span>件</h2></div>
+                    <div class="col12 column-content">
+                        <table class="listing table-room">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>回散</th>
+                                    <th>面積</th>
+                                    <th>間取り</th>
+                                    <th>参考価格</th>
+                                    <th>物件</th>
+                                    <th>地位</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for room in rooms %}
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <img src="/static/images/no-image.png" class="image-room">
+                                        </div>
+                                    </td>
+                                    <td>2階</td>
+                                    <td>130.92m²</td>
+                                    <td>1LDK</td>
+                                    <td>18,880<span>万円</span></td>
+                                    <td>Renovation type</td>
+                                    <td>Status</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </section>
+
+
 
 
             <section id="renovation" class="nice-padding">

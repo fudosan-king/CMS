@@ -97,6 +97,15 @@ python3 manage.py
 
 ```
 
+Build static (css, js, images, ...)
+```
+cd ~/project/wagtail
+. ./env/bin/activate
+cd logknot
+python3 manage.py collectstatic
+
+```
+
 Test import csv
 
 ```

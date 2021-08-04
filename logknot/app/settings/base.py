@@ -192,3 +192,5 @@ BASE_URL = 'http://fudosan-king.xyz'
 WAGTAILIMAGES_IMAGE_MODEL = 'home.BuildingImage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+API_DATA_FDK = 'https://fudosan-king.jp/api/161/list?token=ik6gi6Do9eyYpyVH&limit=10&skip=2'

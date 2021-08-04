@@ -2,6 +2,8 @@
 {% include "wagtailadmin/macros.html" %}
 {% load i18n wagtailadmin_tags %}
 {% load wagtailimages_tags %}
+{% load dashboard_tags %}
+
 
 {% block titletag %}{{ building_detail.building_name }}{% endblock %}
 
@@ -199,15 +201,15 @@
                                 <tr>
                                     <td>
                                         <div>
-                                            <img src="/static/images/no-image.png" class="image-room">
+                                            <img src="{% if room.photo and room.photo.url %}{{ room.photo.url }}{% else %}/static/images/no-image.png{% endif %}" class="image-room">
                                         </div>
                                     </td>
-                                    <td>2階</td>
-                                    <td>130.92m²</td>
-                                    <td>1LDK</td>
-                                    <td>18,880<span>万円</span></td>
+                                    <td>{{ room.room_floor }}階</td>
+                                    <td>{{ room.tatemono_menseki }}m²</td>
+                                    <td>{{ room.room_count }}{{ room.room_kind }}</td>
+                                    <td>{% format_money room.price %}<span>万円</span></td>
                                     <td>Renovation type</td>
-                                    <td>Status</td>
+                                    <td>{{ room.current_state }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

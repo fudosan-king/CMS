@@ -8,6 +8,8 @@ from wagtail.admin import messages
 from django.utils.translation import gettext as _  # noqa
 from home.management.commands.locations import PREF_MAP
 from django.template.response import TemplateResponse
+from django.conf import settings
+from dashboard.views import fetch_url_to_json
 
 
 def index(request):
@@ -87,9 +89,11 @@ def show(request, building_id):
             else:
                 messages.error(request, _('Sorry, you do not have permission to access this area.'))
 
-    total_room = 11
+    data = fetch_url_to_json(settings.API_DATA_FDK)
+    total_room = 0
     active_room = 2
-    rooms = [''] * 10
+    if data and 'esstates' in data:
+        total_room = len(data.get('esstates'))
 
     context = {
         'action': '/dashboard/buildings/edit/{}/'.format(building_detail.id),
@@ -102,7 +106,7 @@ def show(request, building_id):
         'pref': PREF_MAP,
         'total_room': total_room,
         'active_room': active_room,
-        'rooms': rooms
+        'rooms': data.get('esstates')
     }
 
     return TemplateResponse(request, 'wagtailadmin/buildings/show.html', context)

@@ -1,4 +1,4 @@
-from dashboard.models import Buildings
+from dashboard.models import Buildings, CountInfoBuildings
 from django.shortcuts import redirect
 from django.http import Http404
 from django.core.paginator import Paginator
@@ -51,6 +51,13 @@ def show(request, building_id):
     if not building_detail:
         raise Http404
 
+    city = building_detail.address.get('city')
+    pref = building_detail.address.get('pref')
+    station = []
+    for transport in building_detail.transports:
+        if transport.station_name and transport.station_name not in station:
+            station.append(transport.station_name)
+
     photos = get_image_model().objects.filter(building_id=building_id)
 
     forms = BuildingsForm(instance=building_detail)
@@ -65,6 +72,7 @@ def show(request, building_id):
                 building_detail = building_detail.remove(request)
                 if building_detail:
                     building_detail.save()
+                    update_count(building_detail, removed=True, pref=pref, city=city, station=station)
                     return redirect('buildings')
                 return Http404
             else:
@@ -77,9 +85,10 @@ def show(request, building_id):
                     building_detail = building_detail.update(request)
                     try:
                         building_detail.save()
+                        update_count(building_detail, pref=pref, city=city, station=station)
                         messages.success(request, _('Updated'))
-
-                    except:
+                    except Exception as e:
+                        print('Update building error: {}'.format(e))
                         errors = forms.errors.items()
                         forms = BuildingsForm(instance=building_detail)
                         messages.error(request, _('Error'))
@@ -123,6 +132,7 @@ def add(request):
                 if building:
                     try:
                         building.save()
+                        update_count(building)
                     except:
                         messages.error(request, 'Have problem')
                     messages.success(request, '{}{}'.format(_('Created building: '), building.building_name))
@@ -140,3 +150,47 @@ def add(request):
     }
 
     return TemplateResponse(request, 'wagtailadmin/buildings/show.html', context)
+
+
+def update_count(building, removed=False, pref=None, city=None, station=[]):
+    count_info = CountInfoBuildings.objects().first()
+
+    if not count_info:
+        count_info = CountInfoBuildings()
+
+    city_dict = count_info.city
+    station_dict = count_info.station
+
+    city_in = building.address.get('city')
+    pref_in = building.address.get('pref')
+
+    station_name_in = []
+    for transport in building.transports:
+        if transport.station_name and transport.station_name not in station_name_in:
+            station_name_in.append(transport.station_name)
+
+    if city and city in city_dict and city_dict[city] > 0:
+        city_dict[city] = city_dict[city] - 1
+
+    if pref and station:
+        for st in station:
+            name_station = '{}-{}'.format(pref, st)
+            if name_station in station_dict and station_dict[name_station] > 0:
+                station_dict[name_station] = station_dict[name_station] - 1
+
+    if not removed:
+        if city_in not in city_dict:
+            city_dict[city_in] = 1
+        else:
+            city_dict[city_in] = city_dict[city_in] + 1
+
+        for sn in station_name_in:
+            name_station = '{}-{}'.format(pref_in, sn)
+            if name_station not in station_dict:
+                station_dict[name_station] = 1
+            else:
+                station_dict[name_station] = station_dict[name_station] + 1
+
+    count_info.city = city_dict
+    count_info.station = station_dict
+    count_info.save()

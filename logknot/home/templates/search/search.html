@@ -134,16 +134,23 @@
             url: '/api/locations/' + pref + '/',
             }).done(function(data) {
                 for (i=0; i<data.length; i++){
-                    $('#id_city').append(
-                        `
-                        <li>
-                            <div class="custom-control custom-checkbox">
-                                <input name="city" type="checkbox" class="custom-control-input" id="area_` + i + `" value="` + data[i] + `">
-                                <label class="custom-control-label" for="area_` + i + `">` + data[i] + `</label>
-                            </div>
-                        </li>
-                        `
-                    );
+                    $.ajax({
+                    method: 'GET',
+                    url: '/api/count/city/' + data[i] + '/',
+                    }).done(function(data) {
+                        if (data && data[1]) {
+                            $('#id_city').append(
+                                `
+                                <li>
+                                    <div class="custom-control custom-checkbox">
+                                        <input name="city" type="checkbox" class="custom-control-input" id="area_` + data[0] + `" value="` + data[0] + `">
+                                        <label class="custom-control-label" for="area_` + data[0] + `">` + data[0] + ` (` + data[1] +  `)` + `</label>
+                                    </div>
+                                </li>
+                                `
+                            );
+                        }
+                    });
                 }
             });
         }
@@ -154,16 +161,23 @@
             url: '/api/railroad/' + pref + '/',
             }).done(function(data) {
                 for (i=0; i<data.length; i++){
-                    $('#id_station_name').append(
-                        `
-                        <li>
-                            <div class="custom-control custom-checkbox">
-                                <input name="station_name" type="checkbox" class="custom-control-input" id="station` + i + `" value="` + data[i] + `">
-                                <label class="custom-control-label" for="station` + i + `">` + data[i] + `</label>
-                            </div>
-                        </li>
-                        `
-                    );
+                    $.ajax({
+                    method: 'GET',
+                    url: '/api/count/station/' + pref + '-' + data[i] + '/',
+                    }).done(function(data) {
+                        if (data && data[1]) {
+                            $('#id_station_name').append(
+                                `
+                                <li>
+                                    <div class="custom-control custom-checkbox">
+                                        <input name="station_name" type="checkbox" class="custom-control-input" id="station` + data[0].split('-')[1] + `" value="` + data[0].split('-')[1] + `">
+                                        <label class="custom-control-label" for="station` + data[0].split('-')[1] + `">` + data[0].split('-')[1] + ` (` + data[1] +  `)` + `</label>
+                                    </div>
+                                </li>
+                                `
+                            );
+                        }
+                    });
                 }
             });
         }

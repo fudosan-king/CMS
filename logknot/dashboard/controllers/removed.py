@@ -7,6 +7,7 @@ from django.core.paginator import Paginator
 from wagtail.admin import messages
 from django.utils.translation import gettext as _  # noqa
 from django.template.response import TemplateResponse
+from .buildings import update_count
 
 
 def index(request):
@@ -56,6 +57,7 @@ def show(request, building_id):
             building_removed.last_time_rollback = datetime.datetime.now
             building_removed.rollback_by = str(request.user)
             building_removed.save()
+            update_count(building_removed)
             return redirect('buildings_removed')
         else:
             messages.error(request, _('Sorry, you do not have permission to access this area.'))

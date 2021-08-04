@@ -5,6 +5,7 @@ from dashboard.models import Buildings, LogsImport
 import datetime
 from mongoengine.queryset.visitor import Q
 from django.urls import reverse
+from dashboard.controllers.buildings import update_count
 
 COL_CSV = 58
 
@@ -103,6 +104,7 @@ class CSVImporter(object):
             if not self.dry_run:
                 try:
                     import_building.save()
+                    update_count(import_building)
                     _ok = True
                 except:
                     self.import_fail.append(building.get('building_name'))

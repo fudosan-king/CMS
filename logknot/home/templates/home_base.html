@@ -21,11 +21,21 @@
         {% block seo %}
             <meta name="description" content="{{ self.description }}" />
             <meta name="keyword" content="{{ self.keyword }}" />
-            <meta name="og:title" content="{{ self.og_title }}" />
-            <meta name="og:url" content="{{ self.og_url }}" />
-            <meta name="og:description" content="{{ self.og_description }}" />
+            <meta name="robots" content="{{ self.robots }}" />
+            <meta property="og:title" content="{{ self.og_title }}" />
+            <meta property="og:url" content="{{ self.og_url }}" />
+            <meta property="og:description" content="{{ self.og_description }}" />
+            <meta property="og:locale" content="{{ self.og_locale }}" />
+            <meta property="og:type" content="{{ self.og_type }}" />
+            <meta property="og:site_name" content="{{ self.og_site_name }}" />
+            <meta property='article:author' content="{{ self.article_publisher }}" />
+            <meta property='article:modified_time' content="{{ self.article_modified_time }}" />
+            <meta property="fb:app_id" content="{{ self.fb_app_id }}" />
             {% image self.og_image fill-1200x300 as og_image %}
-            <meta name="og:image" content="{{ og_image.url }}" />
+            <meta property="og:image" content="{{ og_image.url }}" />
+            <meta name="twitter:card" content="{{ self.twitter_card }}" />
+            <meta name="twitter:creater" content="{{ self.twitter_creater }}" />
+            <meta name="twitter:site" content="{{ self.twitter_site }}" />
         {% endblock %}
 
         {# Global stylesheets #}

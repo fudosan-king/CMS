@@ -13,11 +13,13 @@ from django.utils.translation import gettext as _  # noqa
 from dashboard.models import Buildings
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from django.shortcuts import render
+from django.utils import timezone
 
 
 class HomePage(RoutablePageMixin, Page):
     description = models.CharField(max_length=255, default='', blank=True, verbose_name=_('Description'))
     keyword = models.CharField(max_length=255, default='', blank=True, verbose_name=_('Keyword'))
+    robots = models.CharField(max_length=255, default='noindex, nofollow', blank=True, verbose_name=_('Robots'))
 
     og_title = models.CharField(max_length=255, default='', blank=True, verbose_name=_('OG Title'))
     og_description = models.CharField(max_length=255, default='', blank=True, verbose_name=_('OG Description'))
@@ -30,6 +32,16 @@ class HomePage(RoutablePageMixin, Page):
         related_name='+',
         verbose_name=_('OG image')
     )
+    og_locale = models.CharField(max_length=10, default='ja_JP', blank=True, verbose_name=_('OG Locale'))
+    og_type = models.CharField(max_length=20, default='article', blank=True, verbose_name=_('OG Type'))
+    og_site_name = models.CharField(max_length=255, default='', blank=True, verbose_name=_('OG Sitename'))
+    fb_app_id = models.CharField(max_length=255, default='', blank=True, verbose_name=_('Facebook ID'))
+    article_publisher = models.URLField(max_length=255, default='', blank=True, verbose_name=_('Article publisher'))
+    article_modified_time = models.DateTimeField(
+        auto_now_add=False, default=timezone.now, verbose_name=_('Article modified time'))
+    twitter_card = models.CharField(max_length=255, default='', blank=True, verbose_name=_('Twitter card'))
+    twitter_creater = models.CharField(max_length=255, default='', blank=True, verbose_name=_('Twitter creater'))
+    twitter_site = models.CharField(max_length=255, default='', blank=True, verbose_name=_('Twitter site'))
 
     content = StreamField(
         [
@@ -50,6 +62,15 @@ class HomePage(RoutablePageMixin, Page):
         FieldPanel('og_url', ),
         FieldPanel('og_description', widget=forms.Textarea),
         ImageChooserPanel('og_image'),
+        FieldPanel('og_locale', widget=forms.TextInput),
+        FieldPanel('og_type', widget=forms.TextInput),
+        FieldPanel('og_site_name', widget=forms.Textarea),
+        FieldPanel('fb_app_id', widget=forms.TextInput),
+        FieldPanel('article_publisher', ),
+        FieldPanel('article_modified_time', widget=forms.DateTimeInput),
+        FieldPanel('twitter_card', widget=forms.TextInput),
+        FieldPanel('twitter_creater', widget=forms.TextInput),
+        FieldPanel('twitter_site', widget=forms.TextInput),
         StreamFieldPanel('content')
     ]
 

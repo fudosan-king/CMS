@@ -2,7 +2,7 @@
 
 <div class="col12 objects">
     {% for child in self.children %}
-        <div class="col{% if child.heading in 'Content,コンテンツ' or child.id_for_label == 'id_title' %}12{% else %}4{% endif %} object {{ child.classes|join:" " }}">
+        <div class="col{% if child.heading in 'Content,コンテンツ' or child.id_for_label == 'id_title' %}12{% else %}4{% endif %} object {{ child.classes|join:" " }}" style="height: 350px;">
             {% if child.heading %}
                 <div class="title-wrapper">
                     <label {% if child.id_for_label %}for="{{ child.id_for_label }}"{% endif %}>
@@ -26,3 +26,8 @@
         </div>
     {% endfor %}
 </div>
+<script type="text/javascript">
+    $('input#id_article_modified_time').datetimepicker({
+        format: 'Y-m-d H:i'
+    });
+</script>

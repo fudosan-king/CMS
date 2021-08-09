@@ -58,6 +58,7 @@ class HomePage(RoutablePageMixin, Page):
     content_panels = Page.content_panels + [
         FieldPanel('description', widget=forms.Textarea),
         FieldPanel('keyword', widget=forms.Textarea),
+        FieldPanel('robots', widget=forms.Textarea),
         FieldPanel('og_title', widget=forms.Textarea),
         FieldPanel('og_url', ),
         FieldPanel('og_description', widget=forms.Textarea),

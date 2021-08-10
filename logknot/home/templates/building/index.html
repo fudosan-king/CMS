@@ -53,21 +53,6 @@
             </div>
         </section>
 
-        {% if page_content.content and page_content.live %}
-        <section class="section_content">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 col-lg-12">
-                        {% for block in page_content.content %}
-                            {% include_block block %}
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </section>
-        {% endif %}
-
-
         <section class="section_property_main">
             <div class="container">
                 <div class="row">
@@ -124,6 +109,20 @@
                 </div>
             </div>
         </section>
+
+        {% if page_content.content and page_content.live %}
+        <section class="section_property_main section_content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-12">
+                        {% for block in page_content.content %}
+                            {% include_block block %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endif %}
 
     </div>
 {% endblock %}

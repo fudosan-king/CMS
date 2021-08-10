@@ -5,6 +5,7 @@ from content.models import ContentDetailPage
 
 @hooks.register('after_create_page')
 def redirect_after_page_create(request, page):
+    page_content = None
     building_id = request.POST.get('building_id')
     if building_id:
         page_content = ContentDetailPage.objects.get(building_id=building_id)
@@ -14,6 +15,7 @@ def redirect_after_page_create(request, page):
 
 @hooks.register('after_edit_page')
 def redirect_after_page_edit(request, page):
+    page_content = None
     building_id = request.POST.get('building_id')
     if building_id:
         page_content = ContentDetailPage.objects.get(building_id=building_id)
@@ -24,6 +26,5 @@ def redirect_after_page_edit(request, page):
 @hooks.register('after_delete_page')
 def redirect_after_page_delete(request, page):
     link = request.POST.get('link')
-    print(link)
     if link:
         return HttpResponseRedirect(link)

@@ -1,18 +1,23 @@
 {% extends "home_base.html" %}
 {% load static wagtailcore_tags %}
-{% load i18n wagtailadmin_tags %}
+{% load i18n wagtailadmin_tags wagtailimages_tags %}
 
 
 {% block body_class %}template-searchresults{% endblock %}
 
-{% block title %}Search{% endblock %}
+{% block title %}Search | {{ home_page.title }}{% endblock %}
 
 {% block seo %}
-    <meta name="description" content="description" />
-    <meta name="keyword" content="keyword" />
-    <meta name="og:title" content="og_title" />
-    <meta name="og:url" content="og_url" />
-    <meta name="og:description" content="og_description" />
+        <meta name="description" content="{{ home_page.description }}" />
+        <meta name="keyword" content="{{ home_page.keyword }}" />
+        <link rel="canonical" href="{{ base_url }}{% url 'search' %}">
+        <meta property="og:title" content="{{ home_page.og_title }}" />
+        <meta property="og:url" content="{{ base_url }}" />
+        <meta property="og:type" content="{{ home_page.og_type }}" />
+        <meta property="og:description" content="{% if home_page.og_description %}{{ home_page.og_description }}{% else %}{{ home_page.description }}{% endif %}" />
+        {% image home_page.og_image fill-1200x300 as og_image %}
+        <meta property="og:image" content="{{ og_image.url }}" />
+        <meta property='article:modified_time' content="{{ home_page.article_modified_time }}" />
 {% endblock %}
 
 {% block header %}

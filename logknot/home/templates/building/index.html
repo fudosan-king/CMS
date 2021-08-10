@@ -1,18 +1,22 @@
 {% extends "home_base.html" %}
 {% load static wagtailcore_tags %}
-{% load i18n wagtailadmin_tags %}
+{% load i18n wagtailadmin_tags wagtailimages_tags %}
 
 
 {% block body_class %}template-searchresults{% endblock %}
 
-{% block title %}{{ building.building_name }}{% endblock %}
+{% block title %}{{ building.building_name }} | {{ home_page.title }}{% endblock %}
 
 {% block seo %}
-    <meta name="description" content="description" />
-    <meta name="keyword" content="keyword" />
-    <meta name="og:title" content="og_title" />
-    <meta name="og:url" content="og_url" />
-    <meta name="og:description" content="og_description" />
+        <meta name="description" content="{{ building.building_name }} | {% for k, address in building.address.items %}{{ address }}{% endfor %}" />
+        <meta name="keyword" content="{{ home_page.keyword }}" />
+        <link rel="canonical" href="{{ base_url }}{% url 'building' building.id %}">
+        <meta property="og:title" content="{{ building.building_name }} | {% for k, address in building.address.items %}{{ address }}{% endfor %}" />
+        <meta property="og:url" content="{{ base_url }}" />
+        <meta property="og:type" content="website">
+        <meta property="og:description" content="{{ building.building_name }} | {% for k, address in building.address.items %}{{ address }}{% endfor %}" />
+        <meta property="og:image" content="{% for photo in building.photos %}{{ photo.path }}{% endfor %}" />
+        <meta property='article:modified_time' content="{{ building.last_time_update }}" />
 {% endblock %}
 
 {% block header %}

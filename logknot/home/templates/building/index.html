@@ -96,10 +96,10 @@
                                         <td>{{ building.total_houses }}</td>
                                     </tr>
                                     <tr>
-                                        <th>構造・階段・所在階・方角</th>
+                                        <th>沿線・駅</th>
                                         <td>
                                         {% for transport in building.transports %}
-                                            {{ transport.station_name }} - {{ transport.station_to }} {{ transport.walk_mins }}分<br>
+                                            {% if transport.station_name %}{{ transport.station_name }} - {{ transport.station_to }} {{ transport.walk_mins }}分<br>{% endif %}
                                         {% endfor %}
                                         </td>
                                     </tr>

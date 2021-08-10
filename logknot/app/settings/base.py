@@ -26,6 +26,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 INSTALLED_APPS = [
     'dashboard',
     'home',
+    'content',
 
     'wagtail_multi_upload',
     'wagtail.contrib.forms',
@@ -186,10 +187,21 @@ WAGTAIL_SITE_NAME = "logknot"
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = 'http://fudosan-king.xyz'
 
 WAGTAILIMAGES_IMAGE_MODEL = 'home.BuildingImage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 API_DATA_FDK = 'https://fudosan-king.jp/api/161/list?token=ik6gi6Do9eyYpyVH&limit=10&skip=2'
+
+WAGTAILADMIN_RICH_TEXT_EDITORS = {
+    'default': {
+        'WIDGET': 'wagtail.admin.rich_text.DraftailRichTextArea'
+    },
+    'hallo': {
+        'WIDGET': 'wagtail.admin.rich_text.HalloRichTextArea'
+    },
+    'custom': {
+        'WIDGET': 'wagtail.tests.testapp.rich_text.CustomRichTextArea'
+    },
+}

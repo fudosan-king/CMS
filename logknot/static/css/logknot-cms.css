@@ -225,6 +225,18 @@
   color: #cd3238;
 }
 
+.section_content .richtext-image.left {float: left; width: 49%; padding-right: 1%;}
+.section_content .richtext-image.right {float: right; width: 49%; padding-left: 1%;}
+.section_content .richtext-image.full-width {width: 100%; height: auto;}
+.section_content .content-line {min-height: 520px; margin-bottom: 50px;}
+
+@media (max-width: 1024px) {
+    .section_content .content-line {min-height: 320px; margin-bottom: 20px;}
+}
+@media (max-width: 768px) {
+   .section_content .content-line {min-height: 220px; margin-bottom: 20px;}
+}
+
 @media only screen and (max-width: 600px) {
   .merged.nice-padding {
     padding-left: 60px;

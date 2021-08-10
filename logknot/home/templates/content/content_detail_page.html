@@ -7,7 +7,9 @@
 {% endblock %}
 
 {% block content %}
-<section>
+<section class="section_content">
+</section>
+<section class="section_content">
     {% image self.banner_image fill-1200x300 as banner %}
     <img src="{{ banner.url }}" alt="{{ banner.alt }}" style='width: 100%; height: auto;'>
 
@@ -21,7 +23,7 @@
     {% endif %}
 
 
-    <div class="container mt-5 mb-5">
+    <div class="container">
         <div class="text-center">
             <h1>
                 {% if self.custom_title %}
@@ -74,7 +76,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 offset-lg-2">
+            <div class="col-12">
                 {% for block in self.content %}
                     {% include_block block %}
                 {% endfor %}

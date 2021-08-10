@@ -2,7 +2,7 @@
 {% include "wagtailadmin/macros.html" %}
 {% load i18n wagtailadmin_tags %}
 {% load wagtailimages_tags %}
-{% load dashboard_tags %}
+{% load dashboard_tags wagtailcore_tags %}
 
 
 {% block titletag %}{{ building_detail.building_name }}{% endblock %}
@@ -36,6 +36,7 @@
             <li><a href="#google">{% trans 'Google map 座標' %}</a></li>
             <li><a href="#room">{% trans '部屋' %}</a></li>
             <li><a href="#renovation">{% trans 'リノベーション' %}</a></li>
+            <li><a href="#content">{% trans 'コンテンツ' %}</a></li>
             {% if building_detail %}
             <li><a href="#photos">{% trans '写真' %}</a></li>
             {% endif %}
@@ -239,6 +240,31 @@
 
                     </div>
                 </div>
+            </section>
+
+            <section id="content" class="nice-padding">
+                <div class="row">
+                    <div class="col12">
+                        {% if page_content.content %}
+                            {% for block in page_content.content %}
+                                {% include_block block %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col12 button-add-photo" align="right">
+                        {% if page_content.content %}
+                            <a href="{% url 'wagtailadmin_pages:edit' page_content.id %}">
+                                <button type="button" class="button button-secondary insert-photo">{% trans 'Edit' %}</button>
+                            </a>
+                            <a href="{% url 'wagtailadmin_pages:delete' page_content.id %}">
+                                <button type="button" class="button button-secondary insert-photo">{% trans 'Delete' %}</button>
+                            </a>
+                        {% else %}
+                            <a href="/dashboard/pages/add/content/contentdetailpage/{{ page_content.id }}/?building_id={{ building_detail.id }}">
+                                <button type="button" class="button button-secondary insert-photo">{% trans 'Create' %}</button>
+                            </a>
+                        {% endif %}
+                    </div>
             </section>
 
 

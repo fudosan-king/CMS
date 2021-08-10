@@ -14,6 +14,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 LANGUAGE_CODE = 'en-us'
 # LANGUAGE_CODE = 'ja-jp'
 
+BASE_URL = 'http://cms.localhost:5000'
+
 try:
     from .local import *  # noqa
 except ImportError:

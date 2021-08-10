@@ -10,6 +10,7 @@ from home.management.commands.locations import PREF_MAP
 from django.template.response import TemplateResponse
 from django.conf import settings
 from dashboard.views import fetch_url_to_json
+from content.models import ContentDetailPage, ContentPage
 
 
 def index(request):
@@ -103,6 +104,10 @@ def show(request, building_id):
     active_room = 2
     if data and 'esstates' in data:
         total_room = len(data.get('esstates'))
+    try:
+        page_content = ContentDetailPage.objects.get(building_id=building_id)
+    except:
+        page_content = ContentPage.objects.filter(id=4).first()
 
     context = {
         'action': '/dashboard/buildings/edit/{}/'.format(building_detail.id),
@@ -115,7 +120,8 @@ def show(request, building_id):
         'pref': PREF_MAP,
         'total_room': total_room,
         'active_room': active_room,
-        'rooms': data.get('esstates')
+        'rooms': data.get('esstates'),
+        'page_content': page_content
     }
 
     return TemplateResponse(request, 'wagtailadmin/buildings/show.html', context)

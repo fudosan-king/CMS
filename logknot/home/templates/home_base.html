@@ -5,38 +5,30 @@
 <html class="no-js" lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>
-            {% block title %}
-                {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
-            {% endblock %}
-            {% block title_suffix %}
-                {% with self.get_site.site_name as site_name %}
-                    {% if site_name %}- {{ site_name }}{% endif %}
-                {% endwith %}
-            {% endblock %}
-        </title>
+        <title>{% block title %}{% if home_page.seo_title %}{{ home_page.seo_title }}{% else %}{{ home_page.title }}{% endif %}{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#ffffff">
-        {% block seo %}
-            <meta name="description" content="{{ self.description }}" />
-            <meta name="keyword" content="{{ self.keyword }}" />
-            <meta name="robots" content="{{ self.robots }}" />
-            <meta property="og:title" content="{{ self.og_title }}" />
-            <meta property="og:url" content="{{ self.og_url }}" />
-            <meta property="og:description" content="{{ self.og_description }}" />
-            <meta property="og:locale" content="{{ self.og_locale }}" />
-            <meta property="og:type" content="{{ self.og_type }}" />
-            <meta property="og:site_name" content="{{ self.og_site_name }}" />
-            <meta property='article:author' content="{{ self.article_publisher }}" />
-            <meta property='article:modified_time' content="{{ self.article_modified_time }}" />
-            <meta property="fb:app_id" content="{{ self.fb_app_id }}" />
-            {% image self.og_image fill-1200x300 as og_image %}
-            <meta property="og:image" content="{{ og_image.url }}" />
-            <meta name="twitter:card" content="{{ self.twitter_card }}" />
-            <meta name="twitter:creater" content="{{ self.twitter_creater }}" />
-            <meta name="twitter:site" content="{{ self.twitter_site }}" />
-        {% endblock %}
+        <meta name="robots" content="{{ home_page.robots }}" />
+    {% block seo %}
+        <meta name="description" content="{{ home_page.description }}" />
+        <meta name="keyword" content="{{ home_page.keyword }}" />
+        <link rel="canonical" href="{{ base_url }}">
+        <meta property="og:title" content="{{ home_page.og_title }}" />
+        <meta property="og:url" content="{{ base_url }}" />
+        <meta property="og:type" content="{{ home_page.og_type }}" />
+        <meta property="og:description" content="{% if home_page.og_description %}{{ home_page.og_description }}{% else %}{{ home_page.description }}{% endif %}" />
+        {% image home_page.og_image fill-1200x300 as og_image %}
+        <meta property="og:image" content="{{ og_image.url }}" />
+        <meta property='article:modified_time' content="{{ home_page.article_modified_time }}" />
+    {% endblock %}
+        <meta property="og:locale" content="{{ home_page.og_locale }}" />
+        <meta property="og:site_name" content="{{ home_page.og_site_name }}" />
+        <meta property='article:author' content="{{ home_page.article_publisher }}" />
+        <meta property="fb:app_id" content="{{ home_page.fb_app_id }}" />
+        <meta name="twitter:card" content="{{ home_page.twitter_card }}" />
+        <meta name="twitter:creater" content="{{ home_page.twitter_creater }}" />
+        <meta name="twitter:site" content="{{ home_page.twitter_site }}" />
 
         {# Global stylesheets #}
         <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -74,8 +66,6 @@
         <script src="/static/js/bootstrap.bundle.min.js"></script>
         <script src="/static/js/bootstrap-datepicker.js"></script>
         <script src="/static/js/bootstrap-datepicker.ja.min.js"></script>
-        <script src="/static/js/Chart.bundle.min.js"></script>
-        <script src="/static/js/chartjs-plugin-labels.js"></script>
         <script src="/static/js/flickity.pkgd.min.js"></script>
         <script src="/static/js/ion.rangeSlider.min.js"></script>
         <script src="/static/js/functions.js"></script>

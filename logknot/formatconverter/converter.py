@@ -19,12 +19,12 @@ class FromCSVConverter(Left2RightConverterBase):
         structure = {
             'PC（プレキャストコンクリート）': 'PC',
             'RC（鉄筋コンクリート）': 'RC',
-            'RC一部SRC（鉄筋コンクリート一部鉄骨鉄筋コンクリート）': 'RC一部SRC',
+            'RC一部SRC（鉄筋コンクリート一部鉄骨鉄筋コンクリート）': 'RC',
             'SRC（鉄骨鉄筋コンクリート）': 'SRC',
-            'SRC一部RC（鉄骨鉄筋コンクリート一部鉄筋コンクリート）': 'SRC一部RC',
-            'SRC一部S（鉄骨鉄筋コンクリート一部鉄骨）': 'SRC一部S',
+            'SRC一部RC（鉄骨鉄筋コンクリート一部鉄筋コンクリート）': 'SRC',
+            'SRC一部S（鉄骨鉄筋コンクリート一部鉄骨）': 'SRC',
             '軽量鉄骨造': '軽量鉄骨造',
-            '鉄骨造': '鉄骨造'
+            '鉄骨造': '鉄骨'
         }
         return structure.get(val, u'')
 

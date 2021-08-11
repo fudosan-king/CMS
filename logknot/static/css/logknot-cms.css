@@ -230,8 +230,59 @@
 .section_content .richtext-image.full-width {width: 100%; height: auto;}
 .section_content .content-line {min-height: 520px; margin-bottom: 50px;}
 
+.search-sort .search-sort-form {
+    max-width: 800px;
+}
+.search-sort .search-sort-item,
+.search-sort .search-sort-item-all,
+.search-sort .title {
+    width: 49%;
+    float: left;
+}
+.search-sort .title {
+    height: 50px;
+    line-height: 50px;
+    font-weight: bold;
+    background-color: #d9d9d9;
+}
+.search-sort .search-sort-item,
+.search-sort .search-sort-item-all {
+    height: 550px;
+    overflow: auto;
+    margin-left: 1px;
+}
+.search-sort .search-sort-item .lable,
+.search-sort .search-sort-item-all .lable {
+    float: left;
+}
+.search-sort .search-sort-item .item-add,
+.search-sort .search-sort-item-all .item-add {
+    float: right;
+}
+.search-sort .search-sort-item .button,
+.search-sort .search-sort-item-all .button {
+    width: 390px;
+    margin-bottom: 4px;
+}
+.search-sort .button-save {
+    margin-top: 30px;
+}
+
 @media (max-width: 1024px) {
     .section_content .content-line {min-height: 320px; margin-bottom: 20px;}
+    .search-sort .search-sort-item .button {
+      width: 350px;
+    }
+}
+@media (max-width: 992px) {
+    .search-sort .search-sort-item .button {
+        width: 260px;
+    }
+}
+@media (max-width: 823px) {
+    .search-sort .search-sort-item .button {
+        width: 220px;
+    }
 }
 @media (max-width: 768px) {
    .section_content .content-line {min-height: 220px; margin-bottom: 20px;}

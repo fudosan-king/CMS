@@ -1,0 +1,62 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n wagtailadmin_tags %}
+{% load home_tags %}
+
+{% block titletag %}{% trans "Sort Search" %}{% endblock %}
+
+{% block content %}
+    <header class="merged nice-padding" >
+        <div class="row">
+            <h1>
+            	<svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-search"></use></svg>
+                    {% trans 'Sort Search' %}
+            </h1>
+            <div class="col9">
+            </div>
+        </div>
+    </header>
+    <div style="padding-top:20px"></div>
+
+    <table class="listing table-sort">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    {% trans 'City' %}
+                </th>
+                <th>
+                    {% trans 'Station Name' %}
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for p in pref %}
+            <tr>
+                <td class="title" valign="top" align="center">
+                    {{ p }}
+                </td>
+                <td align="center">
+                    <a href="{% url 'search_sort_show' p 'city' %}"><button class="button button-rollback">{% trans 'Edit' %}</button></a>
+                </td>
+                <td align="center">
+                    <a href="{% url 'search_sort_show' p 'station' %}"><button class="button button-rollback">{% trans 'Edit' %}</button></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="nice-padding">
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+<style type="text/css">
+    .table-sort th {width: 33%;}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}

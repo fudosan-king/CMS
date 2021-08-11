@@ -1,0 +1,92 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n wagtailadmin_tags %}
+{% load home_tags %}
+
+{% block titletag %}{% trans "Sort Search" %} - {{ pref }}{% endblock %}
+
+{% block content %}
+    <header class="merged nice-padding">
+        <div class="row">
+            <h1>
+            	<svg class="icon icon-user header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-search"></use></svg>
+                    {% trans 'Sort Search' %} - {{ pref }} - {% if kind == 'city' %}{% trans 'City' %}{% else %}{% trans 'Station Name' %}{% endif %}
+            </h1>
+            <div class="col9">
+            </div>
+        </div>
+    </header>
+
+    <div style="padding-top:40px"></div>
+
+    <div class="nice-padding search-sort" align="center">
+        <form class="search-sort-form" action="{% url 'search_sort_show' pref kind %}" method="POST">
+            {% csrf_token %}
+            <p class="title" align="center">{% trans 'SORT' %}</p>
+            <p class="title" align="center">{% trans 'ALL' %}</p>
+            {% if kind == 'city' %}
+                <ul class="search-sort-item sort-append" align="left">
+                    {% for ct in search_sort.city %}
+                        <li>
+                            <a class="button button-secondary button-delete"><span class="lable">{{ ct }}</span><span class="item-add">-</span></a>
+                            <input type="hidden" name="city" value="{{ ct }}">
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <ul class="search-sort-item-all" align="left">
+                    {% for ct in city %}
+                        <li><a class="button button-secondary button-add" data-sort="{{ ct }}" data-kind="city"><span class="lable">{{ ct }}</span><span class="item-add">+</span></a></li>
+                    {% endfor %}
+                </ul>
+            {% elif kind == 'station' %}
+                <ul class="search-sort-item sort-append" align="left">
+                {% for st in search_sort.station_name %}
+                    <li>
+                        <a class="button button-secondary button-delete"><span class="lable">{{ st }}</span><span class="item-add">-</span></a>
+                        <input type="hidden" name="station" value="{{ st }}">
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <ul class="search-sort-item-all" align="left">
+                    {% for st in station %}
+                        <li><a class="button button-secondary button-add" data-sort="{{ st }}" data-kind="station"><span class="lable">{{ st }}</span><span class="item-add">+</span></a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <button type="submit" class="button button-save">{% trans 'Save' %}</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+$(function(){
+    $('.search-sort-item').sortable({
+        update: function (event, ui) {
+            ui.item.addClass('.button-delete');
+        }
+    });
+
+    $('.search-sort-form').on('click', '.button-add', function(){
+        var data = $(this).attr('data-sort');
+        var kind = $(this).attr('data-kind');
+        $('.sort-append').append(`
+            <li>
+                <a class="button button-secondary button-delete"><span class="lable">` + data + `</span><span class="item-add">-</span></a>
+                <input type="hidden" name="` + kind + `" value="` + data + `">
+            </li>
+
+        `);
+    });
+
+    $('.search-sort-form').on('click', '.button-delete', function(){
+        $(this).parent().remove();
+    });
+});
+</script>
+{% endblock %}

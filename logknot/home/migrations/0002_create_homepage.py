@@ -19,9 +19,9 @@ def create_homepage(apps, schema_editor):
 
     # Create a new homepage
     homepage = HomePage.objects.create(
-        title="Home",
+        title="Order Renove",
         draft_title="Home",
-        slug='home',
+        slug='Order Renove',
         content_type=homepage_content_type,
         path='00010001',
         depth=2,

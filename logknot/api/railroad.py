@@ -2,6 +2,7 @@ from rest_framework.viewsets import GenericViewSet
 from django.urls import path
 from django.http import JsonResponse
 from rest_framework import status
+from dashboard.models import SearchSortByPref
 
 
 class RailRoadViewSet(GenericViewSet):
@@ -18,11 +19,20 @@ class RailRoadViewSet(GenericViewSet):
         return JsonResponse({}, status=status.HTTP_404_NOT_FOUND)
 
     def railroad_pref(self, request, pref):
+        search_sort = SearchSortByPref.objects.filter(pref=pref).first()
         with open('data/railroad.json', 'r', encoding='utf8') as f:
             data = eval(f.read())
             if pref and pref in data:
+                station_name_all = list(data[pref].keys())
+                if search_sort:
+                    station_name = search_sort.station_name
+                else:
+                    station_name = []
+                for st in station_name_all:
+                    if st not in station_name:
+                        station_name.append(st)
                 return JsonResponse(
-                    list(data[pref].keys()),
+                    station_name,
                     safe=False,
                     json_dumps_params={'ensure_ascii': False},
                     content_type='application/json',

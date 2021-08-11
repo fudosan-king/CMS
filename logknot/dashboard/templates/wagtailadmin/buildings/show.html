@@ -481,6 +481,7 @@
                 transport.find('#id_station_name option').remove();
                 transport.find('#id_station_to option').remove();
                 transport.find('#id_walk_mins').val('');
+                transport.find('#id_station_name').append(new Option('↓(駅名)', ''));
                 if (pref) {
                     $.ajax({
                     method: 'GET',

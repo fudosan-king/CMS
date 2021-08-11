@@ -1,7 +1,7 @@
 from django.contrib.auth.models import Permission
 from wagtail.core import hooks
 from django.urls import path, reverse
-from dashboard.controllers import buildings, import_buildings, removed, import_logs
+from dashboard.controllers import buildings, import_buildings, removed, import_logs, search_sort
 from wagtail.admin.menu import MenuItem
 from django.utils.translation import gettext as _  # noqa
 
@@ -104,3 +104,22 @@ def buildings_removed_show():
     return [
         path('removed/edit/<building_id>/', removed.show, name='buildings_removed_show'),
     ]
+
+
+@hooks.register('register_admin_urls')
+def search_sort_index():
+    return [
+        path('search_sort/', search_sort.index, name='search_sort'),
+    ]
+
+
+@hooks.register('register_admin_urls')
+def search_sort_show():
+    return [
+        path('search_sort/<pref>/<kind>/', search_sort.show, name='search_sort_show'),
+    ]
+
+
+@hooks.register('register_admin_menu_item')
+def register_search_sort_menu_item():
+    return MenuItem(_('Sort Search'), reverse('search_sort'), icon_name='search', order=6)

@@ -292,3 +292,31 @@ class LogsImport(Document):
 class CountInfoBuildings(Document):
     city = fields.DictField(blank=True, default={})
     station = fields.DictField(blank=True, default={})
+
+
+class SearchSortByPref(Document):
+    pref = fields.StringField(max_length=20, blank=False)
+    city = fields.ListField(
+        fields.StringField(max_length=255, blank=True),
+        blank=True,
+        default=[]
+    )
+    station_name = fields.ListField(
+        fields.StringField(max_length=255, blank=True),
+        blank=True,
+        default=[]
+    )
+
+    def update(self, request):
+        city = request.POST.getlist('city')
+        if city:
+            self.city = []
+            for ct in city:
+                self.city.append(ct)
+
+        station_name = request.POST.getlist('station_name')
+        if station_name:
+            self.station_name = []
+            for sn in station_name:
+                self.station_name.append(sn)
+        return self

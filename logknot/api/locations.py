@@ -2,6 +2,7 @@ from rest_framework.viewsets import GenericViewSet
 from django.urls import path
 from django.http import JsonResponse
 from rest_framework import status
+from dashboard.models import SearchSortByPref
 
 
 class LocationsViewSet(GenericViewSet):
@@ -18,11 +19,20 @@ class LocationsViewSet(GenericViewSet):
         return JsonResponse({}, status=status.HTTP_404_NOT_FOUND)
 
     def locations_pref(self, request, pref):
+        search_sort = SearchSortByPref.objects.filter(pref=pref).first()
         with open('data/locations.json', 'r', encoding='utf8') as f:
             data = eval(f.read())
             if pref and pref in data:
+                city_all = list(data[pref].keys())
+                if search_sort:
+                    city = search_sort.city
+                else:
+                    city = []
+                for ct in city_all:
+                    if ct not in city:
+                        city.append(ct)
                 return JsonResponse(
-                    list(data[pref].keys()),
+                    city,
                     safe=False,
                     json_dumps_params={'ensure_ascii': False},
                     content_type='application/json',

@@ -2,8 +2,11 @@ from django.contrib.auth.models import Permission
 from wagtail.core import hooks
 from django.urls import path, reverse
 from dashboard.controllers import buildings, import_buildings, removed, import_logs, search_sort
-from wagtail.admin.menu import MenuItem
 from django.utils.translation import gettext as _  # noqa
+from dashboard.views import (
+    MenuBuildingItem, MenuRemovedItem, MenuImportItem, MenuLogsItem,
+    MenuSearchItem
+)
 
 
 @hooks.register('register_permissions')
@@ -14,22 +17,12 @@ def register_building_permissions():
     )
 
 
-@hooks.register('register_admin_menu_item')
-def register_building_menu_item():
-    return MenuItem(_('Buildings'), reverse('buildings'), icon_name='view', order=2)
-
-
 @hooks.register('register_permissions')
 def register_removed_permissions():
     return Permission.objects.filter(
         content_type__app_label='removedgroup',
         codename__in=['change_removed']
     )
-
-
-@hooks.register('register_admin_menu_item')
-def register_removed_menu_item():
-    return MenuItem(_('Remove'), reverse('buildings_removed'), icon_name='cross', order=3)
 
 
 @hooks.register('register_permissions')
@@ -40,14 +33,45 @@ def register_import_permissions():
     )
 
 
+@hooks.register('register_permissions')
+def register_logs_permissions():
+    return Permission.objects.filter(
+        content_type__app_label='logsgroup',
+        codename__in=['change_logs']
+    )
+
+
+@hooks.register('register_permissions')
+def register_search_permissions():
+    return Permission.objects.filter(
+        content_type__app_label='searchgroup',
+        codename__in=['change_search']
+    )
+
+
+@hooks.register('register_admin_menu_item')
+def register_building_menu_item():
+    return MenuBuildingItem(_('Buildings'), reverse('buildings'), icon_name='view', order=2)
+
+
+@hooks.register('register_admin_menu_item')
+def register_removed_menu_item():
+    return MenuRemovedItem(_('Remove'), reverse('buildings_removed'), icon_name='cross', order=3)
+
+
 @hooks.register('register_admin_menu_item')
 def register_import_menu_item():
-    return MenuItem(_('Import'), reverse('buildings_import'), icon_name='download', order=4)
+    return MenuImportItem(_('Import'), reverse('buildings_import'), icon_name='download', order=4)
 
 
 @hooks.register('register_reports_menu_item')
 def register_report_import_menu_item():
-    return MenuItem(_('Import logs'), reverse('import_logs'), icon_name='list-ul', order=5)
+    return MenuLogsItem(_('Import logs'), reverse('import_logs'), icon_name='list-ul', order=5)
+
+
+@hooks.register('register_admin_menu_item')
+def register_search_sort_menu_item():
+    return MenuSearchItem(_('Sort Search'), reverse('search_sort'), icon_name='search', order=6)
 
 
 @hooks.register('register_admin_urls')
@@ -118,8 +142,3 @@ def search_sort_show():
     return [
         path('search_sort/<pref>/<kind>/', search_sort.show, name='search_sort_show'),
     ]
-
-
-@hooks.register('register_admin_menu_item')
-def register_search_sort_menu_item():
-    return MenuItem(_('Sort Search'), reverse('search_sort'), icon_name='search', order=6)

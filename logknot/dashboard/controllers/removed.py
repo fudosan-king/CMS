@@ -8,9 +8,12 @@ from wagtail.admin import messages
 from django.utils.translation import gettext as _  # noqa
 from django.template.response import TemplateResponse
 from .buildings import update_count
+from dashboard.views import MenuRemovedItem
 
 
 def index(request):
+    if not MenuRemovedItem.is_shown(MenuRemovedItem, request):
+        raise Http404
     query = Buildings().query(request, True)
     buildings = Buildings.objects().filter(query)
 
@@ -45,6 +48,8 @@ def index(request):
 
 
 def show(request, building_id):
+    if not MenuRemovedItem.is_shown(MenuRemovedItem, request):
+        raise Http404
     building_removed = Buildings.objects(id=building_id, removed=True).first()
     if not building_removed:
         raise Http404

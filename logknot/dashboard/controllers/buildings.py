@@ -11,9 +11,12 @@ from django.template.response import TemplateResponse
 from django.conf import settings
 from dashboard.views import fetch_url_to_json
 from content.models import ContentDetailPage, ContentPage
+from dashboard.views import MenuBuildingItem
 
 
 def index(request):
+    if not MenuBuildingItem.is_shown(MenuBuildingItem, request):
+        raise Http404
     query = Buildings().query(request, False)
     buildings = Buildings.objects().filter(query).order_by('-id')
 
@@ -48,6 +51,8 @@ def index(request):
 
 
 def show(request, building_id):
+    if not MenuBuildingItem.is_shown(MenuBuildingItem, request):
+        raise Http404
     building_detail = Buildings.objects(id=building_id, removed=False).first()
     if not building_detail:
         raise Http404

@@ -6,6 +6,8 @@ from django.shortcuts import redirect
 from wagtail.admin import messages
 from django.utils.translation import gettext as _  # noqa
 from django.template.response import TemplateResponse
+from django.http import Http404
+from dashboard.views import MenuImportItem
 
 
 # 1MB - 1048576
@@ -22,6 +24,8 @@ MAX_UPLOAD_SIZE = 2097152
 
 
 def index(request):
+    if not MenuImportItem.is_shown(MenuImportItem, request):
+        raise Http404
     errors = []
     done = {}
     ignore = {}

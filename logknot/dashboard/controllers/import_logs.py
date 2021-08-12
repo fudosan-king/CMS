@@ -3,9 +3,12 @@ from django.http import Http404
 from django.core.paginator import Paginator
 from bson import ObjectId
 from django.template.response import TemplateResponse
+from dashboard.views import MenuLogsItem
 
 
 def index(request):
+    if not MenuLogsItem.is_shown(MenuLogsItem, request):
+        raise Http404
     logs = LogsImport.objects().all().order_by('-id')
     try:
         page = int(request.GET.get('page', 1))
@@ -38,6 +41,8 @@ def index(request):
 
 
 def show(request, log_id):
+    if not MenuLogsItem.is_shown(MenuLogsItem, request):
+        raise Http404
     try:
         log_id = ObjectId(log_id)
     except:

@@ -26,13 +26,11 @@
                     {% format_permissions permission_bound_field=form.permissions %}
                 </li>
 
-                <div class="u-hidden">
-                    {% for panel in permission_panels %}
-                        <li>
-                            {{ panel.as_admin_panel }}
-                        </li>
-                    {% endfor %}
-                </div>
+                {% for panel in permission_panels %}
+                    <li>
+                        {{ panel.as_admin_panel }}
+                    </li>
+                {% endfor %}
                 <li><input type="submit" value='{% trans "Add group" %}' class="button" /></li>
             </ul>
         </form>

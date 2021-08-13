@@ -68,12 +68,12 @@ class FromCSVConverter(Left2RightConverterBase):
         transports = []
         for i in range(0, 3):
             transport = Transports()
-            station_name = left.pop().split('/')
-            if station_name and len(station_name) >= 1:
-                transport.station_name = station_name[0]
-            transport.station_to = left.pop()
-            left.pop()
-            transport.walk_mins = left.pop()
+            # station_name = left.pop().split('/')
+            # if station_name and len(station_name) >= 1:
+            #     transport.station_name = station_name[0]
+            # transport.station_to = left.pop()
+            # left.pop()
+            # transport.walk_mins = left.pop()
             transports.append(transport)
 
         right.set('transports', transports)

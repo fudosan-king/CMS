@@ -21,7 +21,8 @@ IGNORE = [
     'land_rights',
     'limitations',
     'google_map',
-    'recommend'
+    'recommend',
+    'map_pref'
 ]
 
 
@@ -40,6 +41,7 @@ class Address(EmbeddedDocument):
 
 
 class Transports(EmbeddedDocument):
+    map_pref = fields.StringField(max_length=255, blank=True)
     station_name = fields.StringField(max_length=255, blank=True)
     station_to = fields.StringField(max_length=255, blank=True)
     walk_mins = fields.StringField(max_length=255, blank=True)
@@ -191,12 +193,14 @@ class Buildings(Document):
         }
 
         self.transports = []
+        map_pref = request.POST.getlist('map_pref', [])
         station_name = request.POST.getlist('station_name', [])
         station_to = request.POST.getlist('station_to', [])
         walk_mins = request.POST.getlist('walk_mins', [])
         if station_name:
             for i in range(0, len(station_name)):
                 transport = Transports()
+                transport.map_pref = map_pref[i]
                 transport.station_name = station_name[i]
                 transport.station_to = station_to[i]
                 transport.walk_mins = walk_mins[i]
@@ -252,12 +256,14 @@ class Buildings(Document):
         }
 
         self.transports = []
+        map_pref = request.POST.getlist('map_pref', [])
         station_name = request.POST.getlist('station_name', [])
         station_to = request.POST.getlist('station_to', [])
         walk_mins = request.POST.getlist('walk_mins', [])
         if station_name:
             for i in range(0, len(station_name)):
                 transport = Transports()
+                transport.map_pref = map_pref[i]
                 transport.station_name = station_name[i]
                 transport.station_to = station_to[i]
                 transport.walk_mins = walk_mins[i]

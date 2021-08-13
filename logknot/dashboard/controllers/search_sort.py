@@ -1,6 +1,7 @@
 from django.utils.translation import gettext as _  # noqa
 from django.template.response import TemplateResponse
 from home.management.commands.locations import PREF_MAP
+from home.management.commands.railroad import MAP_PREF_STATION
 from django.http import Http404
 from dashboard.models import SearchSortByPref
 from dashboard.views import MenuSearchItem
@@ -11,7 +12,8 @@ def index(request):
     if not MenuSearchItem.is_shown(MenuSearchItem, request):
         raise Http404
     context = {
-        'pref': PREF_MAP
+        'pref': PREF_MAP,
+        'map_pref': list(MAP_PREF_STATION.values()),
     }
     return TemplateResponse(request, 'wagtailadmin/search_sort/index.html', context)
 
@@ -45,11 +47,13 @@ def show(request, pref, kind):
     if kind == 'city':
         with open('data/locations.json', 'r', encoding='utf8') as f:
             data = eval(f.read())
-            city = list(data[pref].keys())
+            if pref in data:
+                city = list(data[pref].keys())
     elif kind == 'station':
         with open('data/railroad.json', 'r', encoding='utf8') as f:
             data = eval(f.read())
-            station = list(data[pref].keys())
+            if pref in data:
+                station = list(data[pref].keys())
     else:
         raise Http404
 

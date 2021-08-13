@@ -109,7 +109,7 @@
 
                         {% include 'wagtailadmin/buildings/form_address.html' with pref=pref data=building_detail.address %}
 
-                        {% include 'wagtailadmin/buildings/form_transports.html' with pref=pref data=building_detail.transports %}
+                        {% include 'wagtailadmin/buildings/form_transports.html' with pref=map_pref data=building_detail.transports %}
 
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.land_rights col='col12' error=forms.errors.land_rights %}
 

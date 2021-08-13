@@ -5,6 +5,7 @@ from mongoengine.queryset.visitor import Q
 from wagtail.core.models import Page
 from wagtail.search.models import Query
 from home.management.commands.locations import PREF_MAP
+from home.management.commands.railroad import MAP_PREF_STATION
 
 
 def search(request):
@@ -39,7 +40,8 @@ def search(request):
         'page': page,
         'limit': per_page,
         'buildings': buildings,
-        'pref': PREF_MAP
+        'pref': PREF_MAP,
+        'map_pref': list(MAP_PREF_STATION.values())
     }
 
     return TemplateResponse(request, 'search/search.html', context)

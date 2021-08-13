@@ -17,36 +17,64 @@
     </header>
     <div style="padding-top:20px"></div>
 
-    <table class="listing table-sort">
-        <thead>
-            <tr>
-                <th>
-                </th>
-                <th>
-                    {% trans 'City' %}
-                </th>
-                <th>
-                    {% trans 'Station Name' %}
-                </th>
-            </tr>
-        </thead>
+    <div class="col12">
+        <div class="row">
+            <div class="col6">
+                <table class="listing table-sort">
+                    <thead>
+                        <tr>
+                            <th style="width:20%">
+                            </th>
+                            <th style="width:80%">
+                                {% trans 'City' %}
+                            </th>
+                        </tr>
+                    </thead>
 
-        <tbody>
-            {% for p in pref %}
-            <tr>
-                <td class="title" valign="top" align="center">
-                    {{ p }}
-                </td>
-                <td align="center">
-                    <a href="{% url 'search_sort_show' p 'city' %}"><button class="button button-rollback">{% trans 'Edit' %}</button></a>
-                </td>
-                <td align="center">
-                    <a href="{% url 'search_sort_show' p 'station' %}"><button class="button button-rollback">{% trans 'Edit' %}</button></a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                    <tbody>
+                        {% for p in pref %}
+                        <tr>
+                            <td class="title" valign="top" align="center">
+                                {{ p }}
+                            </td>
+                            <td align="center">
+                                <a href="{% url 'search_sort_show' p 'city' %}"><button class="button button-rollback">{% trans 'Edit' %}</button></a>
+                            </td>
+                            <td align="center">
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col6">
+                <table class="listing table-sort">
+                    <thead>
+                        <tr>
+                            <th style="width:20%">
+                            </th>
+                            <th style="width:80%">
+                                {% trans 'Station Name' %}
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for p in map_pref %}
+                        <tr>
+                            <td class="title" valign="top" align="center">
+                                {{ p }}
+                            </td>
+                            <td align="center">
+                                <a href="{% url 'search_sort_show' p 'station' %}"><button class="button button-rollback">{% trans 'Edit' %}</button></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
     <div class="nice-padding">
     </div>

@@ -8,10 +8,10 @@
         <div class="col4 field-building">
             <span class="field-label">{% trans '交通' %}{{ forloop.counter }}</span>
             <div>
-                <select value="" id="id_pref_transports">
+                <select value="" id="id_pref_transports" name="map_pref">
                     <option value="">↓(都道府県)</option>
                     {% for p in pref %}
-                    <option value="{{ p }}">{{ p }}</option>
+                    <option value="{{ p }}" {% if p == transport.map_pref %}selected{% endif %}>{{ p }}</option>
                     {% endfor %}
                 </select>
                 <span class="message-error"></span>
@@ -69,10 +69,10 @@
         <div class="col4 field-building">
             <span class="field-label">{% trans '交通' %}{{ forloop.counter }}</span>
             <div>
-                <select value="" id="id_pref_transports">
+                <select value="" id="id_pref_transports" name="map_pref">
                     <option value="">↓(都道府県)</option>
                     {% for p in pref %}
-                    <option value="{{ p }}">{{ p }}</option>
+                    <option value="{{ p }}" {% if p == transport.map_pref %}selected{% endif %}>{{ p }}</option>
                     {% endfor %}
                 </select>
                 <span class="message-error"></span>

@@ -7,6 +7,7 @@ from wagtail.images import get_image_model
 from wagtail.admin import messages
 from django.utils.translation import gettext as _  # noqa
 from home.management.commands.locations import PREF_MAP
+from home.management.commands.railroad import MAP_PREF_STATION
 from django.template.response import TemplateResponse
 from django.conf import settings
 from dashboard.views import fetch_url_to_json
@@ -58,11 +59,10 @@ def show(request, building_id):
         raise Http404
 
     city = building_detail.address.get('city')
-    pref = building_detail.address.get('pref')
     station = []
     for transport in building_detail.transports:
         if transport.station_name and transport.station_name not in station:
-            station.append(transport.station_name)
+            station.append([transport.map_pref, transport.station_name])
 
     photos = get_image_model().objects.filter(building_id=building_id)
 
@@ -78,7 +78,7 @@ def show(request, building_id):
                 building_detail = building_detail.remove(request)
                 if building_detail:
                     building_detail.save()
-                    update_count(building_detail, removed=True, pref=pref, city=city, station=station)
+                    update_count(building_detail, removed=True, city=city, station=station)
                     return redirect('buildings')
                 return Http404
             else:
@@ -91,7 +91,7 @@ def show(request, building_id):
                     building_detail = building_detail.update(request)
                     try:
                         building_detail.save()
-                        update_count(building_detail, pref=pref, city=city, station=station)
+                        update_count(building_detail, city=city, station=station)
                         messages.success(request, _('Updated'))
                     except Exception as e:
                         print('Update building error: {}'.format(e))
@@ -123,6 +123,7 @@ def show(request, building_id):
         'category': CATEGORY,
         'errors': errors,
         'pref': PREF_MAP,
+        'map_pref': list(MAP_PREF_STATION.values()),
         'total_room': total_room,
         'active_room': active_room,
         'rooms': data.get('esstates'),
@@ -157,13 +158,14 @@ def add(request):
     context = {
         'action': '/dashboard/buildings/add/',
         'forms': forms,
-        'pref': PREF_MAP
+        'pref': PREF_MAP,
+        'map_pref': list(MAP_PREF_STATION.values())
     }
 
     return TemplateResponse(request, 'wagtailadmin/buildings/show.html', context)
 
 
-def update_count(building, removed=False, pref=None, city=None, station=[]):
+def update_count(building, removed=False, city=None, station=[]):
     count_info = CountInfoBuildings.objects().first()
 
     if not count_info:
@@ -173,21 +175,21 @@ def update_count(building, removed=False, pref=None, city=None, station=[]):
     station_dict = count_info.station
 
     city_in = building.address.get('city')
-    pref_in = building.address.get('pref')
 
     station_name_in = []
     for transport in building.transports:
         if transport.station_name and transport.station_name not in station_name_in:
-            station_name_in.append(transport.station_name)
+            station_name_in.append([transport.map_pref, transport.station_name])
 
     if city and city in city_dict and city_dict[city] > 0:
         city_dict[city] = city_dict[city] - 1
 
-    if pref and station:
+    if station:
         for st in station:
-            name_station = '{}-{}'.format(pref, st)
-            if name_station in station_dict and station_dict[name_station] > 0:
-                station_dict[name_station] = station_dict[name_station] - 1
+            if st[0] and st[1]:
+                name_station = '{}-{}'.format(st[0], st[1])
+                if name_station in station_dict and station_dict[name_station] > 0:
+                    station_dict[name_station] = station_dict[name_station] - 1
 
     if not removed:
         if city_in not in city_dict:
@@ -196,11 +198,12 @@ def update_count(building, removed=False, pref=None, city=None, station=[]):
             city_dict[city_in] = city_dict[city_in] + 1
 
         for sn in station_name_in:
-            name_station = '{}-{}'.format(pref_in, sn)
-            if name_station not in station_dict:
-                station_dict[name_station] = 1
-            else:
-                station_dict[name_station] = station_dict[name_station] + 1
+            if sn[0] and sn[1]:
+                name_station = '{}-{}'.format(sn[0], sn[1])
+                if name_station not in station_dict:
+                    station_dict[name_station] = 1
+                else:
+                    station_dict[name_station] = station_dict[name_station] + 1
 
     count_info.city = city_dict
     count_info.station = station_dict

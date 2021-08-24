@@ -26,11 +26,10 @@ rules:
   - processor: processor_built_date
   - index: 10
     key: total_houses
-  - index: 11
-    key: superintendent
-  - index: 12
-    key: land_rights
-    converter: converter_list
+  #index: 11
+  - processor: processor_superintendent
+  # index: 12
+  - processor: processor_land_rights
   - index: 13
     key: management_company
   # index: 14

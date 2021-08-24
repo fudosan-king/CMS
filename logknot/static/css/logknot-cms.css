@@ -358,6 +358,25 @@
 .field-building {margin-bottom: 10px;}
 .checkbox li label {font-weight: normal;}
 
+.button-ok {
+  background-color: #3399FF;
+  color: #ffffff;
+  width: 100px;
+}
+.button-cancel {
+  background-color: #FF3333;
+  color: #ffffff;
+  width: 100px;
+}
+.button-more {
+  background-color: #FF8000;
+  color: #ffffff;
+  width: 60px;
+}
+.table-buildings {
+  width: 100%;
+}
+
 @media (max-width: 1024px) {
     .section_content .content-line {min-height: 320px; margin-bottom: 20px;}
     .search-sort .search-sort-item .button {

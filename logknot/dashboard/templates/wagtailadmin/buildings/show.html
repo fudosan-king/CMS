@@ -453,8 +453,35 @@
                 <button type="submit" class="button button-save">{% trans 'Save' %}</button>
             </div>
         {% else %}
+            <div class="modal" tabindex="-1" role="dialog" id="checkBuilding">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header" align="center">
+                            <h2>重複可</h2>
+                        </div>
+                        <div class="col12 modal-body">
+                            <table class="listing table-buildings">
+                              <thead>
+                                <tr>
+                                  <th scope="col">マンションID</th>
+                                  <th scope="col">マンション名</th>
+                                  <th scope="col">住所</th>
+                                  <th scope="col"></th>
+                                </tr>
+                              </thead>
+                              <tbody class="buildings-result">
+                              </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer" align="center">
+                            <button type="submit" class="button button-center button-ok">{% trans '新規' %}</button>
+                            <button class="button button-center button-cancel" data-dismiss="modal">{% trans 'キャンセル' %}</button>
+                        </div>
+                </div>
+                </div>
+            </div>
             <div class="button-submit" align="center">
-                <button type="submit" class="button button-center">{% trans '作成する' %}</button>
+                <button class="button button-center" data-toggle="modal" data-target="#checkBuilding" onclick="searchBuildings()">{% trans '作成する' %}</button>
             </div>
         {% endif %}
     </form>
@@ -498,6 +525,33 @@
 {% block extra_js %}
     <script>
         $('#listPhotos').modal('hidden');
+
+        // Duplicate verification required before new registration
+        function searchBuildings(){
+            $('.buildings-result tr').remove();
+            var pref = $('#id_pref').val();
+            var city = $('#id_city').val();
+            var ooaza = $('#id_ooaza').val();
+            var tyoume = $('#id_tyoume').val();
+            if (pref && city && ooaza && tyoume) {
+                $.ajax({
+                method: 'GET',
+                url: '/api/buildings/' + pref + '/' + city + '/' + ooaza + '/' + tyoume + '/',
+                }).done(function(data) {
+                    for (i=0; i<data.length; i++){
+                        $('.buildings-result').append(`
+                            <tr>
+                              <th scope="row">` + data[i]['building_id'] + `</th>
+                              <td>` + data[i]['building_name'] + `</td>
+                              <td>` + data[i]['address'] + `</td>
+                              <td><a href="` + data[i]['link'] + `" target="_blank" class="button button-center button-more">{% trans '見る' %}</a></td>
+                            </tr>
+                        `);
+                    }
+                });
+            }
+
+        };
 
         // Function add div photo
         function insertPhoto(){

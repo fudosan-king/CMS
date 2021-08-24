@@ -1,6 +1,19 @@
 from .core import Left2RightConverterBase
 from dashboard.models import Transports
 
+NUM_JP = {
+    '0': '０',
+    '1': '１',
+    '2': '２',
+    '3': '３',
+    '4': '４',
+    '5': '５',
+    '6': '６',
+    '7': '７',
+    '8': '８',
+    '9': '９',
+}
+
 
 class NotFoundError(Exception):
     pass
@@ -102,7 +115,7 @@ class FromCSVConverter(Left2RightConverterBase):
         right.set('address.city', city)
         right.set('address.ooaza', ooaza)
         if tyoume_hidden and len(tyoume_hidden) == 2:
-            right.set('address.tyoume', u'{}丁目'.format(tyoume_hidden[0]))
+            right.set('address.tyoume', u'{}丁目'.format(NUM_JP.get(tyoume_hidden[0])))
             right.set('address.hidden', tyoume_hidden[1])
         elif tyoume_hidden and len(tyoume_hidden) == 1:
             right.set('address.tyoume', u'')

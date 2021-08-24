@@ -88,8 +88,8 @@ def result(request):
         q &= Q(address__pref=request.GET.get('pref'))
     if request.GET.getlist('city', []):
         q &= Q(address__city__in=request.GET.getlist('city'))
-    if request.GET.getlist('station_name', []):
-        q &= Q(transports__station_name__in=request.GET.getlist('station_name'))
+    if request.GET.getlist('transport_company', []):
+        q &= Q(transports__transport_company__in=request.GET.getlist('transport_company'))
 
     buildings = Buildings.objects().filter(q).order_by('-created_at')
 

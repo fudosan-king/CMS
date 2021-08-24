@@ -62,4 +62,7 @@
     {% main_nav_js %}
 
     {% block extra_js %}{% endblock %}
+    <script type="text/javascript">
+        setTimeout(function(){$('.messages').hide(500);}, 4000);
+    </script>
 {% endblock %}

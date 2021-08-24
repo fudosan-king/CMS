@@ -40,7 +40,7 @@
                 </ul>
             {% elif kind == 'station' %}
                 <ul class="search-sort-item sort-append" align="left">
-                {% for st in search_sort.station_name %}
+                {% for st in search_sort.transport_company %}
                     <li>
                         <a class="button button-secondary button-delete"><span class="lable">{{ st }}</span><span class="item-add">-</span></a>
                         <input type="hidden" name="station" value="{{ st }}">

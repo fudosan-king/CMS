@@ -29,10 +29,15 @@
         </div>
     </header>
 
-    <form method="post" action="{{ action }}" class="building-content">
+    <form method="post" action="{{ action }}" class="building-content" novalidate>
         {% csrf_token %}
         <ul class="tab-nav merged" data-tab-nav="">
-            <li class="active"><a href="#information">{% trans '情報' %}</a></li>
+            <li class="active"><a href="#information">{% trans '基本情報' %}</a></li>
+            <li><a href="#price">{% trans '価格' %}</a></li>
+            <li><a href="#building_room">{% trans '建物部屋' %}</a></li>
+            <li><a href="#land_rights">{% trans '土地権利' %}</a></li>
+            <li><a href="#limitations">{% trans '制限事項' %}</a></li>
+            <li><a href="#facility">{% trans '設備' %}</a></li>
             <li><a href="#google">{% trans 'Google map 座標' %}</a></li>
             <li><a href="#room">{% trans '部屋' %}</a></li>
             <li><a href="#renovation">{% trans 'リノベーション' %}</a></li>
@@ -46,7 +51,7 @@
           {% for field in forms %}
             {% if field.errors %}
               <li class="col6">
-                <a href="#{{ field.name }}">{{ field.label }}: {% for error in field.errors %} {{ error }} {% endfor %}</a>
+                <a>{{ field.label }}: {% for error in field.errors %} {{ error }} {% endfor %}</a>
               </li>
             {% endif %}
           {% endfor %}
@@ -56,8 +61,14 @@
         <div class="tab-content">
             <section id="information" class="active nice-padding">
                 <div class="row">
+
                     <div class="col6 column-content">
+                        <div class="col12 sub-category">基本情報</div>
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.estate_subtype col='col12' error=forms.errors.estate_subtype %}
+
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.building_name col='col12' error=forms.errors.building_name %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.building_name_kana col='col12' error=forms.errors.building_name_kana %}
 
                         <div class="col12 field-building {% if forms.recommend.error %}error{% endif %}">
                             <div class="field-checkbox">
@@ -66,12 +77,110 @@
                             <span class="message-error">{{ forms.recommend.error }}</span>
                         </div>
 
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.structure col='col6' error=forms.errors.structure %}
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.company col='col12' error=forms.errors.company %}
 
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.ground_floors col='col6' error=forms.errors.ground_floors %}
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.design_club col='col12' error=forms.errors.design_club %}
 
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.underground_floors col='col5' error=forms.errors.underground_floors %}
+                    </div>
+                    <div class="col6 column-content">
+                        <div class="col12 sub-category">所在地</div>
+                        <div class="col12 field-building {% if forms.errors.zipcode_1 or forms.errors.zipcode_2 %}error{% endif %}">
+                            <div class="col12">
+                                <span class="field-label">{{ forms.zipcode_1.label }}</span><span class="required-field">({% trans 'required' %})</span>
+                            </div>
+                            <div class="col3">{{ forms.zipcode_1 }}</div><div class="col1 zipcode"> - </div><div class="col4">{{ forms.zipcode_2 }}</div>
+                            <div class="col12">
+                                <span class="message-error">{{ forms.errors.zipcode_1 }}{{ forms.errors.zipcode_2 }}</span>
+                            </div>
+                        </div>
 
+                        {% include 'wagtailadmin/buildings/form_address.html' with pref=pref data=building_detail.address error_pref=forms.errors.pref error_city=forms.errors.city error_ooaza=forms.errors.ooaza%}
+
+                        <div class="col12 sub-category">交通</div>
+                        {% include 'wagtailadmin/buildings/form_transports.html' with pref=map_pref data=building_detail.transports %}
+
+                    <div>
+                </div>
+            </section>
+
+            <section id="price" class="nice-padding">
+                <div class="row">
+                    <div class="col6 column-content">
+                        <div class="col12 sub-category">管理費・修繕積立金</div>
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.management_scope col='col6' error=forms.errors.management_scope %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.superintendent col='col6' error=forms.errors.superintendent %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.management_company col='col6' error=forms.errors.management_company %}
+
+                        <div class="col12 sub-category">設備費用</div>
+
+                        {% include 'wagtailadmin/buildings/form_fee.html' with data=building_detail.usen_fee label='有線放送' name='usen_fee' %}
+
+                        {% include 'wagtailadmin/buildings/form_fee.html' with data=building_detail.internet_fee label='インターネット' name='internet_fee' %}
+
+                        {% include 'wagtailadmin/buildings/form_fee.html' with data=building_detail.catv_fee label='CATV' name='catv_fee' %}
+
+                        <div class="col12 sub-category">温泉</div>
+
+                        {% include 'wagtailadmin/buildings/form_spa_fee.html' with data=building_detail.spa_fee spa_type=building_detail.spa_type spa_tags=building_detail.spa_tags %}
+
+                        <div class="col12 sub-category">権利金</div>
+
+                        {% include 'wagtailadmin/buildings/form_money.html' with rights_fee=building_detail.rights_fee guarantee_fee=building_detail.guarantee_fee guarantee_fee_depreciation=building_detail.guarantee_fee_depreciation deposit_fee=building_detail.deposit_fee %}
+
+
+                    </div>
+
+                    <div class="col6 column-content">
+                        <div class="col12 sub-category">駐車場</div>
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.carpark_type col='col3' error=forms.errors.carpark_type %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.carpark_space col='col3' error=forms.errors.carpark_space %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.carpark_space_cars col='col6' error=forms.errors.carpark_space_cars group='台' %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.carpark_place col='col3' error=forms.errors.carpark_place %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.carpark_fee_min col='col4' error=forms.errors.carpark_fee_min group='円/' %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.carpark_fee_per col='col2' error=forms.errors.carpark_fee_per %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.carpark_fee_tax_inc col='col3' error=forms.errors.carpark_fee_tax_inc %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.carpark_note col='col12' error=forms.errors.carpark_note %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.bike_park col='col3' error=forms.errors.bike_park %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.bike_park_price col='col6' error=forms.errors.bike_park_price group='円/' %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.bike_park_price_per col='col3' error=forms.errors.bike_park_price_per %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.bicycles_park col='col3' error=forms.errors.bicycles_park %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.bicycles_park_price col='col6' error=forms.errors.bicycles_park_price group='円/' %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.bicycles_park_price_per col='col3' error=forms.errors.bicycles_park_price_per %}
+
+
+                        <div class="col12 sub-category">町会費</div>
+
+                        {% include 'wagtailadmin/buildings/form_community_fee.html' with community_fee=building_detail.community_fee community_fee_type=building_detail.community_fee_type %}
+
+                        <div class="col12 sub-category">その他の費用</div>
+
+                        {% include 'wagtailadmin/buildings/form_other_fee.html' with other_fee=building_detail.other_fee %}
+
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="building_room" class="nice-padding">
+                <div class="row">
+                    <div class="col6 column-content">
+                        <div class="col12 sub-category">築年数</div>
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.built_date_year col='col3' error=forms.errors.built_date_year %}
                         <div class="col1 field-building ">
                             <span class="built-date">年</span>
@@ -81,42 +190,85 @@
                         <div class="col1 field-building ">
                             <span class="built-date">月</span>
                         </div>
-
+                        <div class="col12 sub-category">面積・規模</div>
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.total_houses col='col6' error=forms.errors.total_houses %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.management_scope col='col6' error=forms.errors.management_scope %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.area_purpose col='col6' error=forms.errors.area_purpose %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.company col='col12' error=forms.errors.company %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.constructor_label col='col6' error=forms.errors.constructor_label %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.design_club col='col6' error=forms.errors.design_club %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.management_company col='col6' error=forms.errors.management_company %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.banners_1 col='col12' error=forms.errors.banners_1 %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.banners_2 col='col12' error=forms.errors.banners_2 %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.banners_3 col='col12' error=forms.errors.banners_3 %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.banners_4 col='col12' error=forms.errors.banners_4 %}
-
                     </div>
+
                     <div class="col6 column-content">
+                        <div class="col12 sub-category">構造</div>
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.ground_floors col='col6' error=forms.errors.ground_floors %}
 
-                        {% include 'wagtailadmin/buildings/form_address.html' with pref=pref data=building_detail.address %}
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.underground_floors col='col6' error=forms.errors.underground_floors %}
+                        <div class="col12">&nbsp;</div>
+                        <div class="col12 form-community">
+                            <div class="col2 sub-field-label">施工会社</div>
+                            {% include 'wagtailadmin/buildings/form_input.html' with field=forms.constructor_label col='col10' error=forms.errors.constructor_label hide_label=True %}
+                            <div class="col2 sub-field-label"></div>
+                            {% include 'wagtailadmin/buildings/form_input.html' with field=forms.constructor col='col10' error=forms.errors.constructor hide_label=True %}
+                        </div>
 
-                        {% include 'wagtailadmin/buildings/form_transports.html' with pref=map_pref data=building_detail.transports %}
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.building_confirmation_number col='col12' error=forms.errors.building_confirmation_number %}
 
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.land_rights col='col12' error=forms.errors.land_rights %}
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.structure col='col6' error=forms.errors.structure %}
 
-                    <div>
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.structure_part col='col6' error=forms.errors.structure_part %}
+                    </div>
                 </div>
             </section>
 
+            <section id="land_rights" class="nice-padding">
+                <div class="row">
+                    <div class="col6 column-content">
+                        <div class="col12 sub-category">敷地権利</div>
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.land_rights col='col12' error=forms.errors.land_rights %}
+                        <div class="col12 sub-category">ライフライン</div>
+                        <div class="checkbox">
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.waterworks col='col12' error=forms.errors.waterworks %}
+                        </div>
+
+                        <div class="checkbox">
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.sewer col='col12' error=forms.errors.sewer %}
+                        </div>
+
+                        <div class="checkbox">
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.gas col='col12' error=forms.errors.gas %}
+                        </div>
+                    </div>
+                    <div class="col6 column-content">
+                        <div class="col12 sub-category">法律・制限</div>
+
+                        <div class="checkbox">
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.land_law_report col='col12' error=forms.errors.land_law_report %}
+                        </div>
+
+                        {% include 'wagtailadmin/buildings/form_area_purpose.html' with area_purpose=building_detail.area_purpose %}
+                    </div>
+                </div>
+            </section>
+
+            <section id="limitations" class="nice-padding">
+                <div class="row">
+                    <div class="col12 column-content">
+                        <div class="col12 sub-category">制限事項</div>
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.limitations col='col12' error=forms.errors.limitations %}
+
+                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.limitations_etc col='col12' error=forms.errors.limitations_etc %}
+                    </div>
+
+                    <div class="col12 column-content">
+                        <div class="col12 sub-category">建築基準法43条</div>
+                        {% include 'wagtailadmin/buildings/form_law43.html' with law43=building_detail.law43 %}
+                    </div>
+                </div>
+            </section>
+
+            <section id="facility" class="nice-padding">
+                <div class="row">
+                    <div class="col12 column-content">
+                        {% include 'wagtailadmin/buildings/form_features.html' with data=building_detail.features features=features %}
+                    </div>
+                </div>
+            </section>
 
             <section id="google" class="nice-padding">
                 <div class="row">
@@ -175,8 +327,6 @@
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.other_fee col='col6' error=forms.errors.other_fee %}
 
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.when_to_move_in col='col6' error=forms.errors.when_to_move_in %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.limitations col='col12' error=forms.errors.limitations %}
 
                     </div>
                 </div>
@@ -478,9 +628,10 @@
             $('[id=id_pref_transports]').change(function() {
                 var pref = $(this).val();
                 var transport = $(this).parent().parent().parent();
+                transport.find('#id_transport_company option').remove();
                 transport.find('#id_station_name option').remove();
-                transport.find('#id_station_to option').remove();
                 transport.find('#id_walk_mins').val('');
+                transport.find('#id_transport_company').append(new Option('↓(駅名)', ''));
                 transport.find('#id_station_name').append(new Option('↓(駅名)', ''));
                 if (pref) {
                     $.ajax({
@@ -488,24 +639,24 @@
                     url: '/api/railroad/' + pref + '/',
                     }).done(function(data) {
                         for (i=0; i<data.length; i++){
-                            transport.find('#id_station_name').append(new Option(data[i], data[i]));
+                            transport.find('#id_transport_company').append(new Option(data[i], data[i]));
                         }
                     });
                 }
             });
-            $('[id=id_station_name]').change(function() {
-                var station_name = $(this).val();
+            $('[id=id_transport_company]').change(function() {
+                var transport_company = $(this).val();
                 var transport = $(this).parent().parent().parent();
                 var pref = transport.find('#id_pref_transports').val();
-                transport.find('#id_station_to option').remove();
+                transport.find('#id_station_name option').remove();
                 transport.find('#id_walk_mins').val('');
-                if (pref && station_name) {
+                if (pref && transport_company) {
                     $.ajax({
                     method: 'GET',
-                    url: '/api/railroad/' + pref + '/' + station_name + '/',
+                    url: '/api/railroad/' + pref + '/' + transport_company + '/',
                     }).done(function(data) {
                         for (i=0; i<data.length; i++){
-                            transport.find('#id_station_to').append(new Option(data[i], data[i]));
+                            transport.find('#id_station_name').append(new Option(data[i], data[i]));
                         }
                     });
                 }

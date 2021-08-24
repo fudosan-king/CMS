@@ -1,0 +1,38 @@
+{% load i18n wagtailadmin_tags %}
+{% load wagtailimages_tags %}
+
+<div class="col12 form-fee">
+	<div class="col12"><span class="field-label">{{ label }}</span></div>
+
+	<div class="col12">
+		<div class="col2 sub-field-label">初期費用</div>
+	    <div class="col2">
+	    	<label for="{{ name }}-initial_unfixed"><input id="{{ name }}-initial_unfixed" name="{{ name }}-initial_unfixed" type="checkbox" value="y" {% if data.initial_unfixed %}checked{% endif %}>未定</label>
+	    </div>
+	    <div class="col1">
+	    	<label for="{{ name }}-initial_no"><input id="{{ name }}-initial_no" name="{{ name }}-initial_no" type="checkbox" value="y" {% if data.initial_no %}checked{% endif %}>無</label>
+	    </div>
+	    <div class="col3">
+	    	<div class="input-group"><input id="{{ name }}-initial_cost" name="{{ name }}-initial_cost" type="number" min="0" value="{{ data.initial_cost }}"><span class="input-group-addon">円</span></div>
+		</div>
+		<div class="col4">
+		</div>
+	</div>
+	<div class="col12">
+		<div class="col2 sub-field-label">定額費用</div>
+		<div class="col2">
+	  		<label for="{{ name }}-repeat_cost-unfixed"><input id="{{ name }}-repeat_cost-unfixed" name="{{ name }}-repeat_cost-unfixed" type="checkbox" value="y" {% if data.repeat_cost.unfixed %}checked{% endif %}>未定</label>
+	  	</div>
+	  	<div class="col1">
+			<label for="{{ name }}-repeat_cost-no"><input id="{{ name }}-repeat_cost-no" name="{{ name }}-repeat_cost-no" type="checkbox" value="y" {% if data.repeat_cost.no %}checked{% endif %}>無</label>
+		</div>
+		<div class="col3">
+			<div class="input-group"><input id="{{ name }}-repeat_cost-price" name="{{ name }}-repeat_cost-price" type="number" min="0" value="{{ data.repeat_cost.price }}"><span class="input-group-addon">円/</span></div>
+		</div>
+		<div class="col4">
+			<label><input checked="" id="{{ name }}-repeat_cost-per-0" name="{{ name }}-repeat_cost-per" type="radio" value="m" {% if data.repeat_cost.per == 'm' %}checked{% endif %}>月</label>
+			<label><input id="{{ name }}-repeat_cost-per-1" name="{{ name }}-repeat_cost-per" type="radio" value="y" {% if data.repeat_cost.per == 'y' %}checked{% endif %}>年</label>
+			<label><input id="{{ name }}-repeat_cost-per-2" name="{{ name }}-repeat_cost-per" type="radio" value="bulk" {% if data.repeat_cost.per == 'bulk' %}checked{% endif %}>一括</label>
+		</div>
+	</div>
+</div>

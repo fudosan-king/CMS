@@ -1,0 +1,33 @@
+{% load i18n wagtailadmin_tags %}
+{% load wagtailimages_tags %}
+
+<div class="col12 form-area">
+	<div class="col12">
+		<div class="col2 sub-field-label">区分</div>
+		<div class="col10">
+			<select class="form-control small-field" id="law43-type" name="law43-type">
+				<option selected="" value="">(未選択)</option>
+				<option value="1" {% if law43.type == '1' %}selected{% endif %}>建築基準法43条但書許可要。事前相談による一次決済取得</option>
+				<option value="2" {% if law43.type == '2' %}selected{% endif %}>建築基準法43条但書許可要。一括(包括)許可同意基準に適合</option>
+				<option value="3" {% if law43.type == '3' %}selected{% endif %}>建築基準法43条但書許可要。</option>
+				<option value="4" {% if law43.type == '4' %}selected{% endif %}>再建築不可。43条但書の許可取得により再建築可</option></select>
+		</div>
+		<div class="law43-detail {% if law43.type and law43.type == '3' %}law43-active{% endif %}">
+			<div class="col2 sub-field-label">区分コメント</div>
+			<div class="col10">
+				<input type="text" maxlength="60" name="law43-comment" value="{{ law43.comment }}">
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$('select[name="law43-type"]').change(function() {
+		if ($(this).val() != '3'){
+			$('.law43-detail').removeClass('law43-active');
+		} else {
+			$('.law43-detail').addClass('law43-active');
+		}
+	});
+});
+</script>

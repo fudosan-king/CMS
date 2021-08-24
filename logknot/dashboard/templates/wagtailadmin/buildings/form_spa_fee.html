@@ -1,0 +1,62 @@
+{% load i18n wagtailadmin_tags %}
+{% load wagtailimages_tags %}
+
+<div class="col12 form-spa">
+	<div class="col2 sub-field-label">温泉</div>
+	<div class="col10">
+	    <ul class="check_list" id="spa_type">
+	    	<li>
+	    		<label class="spa-fee-inline" for="spa_type-0"><input checked="" id="spa_type-0" name="spa_type" type="radio" value="無" {% if spa_type == '無' %}checked{% endif %}>無</label>
+	    	</li>
+	    	<li>
+	    		<label class="spa-fee-inline" for="spa_type-1"><input id="spa_type-1" name="spa_type" type="radio" value="温泉使用料" {% if spa_type == '温泉使用料' %}checked{% endif %}>温泉使用料</label>
+	    	</li>
+	    	<li>
+	    		<label class="spa-fee-inline" for="spa_type-2"><input id="spa_type-2" name="spa_type" type="radio" value="温泉権利金" {% if spa_type == '温泉権利金' %}checked{% endif %}>温泉権利金</label>
+	    	</li>
+	    </ul>
+	</div>
+
+	<div class="spa-detail {% if spa_type and spa_type != '無' %}spa-active{% endif %}">
+		<div class="col2 sub-field-label">使用料</div>
+		<div class="col2">
+	  		<label for="spa-repeat_cost-unfixed">
+	  			<input id="spa-repeat_cost-unfixed" name="spa-repeat_cost-unfixed" type="checkbox" value="y" {% if data.unfixed %}checked{% endif %}>未定</label>
+	  	</div>
+		<div class="col4">
+			<div class="input-group"><input class="form-control lv-int" id="spa-repeat_cost-price" name="spa-repeat_cost-price" type="number" min="0" value="{{ data.price }}"><span class="input-group-addon">円/</span></div>
+		</div>
+		<div class="col4">
+			<label><input checked="" id="spa-repeat_cost-per-0" name="spa-repeat_cost-per" type="radio" value="m" {% if data.per == 'm' %}checked{% endif %}>月</label>
+			<label><input id="spa-repeat_cost-per-1" name="spa-repeat_cost-per" type="radio" value="y" {% if data.per == 'y' %}checked{% endif %}>年</label>
+			<label><input id="spa-repeat_cost-per-2" name="spa-repeat_cost-per" type="radio" value="bulk" {% if data.per == 'bulk' %}checked{% endif %}>一括</label>
+		</div>
+
+		<div class="col12"></div>
+		<div class="col2 sub-field-label">詳細</div>
+		<div class="col10">
+	          <label class="spa-fee-inline" for="spa_tags-0">
+	          	<input id="spa_tags-0" name="spa_tags" type="checkbox" value="加温" {% if '加温' in spa_tags %}checked{% endif %}>加温</label>
+	          <label class="spa-fee-inline" for="spa_tags-1">
+	          	<input id="spa_tags-1" name="spa_tags" type="checkbox" value="加水" {% if '加水'  in spa_tags %}checked{% endif %}>加水</label>
+	          <label class="spa-fee-inline" for="spa_tags-2">
+	          	<input id="spa_tags-2" name="spa_tags" type="checkbox" value="運び湯" {% if '運び湯'  in spa_tags %}checked{% endif %}>運び湯</label>
+	          <label class="spa-fee-inline" for="spa_tags-3">
+	          	<input id="spa_tags-3" name="spa_tags" type="checkbox" value="循環装置使用" {% if '循環装置使用'  in spa_tags %}checked{% endif %}>循環装置使用</label>
+	          <label class="spa-fee-inline" for="spa_tags-4">
+	          	<input id="spa_tags-4" name="spa_tags" type="checkbox" value="循環ろ過装置使用" {% if '循環ろ過装置使用'  in spa_tags %}checked{% endif %}>循環ろ過装置使用</label>
+	  </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+	$('input[name="spa_type"]').change(function() {
+		if ($(this).val() == '無'){
+			$('.spa-detail').removeClass('spa-active');
+		} else {
+			$('.spa-detail').addClass('spa-active');
+		}
+	});
+});
+</script>

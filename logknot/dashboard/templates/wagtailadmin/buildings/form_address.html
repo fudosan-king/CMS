@@ -2,7 +2,7 @@
 {% load wagtailimages_tags %}
 
 <div class="col12 col-address">
-    <div class="col4 field-building">
+    <div class="col4 field-building {% if error_pref %}error{% endif %}">
         <span class="field-label">{% trans '住所' %}</span><span class="required-field">({% trans 'required' %})</span>
         <div>
             <select name="pref" value="" id="id_pref" required>
@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div class="col4 field-building">
+    <div class="col4 field-building {% if error_city %}error{% endif %}">
         <span class="field-label">&nbsp;</span>
         <div>
             <select name="city" value="" id="id_city" required>
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div class="col4 field-building">
+    <div class="col4 field-building {% if error_ooaza %}error{% endif %}">
         <span class="field-label">&nbsp;</span>
         <div>
             <select name="ooaza" value="" id="id_ooaza" required>

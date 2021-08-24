@@ -23,16 +23,16 @@ class RailRoadViewSet(GenericViewSet):
         with open('data/railroad.json', 'r', encoding='utf8') as f:
             data = eval(f.read())
             if pref and pref in data:
-                station_name_all = list(data[pref].keys())
+                transport_company_all = list(data[pref].keys())
                 if search_sort:
-                    station_name = search_sort.station_name
+                    transport_company = search_sort.transport_company
                 else:
-                    station_name = []
-                for st in station_name_all:
-                    if st not in station_name:
-                        station_name.append(st)
+                    transport_company = []
+                for st in transport_company_all:
+                    if st not in transport_company:
+                        transport_company.append(st)
                 return JsonResponse(
-                    station_name,
+                    transport_company,
                     safe=False,
                     json_dumps_params={'ensure_ascii': False},
                     content_type='application/json',

@@ -10,27 +10,36 @@ rules:
   - index: 0
     key: building_name
     converter: converter_building_name
-  - pass
+  # index 1
+  - processor: process_zipcode
+  # index: 2 - 5
   - processor: process_address
-  - index: 6
-    key: structure
-    converter: converter_structure
+  # index: 6
+  - processor: process_structure
   - index: 7
     key: ground_floors
+    converter: converter_int
   - index: 8
     key: underground_floors
+    converter: converter_int
+  # index: 9
   - processor: processor_built_date
   - index: 10
     key: total_houses
   - index: 11
-    key: management_scope
+    key: superintendent
   - index: 12
     key: land_rights
-    converter: converter_land_rights
+    converter: converter_list
   - index: 13
     key: management_company
+  # index: 14
   - pass
+  # index: 15
   - pass
+  # index: 16
   - pass
+  # index: 17
   - processor: process_room
+  # index: 18 - end
   - processor: process_transports

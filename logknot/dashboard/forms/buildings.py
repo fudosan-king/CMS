@@ -4,74 +4,63 @@ from dashboard.models import Buildings, Photos
 from django.utils.translation import gettext as _  # noqa
 from django.utils.translation import gettext_lazy as __  # noqa
 import datetime
+from dashboard.forms.core import double
 
 
-CATEGORY = [
-    ('', ''),
-    ('カテゴリー1', 'カテゴリー1'),
-    ('カテゴリー2', 'カテゴリー2')
-]
+CATEGORY = double('', 'カテゴリー1', 'カテゴリー2')
 
-DIRECTION = [
-    ('', ''),
-    ('北', '北'),
-    ('北東', '北東'),
-    ('東', '東'),
-    ('南東', '南東'),
-    ('南', '南'),
-    ('南西', '南西'),
-    ('西', '西'),
-    ('北西', '北西'),
-]
+DIRECTION = double('', '北', '北東', '東', '南東', '南', '南西', '西', '北西')
 
-ROOM_KIND = [
-    ('', ''),
-    ('K', 'K'),
-    ('R', 'R'),
-    ('DK', 'DK'),
-    ('LK', 'LK'),
-    ('SK', 'SK'),
-    ('LDK', 'LDK'),
-    ('SDK', 'SDK'),
-    ('SLDK', 'SLDK'),
-    ('間取り最大', '間取り最大')
-]
+ROOM_KIND = double('', 'K', 'R', 'DK', 'LK', 'SK', 'LDK', 'SDK', 'SLDK', '間取り最大')
 
-LIMITATIONS = [
-    ('文化財保護法', '文化財保護法'),
-    ('密集市街地整備法', '密集市街地整備法')
-]
+LIMITATIONS = double(
+    '文化財保護法', '古都保存法', '景観法', '密集市街地整備法', '航空法', '河川法', '砂防法', '農地法届出要',
+    '安全条例', '宅地造成工事規制区域', '急傾斜地崩壊危険区域', '高度地区', '高度利用地区', '中高層階住居専用地区',
+    '高層住宅誘導地区', '防火地域', '準防火地域', '風致地区', '景観地区', '準景観地区', '観光地区', '歴史的風土保存地区',
+    '伝統的建造物群保存地区', '特定街区', '特別用途制限地域', '文教地区', '都市再生特別地区', '特別緑地保全地区',
+    '高さ最高限度有', '高さ最低限度有', '建ぺい率最低限度有', '容積率最低限度有', '敷地面積最高限度有', '敷地面積最低限度有',
+    '建物面積最高限度有', '建物面積最低限度有', '一部都市計画道路', '一部協定通路', '日影制限有', '隅切り有', '接道と段差有',
+    '敷地内段差有', '壁面後退有', '建築協定有', '崖下につき建築制限有', '崖上につき建築制限有', '不整形地')
 
-STRUCTURE = [
-    ('', ''),
-    ('PC', 'PC'),
-    ('RC', 'RC'),
-    ('SRC', 'SRC'),
-    ('軽量鉄骨造', '軽量鉄骨造'),
-    ('鉄骨', '鉄骨'),
-    ('その他', 'その他')
-]
+STRUCTURE = double(
+    '木造', '鉄骨', 'RC', 'SRC', 'PC', 'HPC', '軽量鉄骨', 'ALC', 'CFT',
+    'ブロック', '鉄筋ブロック', 'その他')
 
+STRUCTURE_PART = double(
+    '木造', '鉄骨', 'RC', 'SRC', 'PC', 'HPC', '軽量鉄骨', 'ALC', 'CFT',
+    'ブロック', '鉄筋ブロック', 'その他')
 
-MANAGEMENT_SCOPE = [
-    ('', ''),
-    ('自主管理', '自主管理'),
-    ('一部委託', '一部委託'),
-    ('全部委託', '全部委託')
-]
+MANAGEMENT_SCOPE = double('自主管理', '一部委託', '全部委託')
 
-LAND_RIGHTS = [
-    ('借地権', '借地権'),
-    ('地上権', '地上権'),
-    ('所有権', '所有権'),
-    ('定期借地権', '定期借地権')
-]
+LAND_RIGHTS = double('借地権', '地上権', '所有権', '定期借地権')
 
-AREA_PURPOSE = [
-    ('', ''),
-    ('庭', '庭'),
-    ('プール', 'プール'),
-]
+ESTATE_SUBTYPE = double('マンション', '公団', '公社', 'タウンハウス', 'リゾートマンション')
+
+SUPER_INTENDENT = double('日勤', '巡回', '常駐', '非常駐')
+
+CARPARK_TYPE = double('無', '駐車場', '分譲駐車場(必購入)', '分譲駐車場(任意購入)', '専用使用権付駐車場')
+
+NO_YES = double('無', '有')
+
+CARPARK_PLACE = double('敷地内', '敷地外')
+
+PER_MONTH = [('m', '月'), ('y', '年')]
+
+PARK = double('無', '空無', '有', '近有')
+
+TAX_INC = double('税込み', '税抜き')
+
+CONSTRUCTOR_LABEL = double(
+    '無し', '株式会社 - 前', '合名会社 - 前', '合資会社 - 前', '合同会社 - 前',
+    '有限会社 - 前', '株式会社 - 後', '合名会社 - 後', '合資会社 - 後', '合同会社 - 後', '有限会社 - 後')
+
+WATERWORKS = double('公営水道', '私設水道', '井戸', 'その他')
+
+SEWER = double('本下水', '集中浄化槽', '個別浄化槽', '汲取', 'その他')
+
+GAS = double('都市ガス', '集中', 'LPG個別', 'LPG', 'オール電化', 'その他')
+
+LAN_LAW_REPORT = double('要', '届出中', '不要')
 
 
 class PhotosForm(EmbeddedDocumentForm):
@@ -82,10 +71,36 @@ class PhotosForm(EmbeddedDocumentForm):
 
 
 class BuildingsForm(DocumentForm):
+    estate_subtype = forms.CharField(
+        label=__('物件種別'),
+        max_length=20,
+        initial='マンション',
+        widget=forms.Select(
+            choices=ESTATE_SUBTYPE,
+        ),
+    )
     building_name = forms.CharField(
         label=__('物件名'),
         max_length=50,
         widget=forms.TextInput()
+    )
+    building_name_kana = forms.CharField(
+        label=__('物件名（フリガナ）'),
+        max_length=50,
+        required=False,
+        widget=forms.TextInput()
+    )
+    zipcode_1 = forms.CharField(
+        label=__('郵便番号'),
+        max_length=3,
+        required=True,
+        widget=forms.NumberInput()
+    )
+    zipcode_2 = forms.CharField(
+        label=__('郵便番号'),
+        max_length=4,
+        required=True,
+        widget=forms.NumberInput()
     )
     recommend = forms.BooleanField(
         label=__('お勧め'),
@@ -93,21 +108,31 @@ class BuildingsForm(DocumentForm):
         widget=forms.CheckboxInput()
     )
     structure = forms.CharField(
-        label=__('構造'),
+        label=__('構造(主要)'),
         max_length=254,
         widget=forms.Select(
             choices=STRUCTURE
         ),
+        initial='その他',
         required=True
     )
+    structure_part = forms.CharField(
+        label=__('構造(一部)'),
+        max_length=254,
+        widget=forms.Select(
+            choices=STRUCTURE_PART
+        ),
+        initial='その他',
+        required=False
+    )
     ground_floors = forms.IntegerField(
-        label=__('階建て'),
+        label=__('階建て（地上）'),
         required=True,
         widget=forms.NumberInput()
     )
     underground_floors = forms.IntegerField(
-        label=__('階建て (地下)'),
-        required=False,
+        label=__('階建て（地下）'),
+        required=True,
         widget=forms.NumberInput()
     )
     built_date_year = forms.IntegerField(
@@ -140,22 +165,52 @@ class BuildingsForm(DocumentForm):
         widget=forms.Select(
             choices=MANAGEMENT_SCOPE
         ),
+        required=True,
+        initial='自主管理'
+    )
+    superintendent = forms.CharField(
+        label=__('管理人'),
+        max_length=254,
+        widget=forms.Select(
+            choices=SUPER_INTENDENT
+        ),
         required=False
     )
     land_rights = forms.MultipleChoiceField(
-        label=__('土地権利'),
-        required=False,
+        label=__('敷地権利'),
+        required=True,
         choices=LAND_RIGHTS,
         initial=[c[0] for c in LAND_RIGHTS],
         widget=forms.CheckboxSelectMultiple()
     )
-    area_purpose = forms.CharField(
-        label=__('用途地域'),
-        max_length=254,
-        widget=forms.Select(
-            choices=AREA_PURPOSE
+    waterworks = forms.CharField(
+        label=__('上水道'),
+        widget=forms.RadioSelect(
+            choices=WATERWORKS
         ),
         required=False
+    )
+    sewer = forms.CharField(
+        label=__('下水道'),
+        widget=forms.RadioSelect(
+            choices=SEWER
+        ),
+        required=False
+    )
+    gas = forms.CharField(
+        label=__('ガス'),
+        widget=forms.RadioSelect(
+            choices=GAS
+        ),
+        required=False
+    )
+    land_law_report = forms.CharField(
+        label=__('国土法'),
+        widget=forms.RadioSelect(
+            choices=LAN_LAW_REPORT
+        ),
+        initial='要',
+        required=True
     )
     company = forms.CharField(
         label=__('分譲会社'),
@@ -165,7 +220,20 @@ class BuildingsForm(DocumentForm):
     )
     constructor_label = forms.CharField(
         label=__('施工会社'),
+        widget=forms.Select(
+            choices=CONSTRUCTOR_LABEL
+        ),
+        required=False
+    )
+    building_confirmation_number = forms.CharField(
+        label=__('建築確認番号'),
         max_length=50,
+        widget=forms.TextInput(),
+        required=False
+    )
+    constructor = forms.CharField(
+        label=__('施工会社'),
+        max_length=100,
         widget=forms.TextInput(),
         required=False
     )
@@ -181,28 +249,106 @@ class BuildingsForm(DocumentForm):
         widget=forms.TextInput(),
         required=False
     )
-    banners_1 = forms.CharField(
-        label=__('物件画像（画像URL1）'),
-        max_length=50,
-        widget=forms.TextInput(),
+    carpark_type = forms.CharField(
+        label=__('駐車場'),
+        max_length=254,
+        widget=forms.Select(
+            choices=CARPARK_TYPE
+        ),
         required=False
     )
-    banners_2 = forms.CharField(
-        label=__('物件画像（画像URL2）'),
+    carpark_space = forms.CharField(
+        label=__('空き'),
         max_length=254,
-        widget=forms.TextInput(),
+        widget=forms.Select(
+            choices=NO_YES
+        ),
         required=False
     )
-    banners_3 = forms.CharField(
-        label=__('物件画像（画像URL3）'),
-        max_length=254,
-        widget=forms.TextInput(),
+    carpark_space_cars = forms.IntegerField(
+        label=__('空き台数'),
+        widget=forms.NumberInput(),
+        min_value=0,
         required=False
     )
-    banners_4 = forms.CharField(
-        label=__('物件画像（画像URL4）'),
+    carpark_place = forms.CharField(
+        label=__('場所'),
         max_length=254,
-        widget=forms.TextInput(),
+        widget=forms.Select(
+            choices=CARPARK_PLACE
+        ),
+        required=False
+    )
+    carpark_fee_min = forms.IntegerField(
+        label=__('料金金額'),
+        widget=forms.NumberInput(),
+        min_value=0,
+        required=False
+    )
+    carpark_fee_per = forms.CharField(
+        label=__('料金支払方法'),
+        max_length=254,
+        widget=forms.Select(
+            choices=PER_MONTH
+        ),
+        required=False
+    )
+    carpark_fee_tax_inc = forms.CharField(
+        label=__('料金税抜き・込み'),
+        max_length=254,
+        widget=forms.Select(
+            choices=TAX_INC
+        ),
+        required=False
+    )
+    carpark_note = forms.CharField(
+        widget=forms.Textarea(),
+        required=False,
+        max_length=100,
+        label=__('備考')
+    )
+    bike_park = forms.CharField(
+        label=__('バイク置場'),
+        max_length=254,
+        widget=forms.Select(
+            choices=PARK
+        ),
+        required=False
+    )
+    bike_park_price = forms.IntegerField(
+        label=__('バイク置場料金'),
+        widget=forms.NumberInput(),
+        min_value=0,
+        required=False
+    )
+    bike_park_price_per = forms.CharField(
+        label=__('バイク置場料金（期間）'),
+        max_length=254,
+        widget=forms.Select(
+            choices=PER_MONTH
+        ),
+        required=False
+    )
+    bicycles_park = forms.CharField(
+        label=__('駐輪場'),
+        max_length=254,
+        widget=forms.Select(
+            choices=PARK
+        ),
+        required=False
+    )
+    bicycles_park_price = forms.IntegerField(
+        label=__('駐輪場料金'),
+        widget=forms.NumberInput(),
+        min_value=0,
+        required=False
+    )
+    bicycles_park_price_per = forms.CharField(
+        label=__('駐輪場料金（期間）'),
+        max_length=254,
+        widget=forms.Select(
+            choices=PER_MONTH
+        ),
         required=False
     )
     google_map = forms.CharField(
@@ -303,12 +449,6 @@ class BuildingsForm(DocumentForm):
         required=False,
         widget=forms.NumberInput()
     )
-    other_fee = forms.CharField(
-        label=__('諸費用'),
-        required=False,
-        max_length=50,
-        widget=forms.TextInput()
-    )
     when_to_move_in = forms.DateField(
         label=__('入居時期'),
         required=False,
@@ -316,11 +456,17 @@ class BuildingsForm(DocumentForm):
         widget=forms.DateInput()
     )
     limitations = forms.MultipleChoiceField(
-        label=__('その他制限事項'),
+        label=__('法令上の制限'),
         required=False,
         choices=LIMITATIONS,
-        initial=[c[0] for c in LIMITATIONS],
+        # initial=[c[0] for c in LIMITATIONS],
         widget=forms.CheckboxSelectMultiple()
+    )
+    limitations_etc = forms.CharField(
+        label=__('その他制限事項'),
+        max_length=60,
+        widget=forms.TextInput(),
+        required=False
     )
     price_full_renovation = forms.IntegerField(
         label=__('フルリノベーション概算価格'),
@@ -344,6 +490,18 @@ class BuildingsForm(DocumentForm):
         max_length=1000,
         widget=forms.Textarea(),
         required=False
+    )
+    pref = forms.CharField(
+        label=__('住所'),
+        required=True
+    )
+    city = forms.CharField(
+        label=__('住所'),
+        required=True
+    )
+    ooaza = forms.CharField(
+        label=__('住所'),
+        required=True
     )
 
     class Meta:

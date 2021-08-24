@@ -28,15 +28,43 @@ class FromCSVConverter(Left2RightConverterBase):
         }
         return structure.get(val, u'')
 
-    def converter_land_rights(self, val, left, right, rule):
+    def converter_list(self, val, left, right, rule):
         val = val.split('、')
         return val
+
+    def converter_int(self, val, left, right, rule):
+        try:
+            val = int(val)
+        except:
+            val = 0
+        return val
+
+    def process_structure(self, rule, left, right):
+        structure = left.pop()
+        structure_format = {
+            'PC（プレキャストコンクリート）': 'PC',
+            'RC（鉄筋コンクリート）': 'RC',
+            'RC一部SRC（鉄筋コンクリート一部鉄骨鉄筋コンクリート）': 'RC',
+            'SRC（鉄骨鉄筋コンクリート）': 'SRC',
+            'SRC一部RC（鉄骨鉄筋コンクリート一部鉄筋コンクリート）': 'SRC',
+            'SRC一部S（鉄骨鉄筋コンクリート一部鉄骨）': 'SRC',
+            '軽量鉄骨造': '軽量鉄骨造',
+            '鉄骨造': '鉄骨'
+        }
+        right.set('structure', structure_format.get(structure, u'その他'))
+        right.set('structure_part', structure_format.get(structure, u'その他'))
 
     def processor_built_date(self, rule, left, right):
         built_date = left.pop().split('年')
         if built_date and len(built_date) == 2:
             right.set('built_date_year', built_date[0])
             right.set('built_date_month', built_date[1].replace('月', ''))
+
+    def process_zipcode(self, rule, left, right):
+        zipcode = left.pop().split('-')
+        if zipcode and len(zipcode) == 2:
+            right.set('zipcode_1', zipcode[0])
+            right.set('zipcode_2', zipcode[1])
 
     def process_address(self, rule, left, right):
         pref = left.pop()
@@ -68,12 +96,21 @@ class FromCSVConverter(Left2RightConverterBase):
         transports = []
         for i in range(0, 3):
             transport = Transports()
-            # station_name = left.pop().split('/')
-            # if station_name and len(station_name) >= 1:
-            #     transport.station_name = station_name[0]
-            # transport.station_to = left.pop()
-            # left.pop()
-            # transport.walk_mins = left.pop()
+            transport_company = left.pop().split('/')
+            if transport_company and len(transport_company) >= 1:
+                transport.transport_company = transport_company[0]
+            transport.station_name = left.pop()
+            station_to = left.pop()
+            mins = left.pop()
+            if station_to == '徒歩':
+                transport.station_to = 'walk'
+                transport.walk_mins = mins
+            elif station_to == '徒歩':
+                transports.station_to = 'bus'
+                transport.bus_walk_mins = mins
+            elif station_to == '車':
+                transports.station_to = 'car'
+                transport.car_mins = mins
             transports.append(transport)
 
         right.set('transports', transports)

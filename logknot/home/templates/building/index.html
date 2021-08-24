@@ -88,7 +88,7 @@
                                         <th>沿線・駅</th>
                                         <td>
                                         {% for transport in building.transports %}
-                                            {% if transport.station_name %}{{ transport.station_name }} - {{ transport.station_to }} {{ transport.walk_mins }}分<br>{% endif %}
+                                            {% if transport.transport_company %}{{ transport.transport_company }} - {{ transport.station_name }}<br>{% endif %}
                                         {% endfor %}
                                         </td>
                                     </tr>

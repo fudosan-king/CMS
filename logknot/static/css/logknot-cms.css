@@ -141,7 +141,10 @@
 .guarantee_fee_show,
 .guarantee_fee_depreciation_show,
 .deposit_fee_show,
-.law43-detail {
+.law43-detail,
+.by-car,
+.by-bus,
+.by-walk {
   display: none;
 }
 
@@ -150,7 +153,10 @@
 .guarantee_fee_show.fee-active,
 .guarantee_fee_depreciation_show.fee-active,
 .deposit_fee_show.fee-active,
-.law43-detail.law43-active {
+.law43-detail.law43-active,
+.by-car.transports-active,
+.by-bus.transports-active,
+.by-walk.transports-active {
   display: block;
 }
 

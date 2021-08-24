@@ -109,7 +109,7 @@ class BuildingsForm(DocumentForm):
     )
     structure = forms.CharField(
         label=__('構造(主要)'),
-        max_length=254,
+        max_length=20,
         widget=forms.Select(
             choices=STRUCTURE
         ),
@@ -118,7 +118,7 @@ class BuildingsForm(DocumentForm):
     )
     structure_part = forms.CharField(
         label=__('構造(一部)'),
-        max_length=254,
+        max_length=20,
         widget=forms.Select(
             choices=STRUCTURE_PART
         ),
@@ -161,7 +161,7 @@ class BuildingsForm(DocumentForm):
     )
     management_scope = forms.CharField(
         label=__('管理方式'),
-        max_length=254,
+        max_length=20,
         widget=forms.Select(
             choices=MANAGEMENT_SCOPE
         ),
@@ -170,7 +170,7 @@ class BuildingsForm(DocumentForm):
     )
     superintendent = forms.CharField(
         label=__('管理人'),
-        max_length=254,
+        max_length=20,
         widget=forms.Select(
             choices=SUPER_INTENDENT
         ),
@@ -245,13 +245,13 @@ class BuildingsForm(DocumentForm):
     )
     management_company = forms.CharField(
         label=__('管理会社'),
-        max_length=254,
+        max_length=50,
         widget=forms.TextInput(),
         required=False
     )
     carpark_type = forms.CharField(
         label=__('駐車場'),
-        max_length=254,
+        max_length=20,
         widget=forms.Select(
             choices=CARPARK_TYPE
         ),
@@ -259,7 +259,7 @@ class BuildingsForm(DocumentForm):
     )
     carpark_space = forms.CharField(
         label=__('空き'),
-        max_length=254,
+        max_length=20,
         widget=forms.Select(
             choices=NO_YES
         ),
@@ -273,7 +273,7 @@ class BuildingsForm(DocumentForm):
     )
     carpark_place = forms.CharField(
         label=__('場所'),
-        max_length=254,
+        max_length=20,
         widget=forms.Select(
             choices=CARPARK_PLACE
         ),
@@ -287,7 +287,7 @@ class BuildingsForm(DocumentForm):
     )
     carpark_fee_per = forms.CharField(
         label=__('料金支払方法'),
-        max_length=254,
+        max_length=20,
         widget=forms.Select(
             choices=PER_MONTH
         ),
@@ -295,7 +295,7 @@ class BuildingsForm(DocumentForm):
     )
     carpark_fee_tax_inc = forms.CharField(
         label=__('料金税抜き・込み'),
-        max_length=254,
+        max_length=20,
         widget=forms.Select(
             choices=TAX_INC
         ),
@@ -309,7 +309,7 @@ class BuildingsForm(DocumentForm):
     )
     bike_park = forms.CharField(
         label=__('バイク置場'),
-        max_length=254,
+        max_length=20,
         widget=forms.Select(
             choices=PARK
         ),
@@ -323,7 +323,7 @@ class BuildingsForm(DocumentForm):
     )
     bike_park_price_per = forms.CharField(
         label=__('バイク置場料金（期間）'),
-        max_length=254,
+        max_length=20,
         widget=forms.Select(
             choices=PER_MONTH
         ),
@@ -345,7 +345,7 @@ class BuildingsForm(DocumentForm):
     )
     bicycles_park_price_per = forms.CharField(
         label=__('駐輪場料金（期間）'),
-        max_length=254,
+        max_length=20,
         widget=forms.Select(
             choices=PER_MONTH
         ),
@@ -354,6 +354,7 @@ class BuildingsForm(DocumentForm):
     google_map = forms.CharField(
         widget=forms.Textarea(),
         required=False,
+        max_length=1000,
         label=__('Google map 座標')
     )
     google_map_lat = forms.FloatField(
@@ -475,13 +476,13 @@ class BuildingsForm(DocumentForm):
     )
     link_2d = forms.CharField(
         label=__('2D参考プランイメージ'),
-        max_length=254,
+        max_length=100,
         widget=forms.TextInput(),
         required=False
     )
     link_3d = forms.CharField(
         label=__('3D参考プランイメージ'),
-        max_length=254,
+        max_length=100,
         widget=forms.TextInput(),
         required=False
     )

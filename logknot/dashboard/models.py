@@ -137,36 +137,36 @@ def get_fee_per(field, request):
 
 
 class Photos(EmbeddedDocument):
-    path = fields.StringField(max_length=255, blank=True)
-    category = fields.StringField(max_length=255, blank=True)
-    comment = fields.StringField(max_length=255, blank=True)
+    path = fields.StringField(max_length=100, blank=True)
+    category = fields.StringField(max_length=20, blank=True)
+    comment = fields.StringField(max_length=100, blank=True)
 
 
 class Address(EmbeddedDocument):
-    pref = fields.StringField(max_length=255, blank=False)
-    city = fields.StringField(max_length=255, blank=False)
-    ooaza = fields.StringField(max_length=255, blank=False)
-    tyoume = fields.StringField(max_length=255, blank=True)
-    hidden = fields.StringField(max_length=255, blank=True)
+    pref = fields.StringField(max_length=20, blank=False)
+    city = fields.StringField(max_length=20, blank=False)
+    ooaza = fields.StringField(max_length=20, blank=False)
+    tyoume = fields.StringField(max_length=20, blank=True)
+    hidden = fields.StringField(max_length=20, blank=True)
 
 
 class Transports(EmbeddedDocument):
-    map_pref = fields.StringField(max_length=255, blank=True)
-    transport_company = fields.StringField(max_length=255, blank=True)
-    station_name = fields.StringField(max_length=255, blank=True)
-    station_to = fields.StringField(max_length=255, blank=True)
-    walk_mins = fields.StringField(max_length=255, blank=True)
-    bus_company = fields.StringField(max_length=255, blank=True)
-    bus_mins = fields.StringField(max_length=255, blank=True)
-    bus_station = fields.StringField(max_length=255, blank=True)
-    bus_walk_mins = fields.StringField(max_length=255, blank=True)
-    car_distance = fields.StringField(max_length=255, blank=True)
-    car_mins = fields.StringField(max_length=255, blank=True)
+    map_pref = fields.StringField(max_length=20, blank=True)
+    transport_company = fields.StringField(max_length=20, blank=True)
+    station_name = fields.StringField(max_length=20, blank=True)
+    station_to = fields.StringField(max_length=20, blank=True)
+    walk_mins = fields.StringField(max_length=20, blank=True)
+    bus_company = fields.StringField(max_length=20, blank=True)
+    bus_mins = fields.StringField(max_length=20, blank=True)
+    bus_station = fields.StringField(max_length=20, blank=True)
+    bus_walk_mins = fields.StringField(max_length=20, blank=True)
+    car_distance = fields.StringField(max_length=20, blank=True)
+    car_mins = fields.StringField(max_length=20, blank=True)
 
 
 class OtherFee(EmbeddedDocument):
     fee = fields.DictField(blank=True, default={})
-    name = fields.StringField(max_length=255, blank=True)
+    name = fields.StringField(max_length=20, blank=True)
 
 
 class Buildings(Document):
@@ -177,13 +177,13 @@ class Buildings(Document):
     removed = fields.BooleanField(default=False, blank=True)
     homepage = fields.BooleanField(default=False, blank=True)
     recommend = fields.BooleanField(default=False, blank=True)
-    create_by = fields.StringField(max_length=255, default='system', blank=True)
+    create_by = fields.StringField(max_length=20, default='system', blank=True)
     last_time_remove = fields.DateTimeField(default=datetime.datetime.now, blank=True)
-    remove_by = fields.StringField(max_length=255, default='system', blank=True)
+    remove_by = fields.StringField(max_length=20, default='system', blank=True)
     last_time_update = fields.DateTimeField(default=datetime.datetime.now, blank=True)
-    update_by = fields.StringField(max_length=255, default='system', blank=True)
+    update_by = fields.StringField(max_length=20, default='system', blank=True)
     last_time_rollback = fields.DateTimeField(default=datetime.datetime.now, blank=True)
-    rollback_by = fields.StringField(max_length=255, default='system', blank=True)
+    rollback_by = fields.StringField(max_length=20, default='system', blank=True)
     import_date = fields.DateTimeField(blank=True)
 
     # Update by form
@@ -198,18 +198,18 @@ class Buildings(Document):
         default=[]
     )
     address = fields.DictField(blank=False)
-    structure = fields.StringField(max_length=255, blank=False, default='')
-    structure_part = fields.StringField(max_length=255, blank=True, default='')
+    structure = fields.StringField(max_length=20, blank=False, default='')
+    structure_part = fields.StringField(max_length=20, blank=True, default='')
     ground_floors = fields.IntField(blank=False, default=0)
     underground_floors = fields.IntField(blank=True, default=0)
     building_confirmation_number = fields.StringField(max_length=50, blank=True)
     built_date_year = fields.IntField(blank=False, default=datetime.datetime.now().year)
     built_date_month = fields.IntField(blank=False, default=datetime.datetime.now().month)
-    total_houses = fields.StringField(max_length=255, blank=True)
-    management_scope = fields.StringField(max_length=255, blank=False)
-    superintendent = fields.StringField(max_length=255, blank=True)
+    total_houses = fields.StringField(max_length=20, blank=True)
+    management_scope = fields.StringField(max_length=20, blank=False)
+    superintendent = fields.StringField(max_length=10, blank=True)
     land_rights = fields.ListField(
-        fields.StringField(max_length=255, blank=True),
+        fields.StringField(max_length=20, blank=True),
         blank=False,
         default=[]
     )
@@ -224,21 +224,21 @@ class Buildings(Document):
     design_club = fields.StringField(max_length=50, blank=True)
     management_company = fields.StringField(max_length=50, blank=True, defaul='')
 
-    carpark_type = fields.StringField(max_length=255, blank=True)
-    carpark_space = fields.StringField(max_length=255, blank=True)
-    carpark_space_cars = fields.StringField(max_length=255, blank=True)
-    carpark_place = fields.StringField(max_length=255, blank=True)
-    carpark_fee_min = fields.StringField(max_length=255, blank=True)
-    carpark_fee_per = fields.StringField(max_length=255, blank=True)
-    carpark_fee_tax_inc = fields.StringField(max_length=255, blank=True)
-    carpark_note = fields.StringField(max_length=255, blank=True)
+    carpark_type = fields.StringField(max_length=20, blank=True)
+    carpark_space = fields.StringField(max_length=20, blank=True)
+    carpark_space_cars = fields.StringField(max_length=20, blank=True)
+    carpark_place = fields.StringField(max_length=20, blank=True)
+    carpark_fee_min = fields.StringField(max_length=20, blank=True)
+    carpark_fee_per = fields.StringField(max_length=20, blank=True)
+    carpark_fee_tax_inc = fields.StringField(max_length=20, blank=True)
+    carpark_note = fields.StringField(max_length=100, blank=True)
 
-    bike_park = fields.StringField(max_length=255, blank=True)
-    bike_park_price = fields.StringField(max_length=255, blank=True)
-    bike_park_price_per = fields.StringField(max_length=255, blank=True)
-    bicycles_park = fields.StringField(max_length=255, blank=True)
-    bicycles_park_price = fields.StringField(max_length=255, blank=True)
-    bicycles_park_price_per = fields.StringField(max_length=255, blank=True)
+    bike_park = fields.StringField(max_length=20, blank=True)
+    bike_park_price = fields.StringField(max_length=20, blank=True)
+    bike_park_price_per = fields.StringField(max_length=20, blank=True)
+    bicycles_park = fields.StringField(max_length=20, blank=True)
+    bicycles_park_price = fields.StringField(max_length=20, blank=True)
+    bicycles_park_price_per = fields.StringField(max_length=20, blank=True)
 
     usen_fee = fields.DictField(blank=True, default={})
     internet_fee = fields.DictField(blank=True, default={})
@@ -256,7 +256,7 @@ class Buildings(Document):
     spa_type = fields.StringField(max_length=20, blank=True, default='')
     spa_fee = fields.DictField(blank=True, default={})
     spa_tags = fields.ListField(
-        fields.StringField(max_length=255, blank=True),
+        fields.StringField(max_length=20, blank=True),
         blank=True,
         default=[]
     )
@@ -265,9 +265,9 @@ class Buildings(Document):
     google_map = fields.StringField(max_length=1000, blank=True, default='')
     google_map_lat = fields.StringField(max_length=20, blank=True)
     google_map_lng = fields.StringField(max_length=20, blank=True)
-    google_map_yaw = fields.StringField(max_length=255, blank=True)
-    google_map_pitch = fields.StringField(max_length=255, blank=True)
-    google_map_zoom = fields.StringField(max_length=255, blank=True)
+    google_map_yaw = fields.StringField(max_length=20, blank=True)
+    google_map_pitch = fields.StringField(max_length=20, blank=True)
+    google_map_zoom = fields.StringField(max_length=20, blank=True)
     transports = fields.ListField(
         fields.EmbeddedDocumentField('Transports'),
         blank=True,
@@ -275,29 +275,29 @@ class Buildings(Document):
     )
     elementary_school_district = fields.StringField(max_length=100, blank=True)
     junior_high_school_district = fields.StringField(max_length=100, blank=True)
-    price = fields.StringField(max_length=255, blank=True)
-    tatemono_menseki = fields.StringField(max_length=255, blank=True)
+    price = fields.StringField(max_length=20, blank=True)
+    tatemono_menseki = fields.StringField(max_length=20, blank=True)
     balcony_space = fields.IntField(blank=False, default=0)
-    room_floor = fields.StringField(max_length=255, blank=True)
-    direction = fields.StringField(max_length=255, blank=True)
-    room_count = fields.StringField(max_length=255, blank=True)
-    room_kind = fields.StringField(max_length=255, blank=True, default='')
-    management_fee = fields.StringField(max_length=255, blank=True)
-    repair_reserve_fee = fields.StringField(max_length=255, blank=True)
+    room_floor = fields.StringField(max_length=20, blank=True)
+    direction = fields.StringField(max_length=20, blank=True)
+    room_count = fields.StringField(max_length=20, blank=True)
+    room_kind = fields.StringField(max_length=20, blank=True, default='')
+    management_fee = fields.StringField(max_length=20, blank=True)
+    repair_reserve_fee = fields.StringField(max_length=20, blank=True)
     when_to_move_in = fields.DateField(default=datetime.datetime.now, blank=True)
     limitations = fields.ListField(
-        fields.StringField(max_length=255, blank=True),
+        fields.StringField(max_length=20, blank=True),
         blank=True,
         default=[]
     )
     limitations_etc = fields.StringField(max_length=60, blank=True)
     law43 = fields.DictField(blank=True, default={})
-    price_full_renovation = fields.StringField(max_length=255, blank=True)
-    link_2d = fields.StringField(max_length=255, blank=True)
-    link_3d = fields.StringField(max_length=255, blank=True)
+    price_full_renovation = fields.StringField(max_length=20, blank=True)
+    link_2d = fields.StringField(max_length=100, blank=True)
+    link_3d = fields.StringField(max_length=100, blank=True)
     specification_description = fields.StringField(max_length=1000, blank=True)
     features = fields.ListField(
-        fields.StringField(max_length=255, blank=True),
+        fields.StringField(max_length=20, blank=True),
         blank=True,
         default=[]
     )

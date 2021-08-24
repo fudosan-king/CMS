@@ -1,0 +1,1800 @@
+// collection: estates_baibai
+{
+	"_id" : ObjectId("606988e8eb76276d7b60b2ab"),
+	"leasehold_memo" : "",
+	"advertiser" : {
+		"license_number" : "",
+		"company" : "",
+		"tel" : "",
+		"address" : {
+			"city" : "",
+			"gaikutiban" : "",
+			"ooaza" : "",
+			"pref" : "",
+			"zipcode" : "",
+			"tyoume" : "",
+			"chiban" : ""
+		}
+	},
+	"law43" : {
+		"comment" : "",
+		"type" : ""
+	},
+	"has_balcony" : "有",
+	"management_fee_tax" : "税込み",
+	"event_date_from" : null,
+	"community_fee" : {
+		"price" : null,
+		"unfixed" : false,
+		"per" : "m"
+	},
+	"carpark_space" : null,
+	"renovation_done_date" : "",
+	"customizable3" : "",
+	"bike_park_price_per" : "m",
+	"rooms" : [
+		{
+			"num" : null,
+			"type" : "",
+			"space" : null,
+			"floor" : null
+		},
+		{
+			"num" : null,
+			"type" : "",
+			"space" : null,
+			"floor" : null
+		},
+		{
+			"num" : null,
+			"type" : "",
+			"space" : null,
+			"floor" : null
+		},
+		{
+			"num" : null,
+			"type" : "",
+			"space" : null,
+			"floor" : null
+		},
+		{
+			"num" : null,
+			"type" : "",
+			"space" : null,
+			"floor" : null
+		},
+		{
+			"num" : null,
+			"type" : "",
+			"space" : null,
+			"floor" : null
+		},
+		{
+			"num" : null,
+			"type" : "",
+			"space" : null,
+			"floor" : null
+		},
+		{
+			"num" : null,
+			"type" : "",
+			"space" : null,
+			"floor" : null
+		},
+		{
+			"num" : null,
+			"type" : "",
+			"space" : null,
+			"floor" : null
+		},
+		{
+			"num" : null,
+			"type" : "",
+			"space" : null,
+			"floor" : null
+		}
+	],
+	"iad_fee_contact" : false,
+	"trade_yield" : null,
+	"room_floor" : "5",
+	"land_fee_per" : "m",
+	"removed" : false,
+	"not_export_homepage" : [ ],
+	"carpark_range_type" : "一律",
+	"date_will_build" : {
+		"date" : null,
+		"about" : ""
+	},
+	"cache" : {
+		"addr_2" : "13",
+		"num_photos" : 2,
+		"addr_5" : "13104",
+		"addr_8" : "13104079",
+		"stations" : [
+			"西武新宿",
+			"新大久保",
+			"大久保"
+		],
+		"lines" : [
+			"ＪＲ総武線",
+			"ＪＲ山手線",
+			"西武新宿線"
+		],
+		"suumo_line_codes" : [
+			"035021050",
+			"057305600",
+			"000519120"
+		],
+		"location" : null,
+		"addr_11" : "13104079002",
+		"num_features" : 48
+	},
+	"carpark_distance" : null,
+	"company_id" : 161,
+	"environment" : {
+		"landmarks" : [
+			{
+				"photo" : "",
+				"kind" : "",
+				"distance" : null,
+				"name" : "",
+				"caption" : ""
+			}
+		],
+		"not_export_landmarks" : [ ]
+	},
+	"structure_etc" : "",
+	"ground_floors" : 9,
+	"private_road_kind" : "無",
+	"latitude" : null,
+	"homepage" : {
+		"label_estate" : "",
+		"video_url" : "",
+		"theta_type" : null,
+		"catchcopy" : "～新規内装リフォーム物件～\r\n・JR山手線「新大久保」駅徒歩3分\r\n・複数路線利用可\r\n・オートロック、TVモニターホンで安心\r\n・豊富な収納、ウォークインクローゼット",
+		"note" : "当社はご自宅でも「オンライン」でスタッフにご相談いただけます。各種オンラインミーティングツール（zoom、calling、Google meet等）を使い、スタッフと対話しながら、物件をご確認いただけます。\r\n※カメラ機能がついたパソコン、タブレット、スマートフォンのいずれかが必要です。\r\n※お顔が映るのが苦手な方は音声のみで問題ございません。\r\n※ご利用は無料ですが、別途通信料がかかります。データ通信料はお客さまのご負担となります。\r\n従量課金制通信サービスや通信料に上限があるネット回線・プランを利用する場合はご注意ください。\r\n〇中国語担当、Available in English",
+		"recommended" : false,
+		"matter_port_url" : "",
+		"nurve_url" : ""
+	},
+	"sub_salesman_info" : {
+		"tel" : "",
+		"name" : "",
+		"email" : ""
+	},
+	"spa_type" : "無",
+	"imported_api_id" : "",
+	"estate_subtype" : "マンション",
+	"is_active" : false,
+	"carpark_type" : "",
+	"suumo" : {
+		"show_minor_address_iad" : false,
+		"staff_code" : "0000",
+		"iad_customer_company_message" : "",
+		"event_estate_pickup" : "",
+		"show_location" : false,
+		"show_minor_address_web" : false,
+		"photos_se" : [
+			{
+				"photo" : null,
+				"kind" : null,
+				"name" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"name" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"name" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"name" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"name" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"name" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"name" : null,
+				"caption" : null
+			}
+		],
+		"photo_highlighted" : false,
+		"photos_uc" : [
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			}
+		],
+		"navigation_address" : "",
+		"event_comment" : "",
+		"photos_ma" : [
+			{
+				"photo" : "60698acb142bbd2f0a9835fb",
+				"kind" : "011",
+				"caption" : ""
+			},
+			{
+				"photo" : "60698acbeb76276d7a60c5f4",
+				"kind" : "214",
+				"caption" : ""
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"caption" : null
+			}
+		],
+		"photos_ko" : [
+			{
+				"photo" : null,
+				"kind" : null,
+				"name" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"name" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"name" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"name" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"name" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"name" : null,
+				"caption" : null
+			},
+			{
+				"photo" : null,
+				"kind" : null,
+				"name" : null,
+				"caption" : null
+			}
+		],
+		"catch" : "～新規内装リフォーム物件～\n・JR山手線「新大久保」駅徒歩3分\n・複数路線利用可\n・オートロック、TVモニターホンで安心\n・豊富な収納、ウォークインクローゼット",
+		"inquiry_person" : "池谷　剛士",
+		"staff_pr_comment" : "「表参道駅徒歩1分」天然無垢材をふんだんに使用したショールームをご用意しております。インテリア販売スペース・キッズスペースもございます。東京初の路面店となっておりますので、お気軽にお立ち寄りください。",
+		"cm_photo" : {
+			"category" : "",
+			"photo" : "",
+			"caption" : ""
+		},
+		"net_comment" : "当社はご自宅でも「オンライン」でスタッフにご相談いただけます。各種オンラインミーティングツール（zoom、calling、Google meet等）を使い、スタッフと対話しながら、物件をご確認いただけます。\n※カメラ機能がついたパソコン、タブレット、スマートフォンのいずれかが必要です。\n※お顔が映るのが苦手な方は音声のみで問題ございません。\n※ご利用は無料ですが、別途通信料がかかります。データ通信料はお客さまのご負担となります。\n従量課金制通信サービスや通信料に上限があるネット回線・プランを利用する場合はご注意ください。\n〇中国語担当、Available in English",
+		"photo_access" : {
+			"photo" : "",
+			"caption" : ""
+		},
+		"comment1" : "",
+		"photo_local_1" : {
+			"photo" : "",
+			"caption" : ""
+		},
+		"photo_local_2" : {
+			"photo" : "",
+			"caption" : ""
+		},
+		"comment2" : "",
+		"displayed_in_tsubo" : false,
+		"photo_railway" : {
+			"photo" : "",
+			"caption" : ""
+		},
+		"not_export_suumo" : [ ]
+	},
+	"area_bldg_name" : "504",
+	"structure_part" : "無し",
+	"land_timoku" : null,
+	"total_houses" : 54,
+	"leasehold_transfer_approve_fee" : null,
+	"gyopro_import_prices" : [ ],
+	"from_file" : "y",
+	"estate_caption" : "",
+	"unigram" : [
+		"町",
+		"京",
+		" ",
+		"大",
+		"第",
+		"新",
+		"2",
+		"シ",
+		"ザ",
+		"人",
+		"宿",
+		"久",
+		"バ",
+		"プ",
+		"保",
+		"神",
+		"区",
+		"日",
+		"武",
+		"ラ",
+		"ル",
+		"東",
+		"都",
+		"ー",
+		"西",
+		"百"
+	],
+	"salesman_info" : {
+		"tel" : "",
+		"name" : "",
+		"email" : ""
+	},
+	"land_leashold_type" : "",
+	"land_leashold_limit" : null,
+	"leasehold_ratio" : null,
+	"customizable2" : "",
+	"renovation_detail" : "",
+	"leasehold_type" : null,
+	"is_member_estate_name" : "公開",
+	"trade_category" : null,
+	"superintendent" : "日勤",
+	"date_last_modified" : ISODate("2021-04-04T16:46:05.713+07:00"),
+	"guarantee_fee" : {
+		"fee" : null,
+		"no_fee" : null
+	},
+	"reins" : {
+		"note1" : "",
+		"note2" : "",
+		"addr3" : ""
+	},
+	"homes_publish_estate_name" : "物件名のみ公開",
+	"point_photos_1" : {
+		"content" : "",
+		"photo" : ""
+	},
+	"date_last_modified_by_system" : ISODate("2021-04-06T02:05:13.222+07:00"),
+	"owner" : {
+		"homes" : {
+			"owner" : {
+				"memo" : ""
+			}
+		},
+		"company" : "",
+		"tel" : "",
+		"fax" : "",
+		"address" : {
+			"city" : "",
+			"gaikutiban" : "",
+			"ooaza" : "",
+			"pref" : "",
+			"zipcode" : "",
+			"tyoume" : "",
+			"chiban" : ""
+		}
+	},
+	"room_count" : 1,
+	"iad_fee_ratio" : null,
+	"limitations_etc" : "",
+	"balcony_space" : 2.7,
+	"salesman_id" : 0,
+	"setback_type" : null,
+	"kentiku_menseki" : null,
+	"sold_data" : {
+		"sold_date" : ISODate("2020-10-19T07:00:00.000+07:00"),
+		"price" : 4180,
+		"salesman_name" : "高野実徳"
+	},
+	"exterior_renovation" : {
+		"date" : "",
+		"renovate_parts" : [ ],
+		"big_renovation" : false,
+		"renovated" : null,
+		"etc" : ""
+	},
+	"tatemono_menseki_measurement" : "壁芯",
+	"management_fee_no" : false,
+	"spa_fee" : {
+		"price" : null,
+		"unfixed" : false,
+		"per" : "m"
+	},
+	"house_status" : "空家",
+	"private_code" : "",
+	"road_connections" : {
+		"roads" : [
+			{
+				"is_static" : false,
+				"width" : null,
+				"kind" : "公道",
+				"direction" : null,
+				"setudouhaba" : null
+			},
+			{
+				"is_static" : false,
+				"width" : null,
+				"kind" : "公道",
+				"direction" : null,
+				"setudouhaba" : null
+			},
+			{
+				"is_static" : false,
+				"width" : null,
+				"kind" : "公道",
+				"direction" : null,
+				"setudouhaba" : null
+			},
+			{
+				"is_static" : false,
+				"width" : null,
+				"kind" : "公道",
+				"direction" : null,
+				"setudouhaba" : null
+			}
+		],
+		"state" : null
+	},
+	"built_date" : ISODate("1985-01-01T07:00:00.000+07:00"),
+	"version" : 1,
+	"terace" : {
+		"fee" : {
+			"price" : null,
+			"per" : "m"
+		},
+		"space" : null
+	},
+	"rights_fee_tax_inc" : null,
+	"land_law_report" : "不要",
+	"import" : {
+		"date_reins_regigster" : null,
+		"private_code" : "reins:100105925157"
+	},
+	"setback_space" : null,
+	"limitations" : [ ],
+	"trade_type" : "先物",
+	"last_modifier" : {
+		"display_name" : "バッチ",
+		"user_id" : 0
+	},
+	"roof_balcony" : {
+		"fee" : {
+			"price" : null,
+			"per" : "m"
+		},
+		"space" : null
+	},
+	"recommend_property" : false,
+	"own_property" : false,
+	"event_time_from_h" : "",
+	"event_time_from_m" : "",
+	"motoduke_last_check_date" : ISODate("2021-04-04T07:00:00.000+07:00"),
+	"event_date_to" : null,
+	"kenpei_ritu" : null,
+	"total_empty_houses" : null,
+	"address" : {
+		"city" : "新宿区",
+		"gaikutiban" : "6-2",
+		"ooaza" : "百人町",
+		"pref" : "東京都",
+		"zipcode" : "",
+		"tyoume" : "２丁目",
+		"chiban" : "",
+		"hidden" : ""
+	},
+	"active" : true,
+	"iad_fee" : null,
+	"estate_name" : "日神シルバープラザ大久保第2",
+	"leasehold_change_kind" : null,
+	"trade_delivery_kind" : "",
+	"underground_floors" : 0,
+	"trade_type_detail" : "",
+	"building_confirmation_number" : "",
+	"has_error" : false,
+	"carpark_fee_per" : "m",
+	"landform" : null,
+	"customizable1" : "",
+	"constructor" : "",
+	"carpark_place" : null,
+	"leasehold_transfer_approver" : null,
+	"land_fee" : 6620,
+	"estate_name_kana" : "",
+	"ouccino" : {
+		"uo_photos" : {
+			"photos" : [
+				{
+					"category" : "外観",
+					"photo" : "60698acb142bbd2f0a9835fb",
+					"comment" : ""
+				},
+				{
+					"category" : "間取",
+					"photo" : "60698acbeb76276d7a60c5f4",
+					"comment" : ""
+				},
+				{
+					"category" : null,
+					"photo" : "",
+					"comment" : ""
+				},
+				{
+					"category" : null,
+					"photo" : "",
+					"comment" : ""
+				},
+				{
+					"category" : null,
+					"photo" : "",
+					"comment" : ""
+				},
+				{
+					"category" : null,
+					"photo" : "",
+					"comment" : ""
+				},
+				{
+					"category" : null,
+					"photo" : "",
+					"comment" : ""
+				},
+				{
+					"category" : null,
+					"photo" : "",
+					"comment" : ""
+				}
+			]
+		},
+		"features" : "",
+		"catchcopy" : "～新規内装リフォーム物件～\n・「西新宿五丁目」駅徒歩1分\n・ビッグターミナル「新宿」駅利用可能！\n・オートロック・TVドアホン！\n・ペット飼育可能！",
+		"no_photos" : {
+			"photo_appearance" : {
+				"comment" : "",
+				"photo" : "60698acb142bbd2f0a9835fb"
+			},
+			"photo_layout" : {
+				"comment" : "",
+				"photo" : "60698acbeb76276d7a60c5f4"
+			},
+			"photos" : [
+				{
+					"comment" : "",
+					"photo" : ""
+				},
+				{
+					"comment" : "",
+					"photo" : ""
+				},
+				{
+					"comment" : "",
+					"photo" : ""
+				},
+				{
+					"comment" : "",
+					"photo" : ""
+				},
+				{
+					"comment" : "",
+					"photo" : ""
+				},
+				{
+					"comment" : "",
+					"photo" : ""
+				},
+				{
+					"comment" : "",
+					"photo" : ""
+				},
+				{
+					"comment" : "",
+					"photo" : ""
+				}
+			]
+		},
+		"note" : "当社はご自宅でも「オンライン」でスタッフにご相談いただけます。各種オンラインミーティングツール（zoom、calling、Google meet等）を使い、スタッフと対話しながら、物件をご確認いただけます。\n※カメラ機",
+		"renovation_detail" : "",
+		"not_export_ouccino" : [ ]
+	},
+	"features" : [
+		"フローリング",
+		"全居室フローリング",
+		"火災報知器（報知器）",
+		"室内洗濯機置場",
+		"洗濯機置場有",
+		"オートバス",
+		"浴室乾燥機",
+		"バス・トイレ別",
+		"専用バス",
+		"追い焚き",
+		"南向き",
+		"通風良好",
+		"陽当り良好",
+		"ウォークインクロゼット",
+		"全居室収納",
+		"システムキッチン",
+		"食器洗乾燥機",
+		"浄水器",
+		"ガスコンロ",
+		"コンロ2口",
+		"インターネット対応",
+		"地上デジタル放送",
+		"フローリング張替",
+		"リノベーション",
+		"内装リフォーム",
+		"南面バルコニー",
+		"バルコニー",
+		"温水洗浄便座",
+		"高機能トイレ",
+		"独立洗面台",
+		"洗髪洗面化粧台",
+		"専用トイレ",
+		"眺望良好",
+		"整備された歩道",
+		"スーパーが徒歩10分以内",
+		"宅配ボックス",
+		"エレベーター",
+		"平坦地",
+		"都市近郊",
+		"市街地が近い",
+		"駅まで平坦",
+		"2沿線以上利用可",
+		"即入居可",
+		"年内入居可",
+		"ペット可",
+		"ペット相談",
+		"TVドアホン",
+		"オートロック"
+	],
+	"internet_fee" : {
+		"initial_cost" : null,
+		"initial_no" : false,
+		"repeat_cost" : {
+			"price" : null,
+			"unfixed" : false,
+			"per" : "m",
+			"no" : false
+		},
+		"initial_unfixed" : false
+	},
+	"gyopro_import_basics" : [ ],
+	"leasehold_transfer" : null,
+	"intermediation_contract_date" : null,
+	"event_message" : "",
+	"management_company" : "",
+	"repair_reserve_fee" : 11390,
+	"rights_fee" : {
+		"fee" : null,
+		"no_fee" : null
+	},
+	"repair_reserve_initial_fee" : null,
+	"point_photos_3" : {
+		"content" : "",
+		"photo" : ""
+	},
+	"point_photos_2" : {
+		"content" : "",
+		"photo" : ""
+	},
+	"repair_reserve_fee_type" : "have",
+	"carpark_maintenance_fee" : {
+		"price" : null,
+		"per" : "m"
+	},
+	"chief_salesman_name" : "",
+	"is_publish_estate_room" : "非公開",
+	"carpark_space_cars" : null,
+	"frk" : {
+		"store_code" : "",
+		"photos" : [
+			{
+				"comment" : "",
+				"photo" : "60698acb142bbd2f0a9835fb",
+				"type" : "現地写真-現地外観写真"
+			},
+			{
+				"comment" : "",
+				"photo" : "60698acbeb76276d7a60c5f4",
+				"type" : "間取り図・区画図-間取り図"
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : ""
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : ""
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : ""
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : ""
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : ""
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : ""
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : ""
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : ""
+			}
+		],
+		"contact_office" : "",
+		"catchcopy" : "～新規内装リフォーム物件～\n・「西新宿五丁目」駅徒歩1分\n・ビッグターミナル「新宿」駅利用可能！\n・オートロック・TVドアホン！\n・ペット飼育可能！",
+		"contact_office_tel" : "",
+		"service_rooms" : "0",
+		"room_count" : null,
+		"comments_for_house" : "",
+		"room_kind" : ""
+	},
+	"management_fee_per" : "m",
+	"room_number" : "504",
+	"leasehold_transfer_approve_require" : null,
+	"tatemono_menseki" : 30.46,
+	"has_manegement_association" : true,
+	"room_kind" : "LDK",
+	"bicycles_park_price" : null,
+	"land_measurement_method" : null,
+	"leasehold_change_span" : null,
+	"files" : [
+		{
+			"comment" : "",
+			"subtype" : "",
+			"type" : "",
+			"file" : ""
+		},
+		{
+			"comment" : "",
+			"subtype" : "",
+			"type" : "",
+			"file" : ""
+		},
+		{
+			"comment" : "",
+			"subtype" : "",
+			"type" : "",
+			"file" : ""
+		},
+		{
+			"comment" : "",
+			"subtype" : "",
+			"type" : "",
+			"file" : ""
+		},
+		{
+			"comment" : "",
+			"subtype" : "",
+			"type" : "",
+			"file" : ""
+		}
+	],
+	"land_space" : null,
+	"bike_park_price" : null,
+	"transports_filled" : true,
+	"allow_kyakutuke" : "不可",
+	"memo" : "",
+	"photo_stats" : {
+		"suumo" : [
+			"011",
+			"214"
+		],
+		"homes" : [
+			"外観",
+			"間取"
+		],
+		"fdk" : [
+			"",
+			"現地写真-現地外観写真",
+			"間取り図・区画図-間取り図"
+		]
+	},
+	"gas" : "都市ガス",
+	"yahoo" : {
+		"yield_rate_division" : "",
+		"room_longitude" : null,
+		"not_export_yahoo" : [ ],
+		"model_room_division" : "-1",
+		"trade_yield" : null,
+		"staff_id" : "0017",
+		"building_etc" : "当社はご自宅でも「オンライン」でスタッフにご相談いただけます。各種オンラインミーティングツール（zoom、calling、Google meet等）を使い、スタッフと対話しながら、物件をご確認いただけます。\n※カメラ機能がついたパソコン、タブレット、スマートフォンのいずれかが必要です。\n※お顔が映るのが苦手な方は音声のみで問題ございません。\n※ご利用は無料ですが、別途通信料がかかります。データ通信料はお客さまのご負担となります。\n従量課金制通信サービスや通信料に上限があるネット回線・プランを利用する場合はご注意ください。\n〇Available in English",
+		"model_room_address_division" : "",
+		"model_room_name" : "",
+		"yahoo_estate_name" : "",
+		"model_room_address_detail" : "",
+		"staff_comment" : "～新規内装リフォーム物件～\n・「西新宿五丁目」駅徒歩1分\n・ビッグターミナル「新宿」駅利用可能！\n・オートロック・TVドアホン！\n・ペット飼育可能！\n・ご見学可能！",
+		"construct_conditions_note" : "",
+		"model_room_address_code" : "",
+		"model_room_address_name" : "",
+		"model_room_open_status" : "",
+		"memo" : "",
+		"apology_and_modify_text" : "",
+		"model_room_open_date" : null,
+		"photos" : [
+			{
+				"comment" : "",
+				"photo" : "60698acb142bbd2f0a9835fb",
+				"type" : "01-01"
+			},
+			{
+				"comment" : "",
+				"photo" : "60698acbeb76276d7a60c5f4",
+				"type" : "02-01"
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : ""
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : ""
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : ""
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : ""
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : ""
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : ""
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : ""
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : ""
+			}
+		],
+		"model_room_remark" : "",
+		"monthly_income_remark" : "",
+		"room_latitude" : null
+	},
+	"delivery" : {
+		"delivery_date_about" : "日",
+		"delivery_date_type" : "即",
+		"resident_span" : null,
+		"delivery_date" : ISODate("2020-12-01T07:00:00.000+07:00")
+	},
+	"photos" : [
+		{
+			"comment" : "",
+			"photo" : "60698acb142bbd2f0a9835fb",
+			"type" : "現地写真-現地外観写真"
+		},
+		{
+			"comment" : "",
+			"photo" : "60698acbeb76276d7a60c5f4",
+			"type" : "間取り図・区画図-間取り図"
+		},
+		{
+			"comment" : "",
+			"photo" : "",
+			"type" : ""
+		},
+		{
+			"comment" : "",
+			"photo" : "",
+			"type" : ""
+		},
+		{
+			"comment" : "",
+			"photo" : "",
+			"type" : ""
+		},
+		{
+			"comment" : "",
+			"photo" : "",
+			"type" : ""
+		},
+		{
+			"comment" : "",
+			"photo" : "",
+			"type" : ""
+		},
+		{
+			"comment" : "",
+			"photo" : "",
+			"type" : ""
+		},
+		{
+			"comment" : "",
+			"photo" : "",
+			"type" : ""
+		},
+		{
+			"comment" : "",
+			"photo" : "",
+			"type" : ""
+		}
+	],
+	"carpark_fee_max" : null,
+	"gyopro_import_event" : [ ],
+	"trading_conditions_supplement" : "",
+	"deposit_fee" : {
+		"fee" : null,
+		"no_fee" : null
+	},
+	"private_garden" : {
+		"fee" : {
+			"price" : null,
+			"per" : "m"
+		},
+		"space" : null
+	},
+	"youseki_ritu" : null,
+	"trade_status" : "販売中",
+	"athome" : {
+		"staff_id" : "",
+		"not_export_athome" : [ ],
+		"note1" : "当社はご自宅でも「オンライン」でスタッ",
+		"note2" : "",
+		"atbb_free_comment" : "",
+		"photos" : [
+			{
+				"date" : null,
+				"photo" : "60698acb142bbd2f0a9835fb",
+				"type" : "03",
+				"caption" : ""
+			},
+			{
+				"date" : null,
+				"photo" : "60698acbeb76276d7a60c5f4",
+				"type" : "01",
+				"caption" : ""
+			},
+			{
+				"date" : null,
+				"photo" : "",
+				"type" : null,
+				"caption" : ""
+			},
+			{
+				"date" : null,
+				"photo" : "",
+				"type" : null,
+				"caption" : ""
+			},
+			{
+				"date" : null,
+				"photo" : "",
+				"type" : null,
+				"caption" : ""
+			},
+			{
+				"date" : null,
+				"photo" : "",
+				"type" : null,
+				"caption" : ""
+			},
+			{
+				"date" : null,
+				"photo" : "",
+				"type" : null,
+				"caption" : ""
+			},
+			{
+				"date" : null,
+				"photo" : "",
+				"type" : null,
+				"caption" : ""
+			},
+			{
+				"date" : null,
+				"photo" : "",
+				"type" : null,
+				"caption" : ""
+			},
+			{
+				"date" : null,
+				"photo" : "",
+				"type" : null,
+				"caption" : ""
+			},
+			{
+				"date" : null,
+				"photo" : "",
+				"type" : null,
+				"caption" : ""
+			},
+			{
+				"date" : null,
+				"photo" : "",
+				"type" : null,
+				"caption" : ""
+			},
+			{
+				"date" : null,
+				"photo" : "",
+				"type" : null,
+				"caption" : ""
+			},
+			{
+				"date" : null,
+				"photo" : "",
+				"type" : null,
+				"caption" : ""
+			},
+			{
+				"date" : null,
+				"photo" : "",
+				"type" : null,
+				"caption" : ""
+			},
+			{
+				"date" : null,
+				"photo" : "",
+				"type" : null,
+				"caption" : ""
+			}
+		],
+		"renovation_detail" : "",
+		"pro_comment" : "～新規内装リフォーム物件～\n・「西新宿五丁目」駅徒歩1分\n・ビッグターミナル「新宿」駅利用可能！\n・オートロック・TVドアホン！\n・ペット飼育可能！",
+		"openhouse_event_comment" : ""
+	},
+	"homes" : {
+		"comment" : "～新規内装リフォーム物件～\n・「西新宿五丁目」駅徒歩1分\n・ビッグターミナル「新宿」駅利用可能",
+		"publish_estate_room" : "非公開",
+		"staff_name" : "",
+		"private_id" : "",
+		"event_open" : "",
+		"delivery_memo" : "",
+		"event_date_from" : null,
+		"owner" : {
+			"memo" : ""
+		},
+		"not_export_homes" : [ ],
+		"commentC" : "",
+		"commentB" : "",
+		"photos_count" : 2,
+		"carpark_note" : "",
+		"staff_comment" : "",
+		"yahoo_estate_name" : "",
+		"note" : "",
+		"staff_comment_type" : "",
+		"memo" : "",
+		"event_memo" : "",
+		"event_date_to" : null,
+		"photos" : [
+			{
+				"comment" : "",
+				"photo" : "60698acb142bbd2f0a9835fb",
+				"type" : "外観"
+			},
+			{
+				"comment" : "",
+				"photo" : "60698acbeb76276d7a60c5f4",
+				"type" : "間取"
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			},
+			{
+				"comment" : "",
+				"photo" : "",
+				"type" : null
+			}
+		],
+		"room_comment" : "",
+		"noteC" : "",
+		"noteB" : "",
+		"transport_comment" : "",
+		"publish_estate_name" : "物件名のみ公開",
+		"kyakutuke_memo" : "",
+		"interior_renovation_note" : "",
+		"land_law_limitation" : "",
+		"comment_template_num" : "",
+		"publish_price" : false,
+		"osusume_point" : "*"
+	},
+	"motoduke" : {
+		"fax" : "",
+		"tel" : "03-6628-8111",
+		"company" : "（株）シンプレクス・リアルティ",
+		"address" : {
+			"city" : "",
+			"gaikutiban" : "",
+			"ooaza" : "",
+			"pref" : "",
+			"zipcode" : "",
+			"tyoume" : "",
+			"chiban" : ""
+		},
+		"salesman" : "不明",
+		"email" : ""
+	},
+	"carpark_fee_tax_inc" : "税込み",
+	"service_rooms" : "0",
+	"bike_park" : "",
+	"publish_status" : {
+		"homes:0110081" : null,
+		"suumo_sale:t12129703201" : {
+			"properties" : {
+				"run_other_company" : false,
+				"internal_market" : false,
+				"osusume_pickup" : false,
+				"run_net" : null,
+				"commercializer" : false,
+				"run_hpservice" : false,
+				"staff_pr" : false,
+				"kengaku_bukken_pickup" : false,
+				"theme_selection" : false,
+				"reservation" : false,
+				"search_list_catch" : false,
+				"allow_copy" : false
+			}
+		},
+		"homes:0140061" : {
+			"properties" : {
+				"publish" : false
+			}
+		},
+		"homepage:chronicle-plus" : {
+			"properties" : {
+				"dishwasher" : false,
+				"floor_ten_or_more" : false,
+				"corner_room" : false,
+				"renovation_and_property_sales" : null,
+				"with_cooking_function" : false,
+				"floor_1st" : false,
+				"all_room_storage" : false,
+				"floor_2nd" : false,
+				"interior_renovation" : false,
+				"pets_allowed" : false,
+				"parking_lot_available" : false,
+				"counter_kitchen" : false,
+				"auto_bus" : false,
+				"is_recommended" : false,
+				"flat_35_compatible" : false,
+				"water_purifier" : false,
+				"bathroom_dryer" : false
+			}
+		},
+		"athome:000157310001" : null,
+		"frk:propon" : {
+			"properties" : {
+				"publish" : false
+			}
+		},
+		"suumo_sale:t12129702601" : {
+			"properties" : {
+				"run_other_company" : false,
+				"internal_market" : false,
+				"osusume_pickup" : false,
+				"run_net" : "1",
+				"commercializer" : false,
+				"run_hpservice" : true,
+				"staff_pr" : false,
+				"kengaku_bukken_pickup" : false,
+				"theme_selection" : false,
+				"reservation" : false,
+				"search_list_catch" : false,
+				"allow_copy" : false
+			},
+			"date_last_exported" : ISODate("2021-04-06T08:00:01.616+07:00")
+		},
+		"ouccino_used:0009982" : {
+			"properties" : {
+				
+			}
+		},
+		"suumo_sale:t12129700201" : null,
+		"ouccino_newly:kos0104" : {
+			"properties" : {
+				
+			}
+		},
+		"suumo_sale:t12129702701" : {
+			"properties" : {
+				"run_other_company" : false,
+				"internal_market" : false,
+				"osusume_pickup" : false,
+				"run_net" : null,
+				"commercializer" : false,
+				"run_hpservice" : false,
+				"staff_pr" : false,
+				"kengaku_bukken_pickup" : false,
+				"theme_selection" : false,
+				"reservation" : false,
+				"search_list_catch" : false,
+				"allow_copy" : false
+			}
+		},
+		"homepage:kodate" : {
+			"properties" : {
+				"is_new_sale" : false,
+				"is_on_sale" : false,
+				"is_recommended" : false,
+				"is_sales_notice" : false
+			}
+		},
+		"log_smart_choice:LSC-sales" : {
+			"properties" : {
+				
+			}
+		},
+		"homepage:chro-mansion" : {
+			"properties" : {
+				"has_insurance" : false,
+				"renovation_style" : "basic",
+				"base_layout" : "",
+				"species_style" : "",
+				"select_plan_layout" : "",
+				"has_select_plan" : false,
+				"spec_type" : "",
+				"is_recommended" : false,
+				"has_campaign" : false
+			}
+		},
+		"homepage:order-renova" : {
+			"properties" : {
+				"total_price" : null
+			}
+		},
+		"yahoo:21-00022383" : {
+			"properties" : {
+				"visit_display" : false
+			}
+		}
+	},
+	"publish_media" : [
+		"homepage:chronicle-plus",
+		"suumo_sale:t12129702601"
+	],
+	"longitude" : null,
+	"carpark_manage_fee" : {
+		"price" : null,
+		"per" : "m"
+	},
+	"reprintability_impossible" : "未選択",
+	"structure_part_etc" : "",
+	"event_time_to_h" : "",
+	"business_estate_category" : "居住用",
+	"event_time_to_m" : "",
+	"bicycles_park_price_per" : "m",
+	"gyopro_import_building" : [ ],
+	"business_purpose_etc" : "",
+	"bigram" : [
+		"武新",
+		"ザ大",
+		"シル",
+		"バー",
+		"人町",
+		" 大",
+		"ープ",
+		"新宿",
+		"プラ",
+		"神シ",
+		"日神",
+		"第2",
+		"新大",
+		"東京",
+		"百人",
+		"宿区",
+		"ラザ",
+		"久保",
+		" 新",
+		"ルバ",
+		"西武",
+		"宿 ",
+		"大久",
+		"保 ",
+		"保第",
+		"京都"
+	],
+	"event_type" : "",
+	"business_estate_category_extend" : null,
+	"guarantee_fee_depreciation" : null,
+	"brokerage_charge" : {
+		"charge_type" : null,
+		"percentage" : null,
+		"fee" : null
+	},
+	"land_rights" : "所有権のみ",
+	"other_fee" : [
+		{
+			"fee" : {
+				"price" : null,
+				"per" : "m"
+			},
+			"name" : ""
+		},
+		{
+			"fee" : {
+				"price" : null,
+				"per" : "m"
+			},
+			"name" : ""
+		},
+		{
+			"fee" : {
+				"price" : null,
+				"per" : "m"
+			},
+			"name" : ""
+		}
+	],
+	"estate_description" : "",
+	"catv_fee" : {
+		"initial_cost" : null,
+		"initial_no" : false,
+		"repeat_cost" : {
+			"price" : null,
+			"unfixed" : false,
+			"per" : "m",
+			"no" : false
+		},
+		"initial_unfixed" : false
+	},
+	"construct_conditions" : null,
+	"nobeyuka_menseki" : null,
+	"iad_type" : "3",
+	"carpark_maintenance_base_fee" : null,
+	"trade_income" : {
+		"price" : null,
+		"per" : "m"
+	},
+	"homes_member_estate_room" : "公開",
+	"repair_reserve_fee_per" : "m",
+	"trade_category_extend" : null,
+	"land_rights_detail" : "普通賃借権",
+	"waterworks" : "公営水道",
+	"community_fee_type" : "無",
+	"leasehold_change_method" : null,
+	"event_date" : [
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null
+	],
+	"window_direction" : "s",
+	"spa_tags" : [ ],
+	"usen_fee" : {
+		"initial_cost" : null,
+		"initial_no" : false,
+		"repeat_cost" : {
+			"price" : null,
+			"unfixed" : false,
+			"per" : "m",
+			"no" : false
+		},
+		"initial_unfixed" : false
+	},
+	"constructor_label" : "",
+	"trade_current_status" : null,
+	"urls" : [
+		{
+			"url" : "https://www.chronicle-web.com/plus/",
+			"type" : "自社HP",
+			"label" : "■クロニクルプラス（中古物件探し＋リノベーションの検索サイト）"
+		},
+		{
+			"url" : "https://ja-jp.facebook.com/chronicle.web.official/",
+			"type" : "自社HP",
+			"label" : "■リノベーションならクロニクル　Facebook"
+		},
+		{
+			"url" : "https://www.facebook.com/chronicle.showroom.omotesando/",
+			"type" : "自社HP",
+			"label" : "■表参道本店ショールーム　Facebook"
+		},
+		{
+			"url" : "https://www.chronicle-web.com/",
+			"type" : "自社HP",
+			"label" : "■クロニクル　コーポレートページ"
+		},
+		{
+			"url" : "https://www.propolife.co.jp/",
+			"type" : "自社HP",
+			"label" : "■プロポライフグループ　コーポレートページ"
+		}
+	],
+	"trading_conditions" : "",
+	"communal_area" : {
+		"remarks" : "",
+		"reform_place" : "",
+		"exterior" : "",
+		"completion_time" : ""
+	},
+	"land_leashold_years" : null,
+	"price_tax_inc" : "税込み",
+	"price" : 3180,
+	"homes_transport_comment" : "",
+	"estate_type" : "mansion",
+	"has_warning" : false,
+	"gyopro_import_business" : [ ],
+	"business_purpose" : null,
+	"carpark_fee_min" : null,
+	"management_fee" : 7900,
+	"gyopro_import_land" : [ ],
+	"management_scope" : "全部委託",
+	"structure" : "SRC",
+	"salesman_name" : "篠崎 弥恵奈",
+	"land_fee_type" : "有",
+	"event_schedule" : null,
+	"interior_renovation" : {
+		"water_around_other" : "",
+		"renovated" : "済",
+		"etc" : "",
+		"water_around_date" : "",
+		"date" : ISODate("2021-04-01T07:00:00.000+07:00"),
+		"renovate_parts" : [
+			"キッチン",
+			"浴室",
+			"トイレ",
+			"洗面",
+			"壁",
+			"床",
+			"全室",
+			"給湯器",
+			"全室クロス張替え",
+			"建具(室内ドア等)",
+			"内装全面"
+		]
+	},
+	"current_state" : "中古",
+	"bicycles_park" : "",
+	"area_purpose" : {
+		"main" : "",
+		"sub" : ""
+	},
+	"sewer" : "本下水",
+	"reinsid" : "",
+	"land_leashold_months" : null,
+	"date_created" : ISODate("2020-06-14T22:00:00.000+07:00"),
+	"transports" : [
+		{
+			"walk_mins" : 3,
+			"bus_company" : "",
+			"bus_mins" : null,
+			"bus_station" : "",
+			"station_to" : "walk",
+			"car_mins" : null,
+			"transport_company" : "ＪＲ山手線",
+			"car_distance" : null,
+			"station_name" : "新大久保",
+			"bus_walk_mins" : null
+		},
+		{
+			"walk_mins" : 6,
+			"bus_company" : "",
+			"car_mins" : null,
+			"bus_station" : "",
+			"station_to" : "walk",
+			"bus_mins" : null,
+			"transport_company" : "ＪＲ総武線",
+			"car_distance" : null,
+			"station_name" : "大久保",
+			"bus_walk_mins" : null
+		},
+		{
+			"walk_mins" : 14,
+			"bus_company" : "",
+			"car_mins" : null,
+			"bus_station" : "",
+			"station_to" : "walk",
+			"bus_mins" : null,
+			"transport_company" : "西武新宿線",
+			"car_distance" : null,
+			"station_name" : "西武新宿",
+			"bus_walk_mins" : null
+		}
+	]
+}

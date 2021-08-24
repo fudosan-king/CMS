@@ -1,0 +1,84 @@
+{% load i18n wagtailadmin_tags %}
+{% load wagtailimages_tags %}
+
+<div class="col12 form-money">
+  <div class="col2 sub-field-label">権利金</div>
+    <div class="col4">
+      <ul class="radio-set check_list" id="rights_fee-no_fee">
+        <li><label class="money-inline" for="rights_fee-no_fee-0">
+          <input checked="" id="rights_fee-no_fee-0" name="rights_fee-no_fee" type="radio" value="無" {% if rights_fee.no_fee == '無' %}checked{% endif %}>無</label></li>
+        <li><label class="money-inline" for="rights_fee-no_fee-1">
+          <input id="rights_fee-no_fee-1" name="rights_fee-no_fee" type="radio" value="有" {% if rights_fee.no_fee == '有' %}checked{% endif %}>有</label></li>
+      </ul>
+    </div>
+    <div class="col6 rights_fee_show {% if rights_fee.no_fee == '有' %}fee-active{% endif %}">
+      <div class="input-group">
+        <input class="form-control lv-int" id="rights_fee-fee" name="rights_fee-fee" type="number" min="0" value="{{ rights_fee.fee }}"><span class="input-group-addon">円</span></div>
+    </div>
+
+  <div class="col12"></div>
+  <div class="col2 sub-field-label">保証金</div>
+  <div class="col4">
+      <ul class="radio-set check_list" id="guarantee_fee-no_fee">
+        <li>
+          <label class="money-inline" for="guarantee_fee-no_fee-0">
+            <input checked="" id="guarantee_fee-no_fee-0" name="guarantee_fee-no_fee" type="radio" value="無" {% if guarantee_fee.no_fee == '無' %}checked{% endif %}>無</label>
+        </li>
+        <li>
+          <label class="money-inline" for="guarantee_fee-no_fee-1">
+            <input id="guarantee_fee-no_fee-1" name="guarantee_fee-no_fee" type="radio" value="有" {% if guarantee_fee.no_fee == '有' %}checked{% endif %}>有</label>
+        </li>
+      </ul>
+  </div>
+  <div class="col6 guarantee_fee_show {% if guarantee_fee.no_fee and guarantee_fee.no_fee == '有' %}fee-active{% endif %}"><div class="input-group"><input class="form-control lv-int" id="guarantee_fee-fee" name="guarantee_fee-fee" type="number" min="0" value="{{ guarantee_fee.fee }}"><span class="input-group-addon">円</span></div></div>
+
+  <div class="col12"></div>
+  <div class="guarantee_fee_depreciation_show {% if guarantee_fee.no_fee and guarantee_fee.no_fee == '有' %}fee-active{% endif %}">
+    <div class="col2 sub-field-label">保証金償却</div>
+    <div class="col10">
+      <ul class="check_list" id="guarantee_fee_depreciation">
+        <li><label class="money-inline" for="guarantee_fee_depreciation-0"><input id="guarantee_fee_depreciation-0" name="guarantee_fee_depreciation" type="radio" value="年" {% if guarantee_fee_depreciation == '年' %}checked{% endif %}>年</label></li>
+        <li><label class="money-inline" for="guarantee_fee_depreciation-1"><input id="guarantee_fee_depreciation-1" name="guarantee_fee_depreciation" type="radio" value="更新" {% if guarantee_fee_depreciation == '更新' %}checked{% endif %}>更新</label></li>
+        <li><label class="money-inline" for="guarantee_fee_depreciation-2"><input id="guarantee_fee_depreciation-2" name="guarantee_fee_depreciation" type="radio" value="解約" {% if guarantee_fee_depreciation == '解約' %}checked{% endif %}>解約</label></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col12"></div>
+  <div class="col2 sub-field-label">敷金</div>
+  <div class="col4">
+    <ul class="radio-set check_list" id="deposit_fee-no_fee">
+      <li><label class="money-inline" for="deposit_fee-no_fee-0"><input id="deposit_fee-no_fee-0" name="deposit_fee-no_fee" type="radio" value="無" {% if not deposit_fee.no_fee or deposit_fee.no_fee == '無' %}checked{% endif %}>無</label></li>
+      <li><label class="money-inline" for="deposit_fee-no_fee-1"><input id="deposit_fee-no_fee-1" name="deposit_fee-no_fee" type="radio" value="有" {% if deposit_fee.no_fee == '有' %}checked{% endif %}>有</label></li>
+    </ul>
+  </div>
+  <div class="col6 deposit_fee_show {% if deposit_fee.no_fee and deposit_fee.no_fee == '有' %}fee-active{% endif %}"><div class="input-group"><input class="form-control lv-int" id="deposit_fee-fee" name="deposit_fee-fee" type="number" min="0" value="{{ deposit_fee.fee }}"><span class="input-group-addon">円</span></div></div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+  $('input[name="rights_fee-no_fee"]').change(function() {
+    if ($(this).val() == '無'){
+      $('.rights_fee_show').removeClass('fee-active');
+    } else {
+      $('.rights_fee_show').addClass('fee-active');
+    }
+  });
+  $('input[name="guarantee_fee-no_fee"]').change(function() {
+    if ($(this).val() == '無'){
+      $('.guarantee_fee_show').removeClass('fee-active');
+      $('.guarantee_fee_depreciation_show').removeClass('fee-active');
+    } else {
+      $('.guarantee_fee_show').addClass('fee-active');
+      $('.guarantee_fee_depreciation_show').addClass('fee-active');
+    }
+  });
+  $('input[name="deposit_fee-no_fee"]').change(function() {
+    if ($(this).val() == '無'){
+      $('.deposit_fee_show').removeClass('fee-active');
+    } else {
+      $('.deposit_fee_show').addClass('fee-active');
+    }
+  });
+});
+</script>

@@ -2,6 +2,7 @@
 {% load wagtailimages_tags %}
 
 <div class="{{ col }} field-building {% if error %}error{% endif %}">
-    <span class="field-label">{% if not field.label %}&nbsp;{% else %}{{ field.label }}{% endif %}</span><span class="required-field">{% if field.field.required %}({% trans 'required' %}){% else %}&nbsp;{% endif %}</span>{{ field }}
+    {% if not hide_label %}<span class="field-label">{% if not field.label %}&nbsp;{% else %}{{ field.label }}{% endif %}</span><span class="required-field">{% if field.field.required %}({% trans 'required' %}){% else %}&nbsp;{% endif %}</span>{% endif %}
+        <div class="input-group">{{ field }}{% if group %}<span class="input-group-addon">{{ group }}</span>{% endif %}</div>
     <span class="message-error">{{ error }}</span>
 </div>

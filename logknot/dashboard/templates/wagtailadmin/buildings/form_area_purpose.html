@@ -1,0 +1,58 @@
+{% load i18n wagtailadmin_tags %}
+{% load wagtailimages_tags %}
+
+<div class="col12 form-area">
+	<div class="col12">
+		<div class="col2 sub-field-label">用途地域</div>
+		<div class="col10 form-group">
+  			<select class="form-control" id="area_purpose-main" name="area_purpose-main">
+  				<option value="">(未選択)</option>
+				<optgroup label="市街化区域">
+					<option value="第一種低層住居専用" {% if area_purpose.main == '第一種低層住居専用' %}selected{% endif %}>第一種低層住居専用</option>
+					<option value="第二種中高層住居専用" {% if area_purpose.main == '第二種中高層住居専用' %}selected{% endif %}>第二種中高層住居専用</option>
+					<option value="第二種住居" {% if area_purpose.main == '第二種住居' %}selected{% endif %}>第二種住居</option>
+					<option value="近隣商業" {% if area_purpose.main == '近隣商業' %}selected{% endif %}>近隣商業</option>
+					<option value="商業" {% if area_purpose.main == '商業' %}selected{% endif %}>商業</option>
+					<option value="準工業" {% if area_purpose.main == '準工業' %}selected{% endif %}>準工業</option>
+					<option value="工業" {% if area_purpose.main == '工業' %}selected{% endif %}>工業</option>
+					<option value="工業専用" {% if area_purpose.main == '工業専用' %}selected{% endif %}>工業専用</option>
+					<option value="第二種低層住居専用" {% if area_purpose.main == '第二種低層住居専用' %}selected{% endif %}>第二種低層住居専用</option>
+					<option value="第一種中高層住居専用" {% if area_purpose.main == '第一種中高層住居専用' %}selected{% endif %}>第一種中高層住居専用</option>
+					<option value="第一種住居" {% if area_purpose.main == '第一種住居' %}selected{% endif %}>第一種住居</option>
+					<option value="準住居" {% if area_purpose.main == '準住居' %}selected{% endif %}>準住居</option>
+					<option value="非線引き区域" {% if area_purpose.main == '非線引き区域' %}selected{% endif %}>非線引き区域</option>
+				</optgroup>
+				<option value="市街化調整区域" {% if area_purpose.main == '市街化調整区域' %}selected{% endif %}>市街化調整区域</option>
+				<option value="都市計画区域外" {% if area_purpose.main == '都市計画区域外' %}selected{% endif %}>都市計画区域外</option>
+				<option value="準都市計画区域" {% if area_purpose.main == '準都市計画区域' %}selected{% endif %}>準都市計画区域</option>
+			</select>
+  		</div>
+	</div>
+
+	<div class="col12">
+		<div class="col2 sub-field-label">用途地域2</div>
+		<div class="col10 form-group">
+  			<select class="form-control" id="area_purpose-sub" name="area_purpose-sub">
+  				<option value="">(未選択)</option>
+				<optgroup label="市街化区域">
+					<option value="第一種低層住居専用" {% if area_purpose.sub == '第一種低層住居専用' %}selected{% endif %}>第一種低層住居専用</option>
+					<option value="第二種中高層住居専用" {% if area_purpose.sub == '第二種中高層住居専用' %}selected{% endif %}>第二種中高層住居専用</option>
+					<option value="第二種住居" {% if area_purpose.sub == '第二種住居' %}selected{% endif %}>第二種住居</option>
+					<option value="近隣商業" {% if area_purpose.sub == '近隣商業' %}selected{% endif %}>近隣商業</option>
+					<option value="商業" {% if area_purpose.sub == '商業' %}selected{% endif %}>商業</option>
+					<option value="準工業" {% if area_purpose.sub == '準工業' %}selected{% endif %}>準工業</option>
+					<option value="工業" {% if area_purpose.sub == '工業' %}selected{% endif %}>工業</option>
+					<option value="工業専用" {% if area_purpose.sub == '工業専用' %}selected{% endif %}>工業専用</option>
+					<option value="第二種低層住居専用" {% if area_purpose.sub == '第二種低層住居専用' %}selected{% endif %}>第二種低層住居専用</option>
+					<option value="第一種中高層住居専用" {% if area_purpose.sub == '第一種中高層住居専用' %}selected{% endif %}>第一種中高層住居専用</option>
+					<option value="第一種住居" {% if area_purpose.sub == '第一種住居' %}selected{% endif %}>第一種住居</option>
+					<option value="準住居" {% if area_purpose.sub == '準住居' %}selected{% endif %}>準住居</option>
+					<option value="非線引き区域" {% if area_purpose.sub == '非線引き区域' %}selected{% endif %}>非線引き区域</option>
+				</optgroup>
+				<option value="市街化調整区域" {% if area_purpose.sub == '市街化調整区域' %}selected{% endif %}>市街化調整区域</option>
+				<option value="都市計画区域外" {% if area_purpose.sub == '都市計画区域外' %}selected{% endif %}>都市計画区域外</option>
+				<option value="準都市計画区域" {% if area_purpose.sub == '準都市計画区域' %}selected{% endif %}>準都市計画区域</option>
+			</select>
+  		</div>
+	</div>
+</div>

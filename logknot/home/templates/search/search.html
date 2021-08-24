@@ -88,7 +88,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 col-lg-12">
-                                    <ul class="list_area" id="id_station_name">
+                                    <ul class="list_area" id="id_transport_company">
                                     </ul>
                                 </div>
                             </div>
@@ -172,7 +172,7 @@
             });
         }
 
-        function set_station_name(pref) {
+        function set_transport_company(pref) {
             $.ajax({
             method: 'GET',
             url: '/api/railroad/' + pref + '/',
@@ -183,11 +183,11 @@
                     url: '/api/count/station/' + pref + '-' + data[i] + '/',
                     }).done(function(data) {
                         if (data && data[1]) {
-                            $('#id_station_name').append(
+                            $('#id_transport_company').append(
                                 `
                                 <li>
                                     <div class="custom-control custom-checkbox">
-                                        <input name="station_name" type="checkbox" class="custom-control-input" id="station` + data[0].split('-')[1] + `" value="` + data[0].split('-')[1] + `">
+                                        <input name="transport_company" type="checkbox" class="custom-control-input" id="station` + data[0].split('-')[1] + `" value="` + data[0].split('-')[1] + `">
                                         <label class="custom-control-label" for="station` + data[0].split('-')[1] + `">` + data[0].split('-')[1] + ` (` + data[1] +  `)` + `</label>
                                     </div>
                                 </li>
@@ -205,7 +205,7 @@
                 set_city(pref);
             }
             if (map_pref) {
-                set_station_name(map_pref);
+                set_transport_company(map_pref);
             }
             $('[id=id_pref]').change(function() {
                 $('#id_city li').remove();
@@ -215,10 +215,10 @@
                 }
             })
             $('[id=id_map_pref]').change(function() {
-                $('#id_station_name li').remove();
+                $('#id_transport_company li').remove();
                 var map_pref = $(this).val();
                 if (map_pref) {
-                    set_station_name(map_pref);
+                    set_transport_company(map_pref);
                 }
             })
         });

@@ -1,0 +1,37 @@
+{% load i18n wagtailadmin_tags %}
+{% load wagtailimages_tags %}
+
+
+<div class="col12 form-community">
+	<div class="col2 sub-field-label">温泉</div>
+	<div class="col10">
+	    <ul class="check_list" id="community_fee_type">
+	    	<li>
+	    		<label class="community-fee-inline" for="community_fee_type-0"><input checked="" id="community_fee_type-0" name="community_fee_type" type="radio" value="無" {% if community_fee_type == '無' %}checked{% endif %}>無</label>
+	    	</li>
+	    	<li>
+	    		<label class="community-fee-inline" for="community_fee_type-1"><input id="community_fee_type-1" name="community_fee_type" type="radio" value="町会費" {% if community_fee_type == '町会費' %}checked{% endif %}>町会費</label>
+	    	</li>
+	    	<li>
+	    		<label class="community-fee-inline" for="community_fee_type-2"><input id="community_fee_type-2" name="community_fee_type" type="radio" value="町内会費" {% if community_fee_type == '町内会費' %}checked{% endif %}>町内会費</label>
+	    	</li>
+	    	<li>
+	    		<label class="community-fee-inline" for="community_fee_type-3"><input id="community_fee_type-3" name="community_fee_type" type="radio" value="自治会費" {% if community_fee_type == '自治会費' %}checked{% endif %}>自治会費</label>
+	    	</li>
+	    </ul>
+	</div>
+
+	<div class="col2 sub-field-label">使用料</div>
+	<div class="col2">
+  		<label for="community_fee-repeat_cost-unfixed">
+  			<input id="community_fee-repeat_cost-unfixed" name="community_fee-repeat_cost-unfixed" type="checkbox" value="y" {% if community_fee.unfixed %}checked{% endif %}>未定</label>
+  	</div>
+	<div class="col4">
+		<div class="input-group"><input class="form-control lv-int" id="community_fee-repeat_cost-price" name="community_fee-repeat_cost-price" type="number" min="0" value="{{ community_fee.price }}"><community_feen class="input-group-addon">円/</community_feen></div>
+	</div>
+	<div class="col4">
+		<label><input checked="" id="community_fee-repeat_cost-per-0" name="community_fee-repeat_cost-per" type="radio" value="m" {% if community_fee.per == 'm' %}checked{% endif %}>月</label>
+		<label><input id="community_fee-repeat_cost-per-1" name="community_fee-repeat_cost-per" type="radio" value="y" {% if community_fee.per == 'y' %}checked{% endif %}>年</label>
+		<label><input id="community_fee-repeat_cost-per-2" name="community_fee-repeat_cost-per" type="radio" value="bulk" {% if community_fee.per == 'bulk' %}checked{% endif %}>一括</label>
+	</div>
+</div>

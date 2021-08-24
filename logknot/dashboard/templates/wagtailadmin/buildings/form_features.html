@@ -1,0 +1,17 @@
+{% load i18n wagtailadmin_tags %}
+{% load wagtailimages_tags %}
+
+<div class="col12 form-features">
+	{% for k, v in features.items %}
+	<div class="col12 sub-category">{{ k }}</div>
+	<div class="col12 field-building ">
+		<div class="input-group">
+			<ul id="id_features">
+				{% for f in v %}
+		    	<li><label for="id_features_{{ f }}"><input type="checkbox" name="features" value="{{ f }}" id="id_features_{{ f }}" {% if f in data %}checked{% endif %}>{{ f }}</label></li>
+				{% endfor %}
+		    </ul>
+		</div>
+	</div>
+	{% endfor %}
+</div>

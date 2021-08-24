@@ -18,7 +18,7 @@ class Command(BaseCommand):
                 print('ignore: {}'.format(len(ignore.keys())))
                 print('Fail: {}'.format(len(fail)))
             elif dry_run == 'False':
-                import_csv('test/import', dry_run=False)
+                import_csv('tests/import', dry_run=False)
 
             self.stdout.write(self.style.SUCCESS('Import done!'))
         except Exception as e:

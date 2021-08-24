@@ -13,6 +13,7 @@ from django.conf import settings
 from dashboard.views import fetch_url_to_json
 from content.models import ContentDetailPage, ContentPage
 from dashboard.views import MenuBuildingItem
+from dashboard.forms.features import features
 
 
 def index(request):
@@ -61,8 +62,8 @@ def show(request, building_id):
     city = building_detail.address.get('city')
     station = []
     for transport in building_detail.transports:
-        if transport.station_name and transport.station_name not in station:
-            station.append([transport.map_pref, transport.station_name])
+        if transport.transport_company and transport.transport_company not in station:
+            station.append([transport.map_pref, transport.transport_company])
 
     photos = get_image_model().objects.filter(building_id=building_id)
 
@@ -127,13 +128,16 @@ def show(request, building_id):
         'total_room': total_room,
         'active_room': active_room,
         'rooms': data.get('esstates'),
-        'page_content': page_content
+        'page_content': page_content,
+        'features': features
     }
 
     return TemplateResponse(request, 'wagtailadmin/buildings/show.html', context)
 
 
 def add(request):
+    forms = BuildingsForm()
+    errors = []
     if request.method == 'POST':
         user = request.user
         if user and user.has_perms(['buildinggroup.add_building']):
@@ -145,21 +149,25 @@ def add(request):
                     try:
                         building.save()
                         update_count(building)
+                        messages.success(request, '{}{}'.format(_('Created building: '), building.building_name))
+                        return redirect('buildings_show', building.id)
                     except:
                         messages.error(request, 'Have problem')
-                    messages.success(request, '{}{}'.format(_('Created building: '), building.building_name))
-                    return redirect('buildings_show', building.id)
+                        forms = BuildingsForm(request.POST)
+                        errors = forms.errors.items()
             else:
-                raise Http404
+                messages.error(request, '{}: ({})'.format('物件名', _('required')))
+                return redirect('buildings_add')
         else:
             messages.error(request, _('Sorry, you do not have permission to access this area.'))
 
-    forms = BuildingsForm()
     context = {
         'action': '/dashboard/buildings/add/',
         'forms': forms,
         'pref': PREF_MAP,
-        'map_pref': list(MAP_PREF_STATION.values())
+        'map_pref': list(MAP_PREF_STATION.values()),
+        'features': features,
+        'errors': errors
     }
 
     return TemplateResponse(request, 'wagtailadmin/buildings/show.html', context)
@@ -176,10 +184,10 @@ def update_count(building, removed=False, city=None, station=[]):
 
     city_in = building.address.get('city')
 
-    station_name_in = []
+    transport_company_in = []
     for transport in building.transports:
-        if transport.station_name and transport.station_name not in station_name_in:
-            station_name_in.append([transport.map_pref, transport.station_name])
+        if transport.transport_company and transport.transport_company not in transport_company_in:
+            transport_company_in.append([transport.map_pref, transport.transport_company])
 
     if city and city in city_dict and city_dict[city] > 0:
         city_dict[city] = city_dict[city] - 1
@@ -197,7 +205,7 @@ def update_count(building, removed=False, city=None, station=[]):
         else:
             city_dict[city_in] = city_dict[city_in] + 1
 
-        for sn in station_name_in:
+        for sn in transport_company_in:
             if sn[0] and sn[1]:
                 name_station = '{}-{}'.format(sn[0], sn[1])
                 if name_station not in station_dict:

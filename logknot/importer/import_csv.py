@@ -100,13 +100,17 @@ class CSVImporter(object):
             for k, v in building.items():
                 import_building[k] = v
             import_building.import_date = datetime.datetime.now
+            import_building.estate_subtype = 'マンション'
+            import_building.land_law_report = '要'
+            import_building.management_scope = '自主管理'
             _ok = False
             if not self.dry_run:
                 try:
                     import_building.save()
                     update_count(import_building)
                     _ok = True
-                except:
+                except Exception as e:
+                    print('Import error {}: {}'.format(import_building.building_name, e))
                     self.import_fail.append(building.get('building_name'))
             if _ok or self.dry_run:
                 self.import_done[import_building.building_name] = reverse(

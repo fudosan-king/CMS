@@ -36,7 +36,7 @@ def show(request, pref, kind):
             if kind == 'station':
                 station = request.POST.getlist('station')
                 station = list(dict.fromkeys(station))
-                search_sort.station_name = station
+                search_sort.transport_company = station
             search_sort.save()
         else:
             messages.error(request, _('Sorry, you do not have permission to access this area.'))

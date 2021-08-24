@@ -220,18 +220,20 @@
                 <div class="row">
                     <div class="col6 column-content">
                         <div class="col12 sub-category">敷地権利</div>
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.land_rights col='col12' error=forms.errors.land_rights %}
+                        <div class="checkbox">
+                            {% include 'wagtailadmin/buildings/form_input.html' with field=forms.land_rights col='col12' error=forms.errors.land_rights %}
+                        </div>
                         <div class="col12 sub-category">ライフライン</div>
                         <div class="checkbox">
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.waterworks col='col12' error=forms.errors.waterworks %}
+                            {% include 'wagtailadmin/buildings/form_input.html' with field=forms.waterworks col='col12' error=forms.errors.waterworks %}
                         </div>
 
                         <div class="checkbox">
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.sewer col='col12' error=forms.errors.sewer %}
+                            {% include 'wagtailadmin/buildings/form_input.html' with field=forms.sewer col='col12' error=forms.errors.sewer %}
                         </div>
 
                         <div class="checkbox">
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.gas col='col12' error=forms.errors.gas %}
+                            {% include 'wagtailadmin/buildings/form_input.html' with field=forms.gas col='col12' error=forms.errors.gas %}
                         </div>
                     </div>
                     <div class="col6 column-content">

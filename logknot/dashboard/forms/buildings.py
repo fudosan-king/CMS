@@ -27,7 +27,7 @@ STRUCTURE = double(
     'ブロック', '鉄筋ブロック', 'その他')
 
 STRUCTURE_PART = double(
-    '木造', '鉄骨', 'RC', 'SRC', 'PC', 'HPC', '軽量鉄骨', 'ALC', 'CFT',
+    '', '木造', '鉄骨', 'RC', 'SRC', 'PC', 'HPC', '軽量鉄骨', 'ALC', 'CFT',
     'ブロック', '鉄筋ブロック', 'その他')
 
 MANAGEMENT_SCOPE = double('自主管理', '一部委託', '全部委託')
@@ -36,7 +36,7 @@ LAND_RIGHTS = double('借地権', '地上権', '所有権', '定期借地権')
 
 ESTATE_SUBTYPE = double('マンション', '公団', '公社', 'タウンハウス', 'リゾートマンション')
 
-SUPER_INTENDENT = double('日勤', '巡回', '常駐', '非常駐')
+SUPER_INTENDENT = double('', '日勤', '巡回', '常駐', '非常駐')
 
 CARPARK_TYPE = double('無', '駐車場', '分譲駐車場(必購入)', '分譲駐車場(任意購入)', '専用使用権付駐車場')
 
@@ -176,12 +176,12 @@ class BuildingsForm(DocumentForm):
         ),
         required=False
     )
-    land_rights = forms.MultipleChoiceField(
+    land_rights = forms.CharField(
         label=__('敷地権利'),
         required=True,
-        choices=LAND_RIGHTS,
-        initial=[c[0] for c in LAND_RIGHTS],
-        widget=forms.CheckboxSelectMultiple()
+        widget=forms.RadioSelect(
+            choices=LAND_RIGHTS,
+        )
     )
     waterworks = forms.CharField(
         label=__('上水道'),

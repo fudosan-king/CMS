@@ -25,7 +25,6 @@ IGNORE = [
     'car_mins',
     'csrfmiddlewaretoken',
     'initial-when_to_move_in',
-    'land_rights',
     'limitations',
     'google_map',
     'recommend',
@@ -208,11 +207,7 @@ class Buildings(Document):
     total_houses = fields.StringField(max_length=20, blank=True)
     management_scope = fields.StringField(max_length=20, blank=False)
     superintendent = fields.StringField(max_length=10, blank=True)
-    land_rights = fields.ListField(
-        fields.StringField(max_length=20, blank=True),
-        blank=False,
-        default=[]
-    )
+    land_rights = fields.StringField(max_length=10, blank=False)
     waterworks = fields.StringField(max_length=50, blank=True)
     sewer = fields.StringField(max_length=50, blank=True)
     gas = fields.StringField(max_length=50, blank=True)
@@ -325,12 +320,6 @@ class Buildings(Document):
                 except Exception as e:
                     print('Please check input: {}'.format(e))
                     continue
-
-        land_rights = request.POST.getlist('land_rights')
-        data.land_rights = []
-        if land_rights:
-            for land in land_rights:
-                data.land_rights.append(land)
 
         limitations = request.POST.getlist('limitations')
         data.limitations = []

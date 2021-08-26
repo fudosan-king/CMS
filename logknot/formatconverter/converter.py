@@ -1,5 +1,6 @@
 from .core import Left2RightConverterBase
 from dashboard.models import Transports
+from dashboard.views import railroad_from_fdk
 
 NUM_JP = {
     '0': '０',
@@ -137,7 +138,9 @@ class FromCSVConverter(Left2RightConverterBase):
             transport = Transports()
             transport_company = left.pop().split('/')
             if transport_company and len(transport_company) >= 1:
-                transport.transport_company = transport_company[0]
+                railroad = railroad_from_fdk(transport_company[0])
+                transport.transport_company = railroad[0]
+                transport.map_pref = railroad[1]
             transport.station_name = left.pop()
             station_to = left.pop()
             mins = left.pop()

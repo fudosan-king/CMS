@@ -34,6 +34,18 @@ def fetch_url_to_json(url):
     return json.loads(response.data.decode('utf-8'))
 
 
+def railroad_to_fdk(line):
+    with open('data/railroad_to_fdk.json', 'r', encoding='utf8') as f:
+        data = eval(f.read())
+        return data.get(line)
+
+
+def railroad_from_fdk(line):
+    with open('data/railroad_from_fdk.json', 'r', encoding='utf8') as f:
+        data = eval(f.read())
+        return data.get(line)
+
+
 class MenuBuildingItem(MenuItem):
     def is_shown(self, request):
         return (

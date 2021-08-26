@@ -212,12 +212,6 @@ class BuildingsForm(DocumentForm):
         initial='要',
         required=True
     )
-    company = forms.CharField(
-        label=__('分譲会社'),
-        max_length=50,
-        widget=forms.TextInput(),
-        required=False
-    )
     constructor_label = forms.CharField(
         label=__('施工会社'),
         widget=forms.Select(
@@ -238,7 +232,7 @@ class BuildingsForm(DocumentForm):
         required=False
     )
     design_club = forms.CharField(
-        label=__('設計会社'),
+        label=__('施工会社'),
         max_length=50,
         widget=forms.TextInput(),
         required=False

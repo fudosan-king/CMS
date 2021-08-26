@@ -213,7 +213,6 @@ class Buildings(Document):
     gas = fields.StringField(max_length=50, blank=True)
     land_law_report = fields.StringField(max_length=50, blank=False, default='要')
     area_purpose = fields.DictField(blank=True, default={})
-    company = fields.StringField(max_length=50, blank=False, default='')
     constructor_label = fields.StringField(max_length=50, blank=True)
     constructor = fields.StringField(max_length=100, blank=True)
     design_club = fields.StringField(max_length=50, blank=True)
@@ -296,6 +295,9 @@ class Buildings(Document):
         blank=True,
         default=[]
     )
+
+    # Will remove
+    company = fields.StringField(max_length=50, blank=False, default='')
 
     @staticmethod
     def building_name_validation(building_name):

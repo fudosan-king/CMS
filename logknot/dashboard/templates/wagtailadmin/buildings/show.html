@@ -77,8 +77,6 @@
                             <span class="message-error">{{ forms.recommend.error }}</span>
                         </div>
 
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.company col='col12' error=forms.errors.company %}
-
                         {% include 'wagtailadmin/buildings/form_input.html' with field=forms.design_club col='col12' error=forms.errors.design_club %}
 
                     </div>
@@ -121,7 +119,7 @@
 
                         {% include 'wagtailadmin/buildings/form_fee.html' with data=building_detail.catv_fee label='CATV' name='catv_fee' %}
 
-                        <div class="col12 sub-category">温泉</div>
+                        <div class="col12 sub-category">町会費</div>
 
                         {% include 'wagtailadmin/buildings/form_spa_fee.html' with data=building_detail.spa_fee spa_type=building_detail.spa_type spa_tags=building_detail.spa_tags %}
 

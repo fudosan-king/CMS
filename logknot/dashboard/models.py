@@ -215,7 +215,6 @@ class Buildings(Document):
     area_purpose = fields.DictField(blank=True, default={})
     constructor_label = fields.StringField(max_length=50, blank=True)
     constructor = fields.StringField(max_length=100, blank=True)
-    design_club = fields.StringField(max_length=50, blank=True)
     management_company = fields.StringField(max_length=50, blank=True, defaul='')
 
     carpark_type = fields.StringField(max_length=20, blank=True)
@@ -298,6 +297,7 @@ class Buildings(Document):
 
     # Will remove
     company = fields.StringField(max_length=50, blank=False, default='')
+    design_club = fields.StringField(max_length=50, blank=True)
 
     @staticmethod
     def building_name_validation(building_name):

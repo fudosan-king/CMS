@@ -7,7 +7,7 @@ from wagtail.images import get_image_model
 from wagtail.admin import messages
 from django.utils.translation import gettext as _  # noqa
 from home.management.commands.locations import PREF_MAP
-from home.management.commands.railroad import MAP_PREF_STATION
+from home.management.commands.railroad import MAP_REGION
 from django.template.response import TemplateResponse
 from django.conf import settings
 from dashboard.views import fetch_url_to_json
@@ -124,7 +124,8 @@ def show(request, building_id):
         'category': CATEGORY,
         'errors': errors,
         'pref': PREF_MAP,
-        'map_pref': list(MAP_PREF_STATION.values()),
+        'map_pref': list(MAP_REGION.keys()),
+        'pref_default': MAP_REGION['関東'],
         'total_room': total_room,
         'active_room': active_room,
         'rooms': data.get('esstates'),
@@ -165,7 +166,8 @@ def add(request):
         'action': '/dashboard/buildings/add/',
         'forms': forms,
         'pref': PREF_MAP,
-        'map_pref': list(MAP_PREF_STATION.values()),
+        'map_pref': list(MAP_REGION.keys()),
+        'pref_default': MAP_REGION['関東'],
         'features': features,
         'errors': errors
     }

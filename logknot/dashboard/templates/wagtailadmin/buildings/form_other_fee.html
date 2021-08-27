@@ -1,46 +1,24 @@
 {% load i18n wagtailadmin_tags %}
-{% load wagtailimages_tags %}
+{% load wagtailimages_tags dashboard_tags %}
 
 <div class="col12 form-other">
-  {% if other_fee %}
-    {% for fee in other_fee %}
-      <div class="col12"><span class="field-label">その他の{{ forloop.counter }}</span></div>
-      <div class="col12">
-        <div class="col2 sub-field-label">名称</div>
-        <div class="col10">
-         <input class="form-control form_top" id="other_fee-{{ forloop.counter }}-name" name="other_fee-name" type="text" maxlength="100" value="{{ fee.name }}">
-        </div>
-
-        <div class="col2 sub-field-label">金額</div>
-        <div class="col4">
-          <div class="input-group"><input class="form-control lv-int" id="other_fee-{{ forloop.counter }}-fee-price" name="other_fee-price" type="number" min="0" value="{{ fee.fee.price }}"><span class="input-group-addon">円/</span></div>
-        </div>
-        <div class="col6">
-          <label class="other-fee-inline"><input id="other_fee-{{ forloop.counter }}-fee-per-0" name="other_fee-per-{{ forloop.counter }}" type="radio" value="m" {% if fee.fee.per == 'm'%}checked{% endif %}>月</label>
-          <label class="other-fee-inline"><input id="other_fee-{{ forloop.counter }}-fee-per-1" name="other_fee-per-{{ forloop.counter }}" type="radio" value="y" {% if fee.fee.per == 'y'%}checked{% endif %}>年</label>
-          <label class="other-fee-inline"><input id="other_fee-{{ forloop.counter }}-fee-per-2" name="other_fee-per-{{ forloop.counter }}" type="radio" value="bulk" {% if fee.fee.per == 'bulk'%}checked{% endif %}>一括</label>
-        </div>
+  {% for fee in other_fee|make_list_data:3 %}
+    <div class="col12"><span class="field-label">その他の{{ forloop.counter }}</span></div>
+    <div class="col12">
+      <div class="col2 sub-field-label">名称</div>
+      <div class="col10">
+       <input class="form-control form_top" id="other_fee-{{ forloop.counter }}-name" name="other_fee-name" type="text" maxlength="100" value="{{ fee.name }}">
       </div>
-    {% endfor %}
-  {% else %}
-    {% for i in "x"|rjust:"3"|make_list %}
-      <div class="col12"><span class="field-label">その他の{{ forloop.counter }}</span></div>
-      <div class="col12">
-        <div class="col2 sub-field-label">名称</div>
-      	<div class="col10">
-         <input class="form-control form_top" id="other_fee-{{ forloop.counter }}-name" name="other_fee-name" type="text" maxlength="100" value="">
-        </div>
 
-        <div class="col2 sub-field-label">金額</div>
-        <div class="col4">
-          <div class="input-group"><input class="form-control lv-int" id="other_fee-{{ forloop.counter }}-fee-price" name="other_fee-price" type="number" min="0" value=""><span class="input-group-addon">円/</span></div>
-        </div>
-        <div class="col6">
-          <label class="other-fee-inline"><input id="other_fee-{{ forloop.counter }}-fee-per-0" name="other_fee-per-{{ forloop.counter }}" type="radio" value="m">月</label>
-          <label class="other-fee-inline"><input id="other_fee-{{ forloop.counter }}-fee-per-1" name="other_fee-per-{{ forloop.counter }}" type="radio" value="y">年</label>
-          <label class="other-fee-inline"><input id="other_fee-{{ forloop.counter }}-fee-per-2" name="other_fee-per-{{ forloop.counter }}" type="radio" value="bulk">一括</label>
-        </div>
+      <div class="col2 sub-field-label">金額</div>
+      <div class="col4">
+        <div class="input-group"><input class="form-control lv-int" id="other_fee-{{ forloop.counter }}-fee-price" name="other_fee-price" type="number" min="0" value="{{ fee.fee.price }}"><span class="input-group-addon">円/</span></div>
       </div>
-    {% endfor %}
-  {% endif %}
+      <div class="col6">
+        <label class="other-fee-inline"><input id="other_fee-{{ forloop.counter }}-fee-per-0" name="other_fee-per-{{ forloop.counter }}" type="radio" value="m" {% if fee.fee.per == 'm'%}checked{% endif %}>月</label>
+        <label class="other-fee-inline"><input id="other_fee-{{ forloop.counter }}-fee-per-1" name="other_fee-per-{{ forloop.counter }}" type="radio" value="y" {% if fee.fee.per == 'y'%}checked{% endif %}>年</label>
+        <label class="other-fee-inline"><input id="other_fee-{{ forloop.counter }}-fee-per-2" name="other_fee-per-{{ forloop.counter }}" type="radio" value="bulk" {% if fee.fee.per == 'bulk'%}checked{% endif %}>一括</label>
+      </div>
+    </div>
+  {% endfor %}
 </div>

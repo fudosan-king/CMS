@@ -3,9 +3,22 @@ from django.urls import path
 from django.http import JsonResponse
 from rest_framework import status
 from dashboard.models import SearchSortByPref
+from home.management.commands.railroad import MAP_REGION
 
 
 class RailRoadViewSet(GenericViewSet):
+    def get_region(self, request, region):
+        data = []
+        if region in MAP_REGION:
+            data = MAP_REGION.get(region, [])
+        return JsonResponse(
+            data,
+            safe=False,
+            json_dumps_params={'ensure_ascii': False},
+            content_type='application/json',
+            status=status.HTTP_200_OK
+        )
+
     def railroad(self, request):
         with open('data/railroad.json', 'r', encoding='utf8') as f:
             data = eval(f.read())
@@ -57,6 +70,7 @@ class RailRoadViewSet(GenericViewSet):
     def get_urlpatterns(cls):
         return [
             path('', cls.as_view({'get': 'railroad'}), name='railroad'),
+            path('region/<region>/', cls.as_view({'get': 'get_region'}), name='region'),
             path('<pref>/', cls.as_view({'get': 'railroad_pref'}), name='railroad_pref'),
             path('<pref>/<line>/', cls.as_view({'get': 'railroad_line'}), name='railroad_line'),
         ]

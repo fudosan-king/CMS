@@ -39,10 +39,12 @@
             <li><a href="#limitations">{% trans '制限事項' %}</a></li>
             <li><a href="#facility">{% trans '設備' %}</a></li>
             <li><a href="#google">{% trans 'Google map 座標' %}</a></li>
-            <li><a href="#room">{% trans '部屋' %}</a></li>
-            <li><a href="#renovation">{% trans 'リノベーション' %}</a></li>
-            <li><a href="#content">{% trans 'コンテンツ' %}</a></li>
             {% if building_detail %}
+            <li><a href="#room">{% trans '部屋' %}</a></li>
+            {% endif %}
+            <li><a href="#renovation">{% trans 'リノベーション' %}</a></li>
+            {% if building_detail %}
+            <li><a href="#content">{% trans 'コンテンツ' %}</a></li>
             <li><a href="#photos">{% trans '写真' %}</a></li>
             {% endif %}
         </ul>
@@ -93,7 +95,7 @@
                         {% include 'wagtailadmin/buildings/form_address.html' with pref=pref data=building_detail.address error_pref=forms.errors.pref error_city=forms.errors.city error_ooaza=forms.errors.ooaza%}
 
                         <div class="col12 sub-category">交通</div>
-                        {% include 'wagtailadmin/buildings/form_transports.html' with pref=map_pref data=building_detail.transports %}
+                        {% include 'wagtailadmin/buildings/form_transports.html' with pref=map_pref data=building_detail.transports pref_default=pref_default %}
 
                     <div>
                 </div>
@@ -614,106 +616,6 @@
             $('#id_when_to_move_in').datetimepicker({
               format: 'Y-m-d',
             });
-
-            // Set address
-            $('[id=id_pref]').change(function() {
-                var pref = $('#id_pref').val();
-                $('#id_city option').remove();
-                $('#id_ooaza option').remove();
-                $('#id_tyoume option').remove();
-                $('#id_hidden').val('');
-                $('#id_city').append(new Option('↓(市区町村)', ''));
-                $('#id_ooaza').append(new Option('↓(町域)', ''));
-                $('#id_tyoume').append(new Option('↓(丁目)', ''));
-                if (pref) {
-                    $.ajax({
-                    method: 'GET',
-                    url: '/api/locations/' + pref + '/',
-                    }).done(function(data) {
-                        for (i=0; i<data.length; i++){
-                            $('#id_city').append(new Option(data[i], data[i]));
-                        }
-                    });
-                }
-
-            });
-            $('[id=id_city]').change(function() {
-                var pref = $('#id_pref').val();
-                var city = $('#id_city').val();
-                $('#id_ooaza option').remove();
-                $('#id_tyoume option').remove();
-                if (pref && city){
-                    $.ajax({
-                    method: 'GET',
-                    url: '/api/locations/' + pref + '/' + city + '/',
-                    }).done(function(data) {
-                        $('#id_ooaza').append(new Option('↓(町域)', ''));
-                        $('#id_tyoume').append(new Option('↓(丁目)', ''));
-                        for (i=0; i<data.length; i++){
-                            $('#id_ooaza').append(new Option(data[i], data[i]));
-                        }
-                    });
-                }
-
-            });
-            $('[id=id_ooaza]').change(function() {
-                var pref = $('#id_pref').val();
-                var city = $('#id_city').val();
-                var ooaza = $('#id_ooaza').val();
-                $('#id_tyoume option').remove();
-                if (pref && city && ooaza){
-                    $.ajax({
-                    method: 'GET',
-                    url: '/api/locations/' + pref + '/' + city + '/' + ooaza + '/',
-                    }).done(function(data) {
-                        $('#id_tyoume').append(new Option('↓(丁目)', ''));
-                        for (i=0; i<data.length; i++){
-                            $('#id_tyoume').append(new Option(data[i], data[i]));
-                        }
-                    });
-                }
-
-            });
-            // End set address
-
-            // Set transports
-            $('[id=id_pref_transports]').change(function() {
-                var pref = $(this).val();
-                var transport = $(this).parent().parent().parent();
-                transport.find('#id_transport_company option').remove();
-                transport.find('#id_station_name option').remove();
-                transport.find('#id_walk_mins').val('');
-                transport.find('#id_transport_company').append(new Option('↓(駅名)', ''));
-                transport.find('#id_station_name').append(new Option('↓(駅名)', ''));
-                if (pref) {
-                    $.ajax({
-                    method: 'GET',
-                    url: '/api/railroad/' + pref + '/',
-                    }).done(function(data) {
-                        for (i=0; i<data.length; i++){
-                            transport.find('#id_transport_company').append(new Option(data[i], data[i]));
-                        }
-                    });
-                }
-            });
-            $('[id=id_transport_company]').change(function() {
-                var transport_company = $(this).val();
-                var transport = $(this).parent().parent().parent();
-                var pref = transport.find('#id_pref_transports').val();
-                transport.find('#id_station_name option').remove();
-                transport.find('#id_walk_mins').val('');
-                if (pref && transport_company) {
-                    $.ajax({
-                    method: 'GET',
-                    url: '/api/railroad/' + pref + '/' + transport_company + '/',
-                    }).done(function(data) {
-                        for (i=0; i<data.length; i++){
-                            transport.find('#id_station_name').append(new Option(data[i], data[i]));
-                        }
-                    });
-                }
-            });
-            // End set transports
 
         });
 

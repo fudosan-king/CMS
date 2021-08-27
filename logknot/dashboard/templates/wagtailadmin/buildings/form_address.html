@@ -53,3 +53,68 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+$(function(){
+    // Set address
+    $('[id=id_pref]').change(function() {
+        var pref = $('#id_pref').val();
+        $('#id_city option').remove();
+        $('#id_ooaza option').remove();
+        $('#id_tyoume option').remove();
+        $('#id_hidden').val('');
+        $('#id_city').append(new Option('↓(市区町村)', ''));
+        $('#id_ooaza').append(new Option('↓(町域)', ''));
+        $('#id_tyoume').append(new Option('↓(丁目)', ''));
+        if (pref) {
+            $.ajax({
+            method: 'GET',
+            url: '/api/locations/' + pref + '/',
+            }).done(function(data) {
+                for (i=0; i<data.length; i++){
+                    $('#id_city').append(new Option(data[i], data[i]));
+                }
+            });
+        }
+
+    });
+    $('[id=id_city]').change(function() {
+        var pref = $('#id_pref').val();
+        var city = $('#id_city').val();
+        $('#id_ooaza option').remove();
+        $('#id_tyoume option').remove();
+        if (pref && city){
+            $.ajax({
+            method: 'GET',
+            url: '/api/locations/' + pref + '/' + city + '/',
+            }).done(function(data) {
+                $('#id_ooaza').append(new Option('↓(町域)', ''));
+                $('#id_tyoume').append(new Option('↓(丁目)', ''));
+                for (i=0; i<data.length; i++){
+                    $('#id_ooaza').append(new Option(data[i], data[i]));
+                }
+            });
+        }
+
+    });
+    $('[id=id_ooaza]').change(function() {
+        var pref = $('#id_pref').val();
+        var city = $('#id_city').val();
+        var ooaza = $('#id_ooaza').val();
+        $('#id_tyoume option').remove();
+        if (pref && city && ooaza){
+            $.ajax({
+            method: 'GET',
+            url: '/api/locations/' + pref + '/' + city + '/' + ooaza + '/',
+            }).done(function(data) {
+                $('#id_tyoume').append(new Option('↓(丁目)', ''));
+                for (i=0; i<data.length; i++){
+                    $('#id_tyoume').append(new Option(data[i], data[i]));
+                }
+            });
+        }
+
+    });
+    // End set address
+});
+</script>

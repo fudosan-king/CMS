@@ -18,3 +18,19 @@ def format_money(money, **kwargs):
             output += str(decimal)[1:]
         return output
     return None
+
+
+@register.filter
+def index(indexable, i):
+    try:
+        i = int(i)
+    except:
+        i = 0
+    return indexable[i]
+
+
+@register.filter
+def make_list_data(data, loop):
+    if data:
+        return data
+    return [''] * int(loop)

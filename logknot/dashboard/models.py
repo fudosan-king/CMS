@@ -295,10 +295,6 @@ class Buildings(Document):
         default=[]
     )
 
-    # Will remove
-    company = fields.StringField(max_length=50, blank=False, default='')
-    design_club = fields.StringField(max_length=50, blank=True)
-
     @staticmethod
     def building_name_validation(building_name):
         if not building_name:

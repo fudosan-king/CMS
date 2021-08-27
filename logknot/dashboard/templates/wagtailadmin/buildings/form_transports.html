@@ -1,420 +1,316 @@
 {% load i18n wagtailadmin_tags %}
-{% load wagtailimages_tags %}
+{% load wagtailimages_tags dashboard_tags %}
 
 <div class="col12 col-transports">
-{% if data %}
-    {% for transport in data %}
-    <div class="col12 transports_{{ forloop.counter }}">
-        <div class="col4 field-building">
-            <span class="field-label">{% trans '交通' %}{{ forloop.counter }}</span>
-            <div>
-                <select value="" id="id_pref_transports" name="map_pref">
-                    <option value="">↓(都道府県)</option>
-                    {% for p in pref %}
-                    <option value="{{ p }}" {% if p == transport.map_pref %}selected{% endif %}>{{ p }}</option>
-                    {% endfor %}
-                </select>
-                <span class="message-error"></span>
-            </div>
-        </div>
-
-        <div class="col4 field-building">
-            <span class="field-label">&nbsp;</span>
-            <div>
-                <select name="transport_company" value="" id="id_transport_company">
-                    <option value="{% if transport.transport_company %}{{ transport.transport_company }}{% endif %}">{% if transport.transport_company %}{{ transport.transport_company }}{% else %}↓(沿線){% endif %}</option>
-                </select>
-                <span class="message-error"></span>
-            </div>
-        </div>
-
-        <div class="col4 field-building">
-            <span class="field-label">&nbsp;</span>
-            <div>
-                <select name="station_name" value="" id="id_station_name">
-                    <option value="{% if transport.station_name %}{{ transport.station_name }}{% endif %}">{% if transport.station_name %}{{ transport.station_name }}{% else %}↓(沿線){% endif %}</option>
-                </select>
-                <span class="message-error"></span>
-            </div>
-        </div>
-
-
-        <div class="col2 field-building">
-            <span class="field-label">&nbsp;</span>
-            <div align="right">
-                <span class="description-field">{% trans '駅から...' %}</span>
-            </div>
-        </div>
-
+{% for transport in data|make_list_data:3 %}
+<div class="col12 transports_{{ forloop.counter }}">
+    <div class="col6 field-building">
+        <span class="field-label">{% trans '交通' %}{{ forloop.counter }}</span>
         <div>
+            <select value="" id="id_region" name="region">
+                <option value="">↓(領域)</option>
+                {% for p in pref %}
+                    <option value="{{ p }}" {% if not transport and p == '関東' %}selected{% endif %}>{{ p }}</option>
+                {% endfor %}
+            </select>
+            <span class="message-error"></span>
+        </div>
+    </div>
+
+    <div class="col6 field-building">
+        <span class="field-label">&nbsp;</span>
+        <div>
+            <select value="" id="id_pref_transports" name="map_pref" class="pref_transports">
+                {% for p in pref_default %}
+                <option value="{{ p }}" {% if not transport and p == '東京都' %}selected{% endif %}{% if transport and p and transport.map_pref == p %}selected{% endif %}>{{ p }}</option>
+                {% endfor %}
+            </select>
+            <span class="message-error"></span>
+        </div>
+    </div>
+
+    <div class="col6 field-building">
+        <span class="field-label">&nbsp;</span>
+        <div>
+            <select name="transport_company" value="" id="id_transport_company">
+                <option value="{% if transport.transport_company %}{{ transport.transport_company }}{% endif %}">{% if transport.transport_company %}{{ transport.transport_company }}{% else %}↓(沿線){% endif %}</option>
+            </select>
+            <span class="message-error"></span>
+        </div>
+    </div>
+
+    <div class="col6 field-building">
+        <span class="field-label">&nbsp;</span>
+        <div>
+            <select name="station_name" value="" id="id_station_name">
+                <option value="{% if transport.station_name %}{{ transport.station_name }}{% endif %}">{% if transport.station_name %}{{ transport.station_name }}{% else %}↓(沿線){% endif %}</option>
+            </select>
+            <span class="message-error"></span>
+        </div>
+    </div>
+
+
+    <div class="col2 field-building">
+        <span class="field-label">&nbsp;</span>
+        <div align="right">
+            <span class="description-field">{% trans '駅から...' %}</span>
+        </div>
+    </div>
+
+    <div>
+        <div class="col3 field-building">
+            <span class="field-label">&nbsp;</span>
+            <div>
+                <select name="station_to" id="id_station_to">
+                    <option value="">(未選択)</option>
+                    <option value="walk" {% if transport.station_to == 'walk' %}selected{% endif %}>徒歩</option>
+                    <option value="bus" {% if transport.station_to == 'bus' %}selected{% endif %}>バス</option>
+                    <option value="car" {% if transport.station_to == 'car' %}selected{% endif %}>車</option>
+                </select>
+                <span class="message-error"></span>
+            </div>
+        </div>
+
+        <div class="by-walk {% if transport.station_to == 'walk' %}transports-active{% endif %}">
+            <div class="col1 field-building fix-height">
+                <span class="field-label">&nbsp;</span>
+                <div>
+                    <span class="description-field">{% trans 'で' %}</span>
+                </div>
+            </div>
+
             <div class="col3 field-building">
                 <span class="field-label">&nbsp;</span>
                 <div>
-                    <select name="station_to" id="id_station_to">
-                        <option value="">(未選択)</option>
-                        <option value="walk" {% if transport.station_to == 'walk' %}selected{% endif %}>徒歩</option>
-                        <option value="bus" {% if transport.station_to == 'bus' %}selected{% endif %}>バス</option>
-                        <option value="car" {% if transport.station_to == 'car' %}selected{% endif %}>車</option>
-                    </select>
+                    <input type="number" name="walk_mins" value="{% if transport.walk_mins %}{{ transport.walk_mins }}{% endif %}" id="id_walk_mins">
                     <span class="message-error"></span>
                 </div>
             </div>
 
-            <div class="by-walk {% if transport.station_to == 'walk' %}transports-active{% endif %}">
-                <div class="col1 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <span class="description-field">{% trans 'で' %}</span>
-                    </div>
+            <div class="col1 field-building fix-height">
+                <span class="field-label">&nbsp;</span>
+                <div>
+                    <span class="description-field">{% trans '分' %}</span>
                 </div>
-
-                <div class="col3 field-building">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <input type="number" name="walk_mins" value="{% if transport.walk_mins %}{{ transport.walk_mins }}{% endif %}" id="id_walk_mins">
-                        <span class="message-error"></span>
-                    </div>
-                </div>
-
-                <div class="col1 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <span class="description-field">{% trans '分' %}</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="by-bus {% if transport.station_to == 'bus' %}transports-active{% endif %}">
-                <div class="col1 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <span class="description-field">{% trans 'で' %}</span>
-                    </div>
-                </div>
-
-                <div class="col3 field-building">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <input type="text" name="bus_company" value="{% if transport.bus_company %}{{ transport.bus_company }}{% endif %}" maxlength="254" id="id_bus_company" placeholder="バス路線">
-                        <span class="message-error"></span>
-                    </div>
-                </div>
-
-                <div class="col3 field-building">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <input type="text" name="bus_station" value="{% if transport.bus_station %}{{ transport.bus_station }}{% endif %}" maxlength="254" id="id_bus_station" placeholder="バス停">
-                        <span class="message-error"></span>
-                    </div>
-                </div>
-
-                <div class="col2 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div align="right">
-                        <span class="description-field">{% trans 'まで' %}</span>
-                    </div>
-                </div>
-
-                <div class="col3 field-building">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <input type="number" name="bus_mins" value="{% if transport.bus_mins %}{{ transport.bus_mins }}{% endif %}" id="id_bus_mins">
-                        <span class="message-error"></span>
-                    </div>
-                </div>
-
-                <div class="col3 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <span class="description-field">{% trans '分、そこから徒歩で' %}</span>
-                    </div>
-                </div>
-
-                <div class="col3 field-building">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <input type="number" name="bus_walk_mins" value="{% if transport.bus_walk_mins %}{{ transport.bus_walk_mins }}{% endif %}" id="id_bus_walk_mins">
-                        <span class="message-error"></span>
-                    </div>
-                </div>
-
-                <div class="col1 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <span class="description-field">{% trans '分' %}</span>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="by-car {% if transport.station_to == 'car' %}transports-active{% endif %}">
-                <div class="col1 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <span class="description-field">{% trans 'で' %}</span>
-                    </div>
-                </div>
-
-                <div class="col3 field-building">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <input type="number" name="car_distance" value="{% if transport.car_distance %}{{ transport.car_distance }}{% endif %}" id="id_car_distance">
-                        <span class="message-error"></span>
-                    </div>
-                </div>
-
-                <div class="col2 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <span class="description-field">{% trans 'km' %}</span>
-                    </div>
-                </div>
-
-                <div class="col6 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div align="right">
-                        <span class="description-field">{% trans 'もしくは' %}</span>
-                    </div>
-                </div>
-
-                <div class="col3 field-building">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <input type="number" name="car_mins" value="{% if transport.car_mins %}{{ transport.car_mins }}{% endif %}" id="id_car_mins">
-                        <span class="message-error"></span>
-                    </div>
-                </div>
-
-                <div class="col1 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <span class="description-field">{% trans '分' %}</span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    {% endfor %}
-
-{% else %}
-    {% for i in "x"|rjust:"3"|make_list %}
-    <div class="col12 transports_{{ forloop.counter }}">
-        <div class="col4 field-building">
-            <span class="field-label">{% trans '交通' %}{{ forloop.counter }}</span>
-            <div>
-                <select value="" id="id_pref_transports" name="map_pref">
-                    <option value="">↓(都道府県)</option>
-                    {% for p in pref %}
-                    <option value="{{ p }}" {% if p == transport.map_pref %}selected{% endif %}>{{ p }}</option>
-                    {% endfor %}
-                </select>
-                <span class="message-error"></span>
             </div>
         </div>
 
-        <div class="col4 field-building">
-            <span class="field-label">&nbsp;</span>
-            <div>
-                <select name="transport_company" value="" id="id_transport_company">
-                    <option value="">↓(沿線)</option>
-                </select>
-                <span class="message-error"></span>
+        <div class="by-bus {% if transport.station_to == 'bus' %}transports-active{% endif %}">
+            <div class="col1 field-building fix-height">
+                <span class="field-label">&nbsp;</span>
+                <div>
+                    <span class="description-field">{% trans 'で' %}</span>
+                </div>
             </div>
-        </div>
 
-        <div class="col4 field-building">
-            <span class="field-label">&nbsp;</span>
-            <div>
-                <select name="station_name" value="" id="id_station_name">
-                    <option value="">↓(沿線)</option>
-                </select>
-                <span class="message-error"></span>
-            </div>
-        </div>
-
-
-        <div class="col2 field-building">
-            <span class="field-label">&nbsp;</span>
-            <div align="right">
-                <span class="description-field">{% trans '駅から...' %}</span>
-            </div>
-        </div>
-
-        <div>
             <div class="col3 field-building">
                 <span class="field-label">&nbsp;</span>
                 <div>
-                    <select name="station_to" id="id_station_to">
-                        <option value="">(未選択)</option>
-                        <option value="徒歩" {% if transport.station_to == '徒歩' %}selected{% endif %}>徒歩</option>
-                        <option value="バス" {% if transport.station_to == 'バス' %}selected{% endif %}>バス</option>
-                        <option value="車" {% if transport.station_to == '車' %}selected{% endif %}>車</option>
-                    </select>
+                    <input type="text" name="bus_company" value="{% if transport.bus_company %}{{ transport.bus_company }}{% endif %}" maxlength="254" id="id_bus_company" placeholder="バス路線">
                     <span class="message-error"></span>
                 </div>
             </div>
 
-            <div class="by-walk">
-                <div class="col1 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <span class="description-field">{% trans 'で' %}</span>
-                    </div>
-                </div>
-
-                <div class="col3 field-building">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <input type="number" name="walk_mins" id="id_walk_mins">
-                        <span class="message-error"></span>
-                    </div>
-                </div>
-
-                <div class="col1 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <span class="description-field">{% trans '分' %}</span>
-                    </div>
+            <div class="col3 field-building">
+                <span class="field-label">&nbsp;</span>
+                <div>
+                    <input type="text" name="bus_station" value="{% if transport.bus_station %}{{ transport.bus_station }}{% endif %}" maxlength="254" id="id_bus_station" placeholder="バス停">
+                    <span class="message-error"></span>
                 </div>
             </div>
 
-            <div class="by-bus">
-                <div class="col1 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <span class="description-field">{% trans 'で' %}</span>
-                    </div>
+            <div class="col2 field-building fix-height">
+                <span class="field-label">&nbsp;</span>
+                <div align="right">
+                    <span class="description-field">{% trans 'まで' %}</span>
                 </div>
-
-                <div class="col3 field-building">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <input type="text" name="bus_company" maxlength="254" id="id_bus_company" placeholder="バス路線">
-                        <span class="message-error"></span>
-                    </div>
-                </div>
-
-                <div class="col3 field-building">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <input type="text" name="bus_station" maxlength="254" id="id_bus_station" placeholder="バス停">
-                        <span class="message-error"></span>
-                    </div>
-                </div>
-
-                <div class="col2 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div align="right">
-                        <span class="description-field">{% trans 'まで' %}</span>
-                    </div>
-                </div>
-
-                <div class="col3 field-building">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <input type="number" name="bus_mins" id="id_bus_mins">
-                        <span class="message-error"></span>
-                    </div>
-                </div>
-
-                <div class="col3 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <span class="description-field">{% trans '分、そこから徒歩で' %}</span>
-                    </div>
-                </div>
-
-                <div class="col3 field-building">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <input type="number" name="bus_walk_mins" id="id_bus_walk_mins">
-                        <span class="message-error"></span>
-                    </div>
-                </div>
-
-                <div class="col1 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <span class="description-field">{% trans '分' %}</span>
-                    </div>
-                </div>
-
             </div>
 
-            <div class="by-car">
-                <div class="col1 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <span class="description-field">{% trans 'で' %}</span>
-                    </div>
+            <div class="col3 field-building">
+                <span class="field-label">&nbsp;</span>
+                <div>
+                    <input type="number" name="bus_mins" value="{% if transport.bus_mins %}{{ transport.bus_mins }}{% endif %}" id="id_bus_mins">
+                    <span class="message-error"></span>
                 </div>
-
-                <div class="col3 field-building">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <input type="number" name="car_distance" id="id_car_distance">
-                        <span class="message-error"></span>
-                    </div>
-                </div>
-
-                <div class="col2 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <span class="description-field">{% trans 'km' %}</span>
-                    </div>
-                </div>
-
-                <div class="col6 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div align="right">
-                        <span class="description-field">{% trans 'もしくは' %}</span>
-                    </div>
-                </div>
-
-                <div class="col3 field-building">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <input type="number" name="car_mins" id="id_car_mins">
-                        <span class="message-error"></span>
-                    </div>
-                </div>
-
-                <div class="col1 field-building fix-height">
-                    <span class="field-label">&nbsp;</span>
-                    <div>
-                        <span class="description-field">{% trans '分' %}</span>
-                    </div>
-                </div>
-
             </div>
+
+            <div class="col3 field-building fix-height">
+                <span class="field-label">&nbsp;</span>
+                <div>
+                    <span class="description-field">{% trans '分、そこから徒歩で' %}</span>
+                </div>
+            </div>
+
+            <div class="col3 field-building">
+                <span class="field-label">&nbsp;</span>
+                <div>
+                    <input type="number" name="bus_walk_mins" value="{% if transport.bus_walk_mins %}{{ transport.bus_walk_mins }}{% endif %}" id="id_bus_walk_mins">
+                    <span class="message-error"></span>
+                </div>
+            </div>
+
+            <div class="col1 field-building fix-height">
+                <span class="field-label">&nbsp;</span>
+                <div>
+                    <span class="description-field">{% trans '分' %}</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="by-car {% if transport.station_to == 'car' %}transports-active{% endif %}">
+            <div class="col1 field-building fix-height">
+                <span class="field-label">&nbsp;</span>
+                <div>
+                    <span class="description-field">{% trans 'で' %}</span>
+                </div>
+            </div>
+
+            <div class="col3 field-building">
+                <span class="field-label">&nbsp;</span>
+                <div>
+                    <input type="number" name="car_distance" value="{% if transport.car_distance %}{{ transport.car_distance }}{% endif %}" id="id_car_distance">
+                    <span class="message-error"></span>
+                </div>
+            </div>
+
+            <div class="col2 field-building fix-height">
+                <span class="field-label">&nbsp;</span>
+                <div>
+                    <span class="description-field">{% trans 'km' %}</span>
+                </div>
+            </div>
+
+            <div class="col6 field-building fix-height">
+                <span class="field-label">&nbsp;</span>
+                <div align="right">
+                    <span class="description-field">{% trans 'もしくは' %}</span>
+                </div>
+            </div>
+
+            <div class="col3 field-building">
+                <span class="field-label">&nbsp;</span>
+                <div>
+                    <input type="number" name="car_mins" value="{% if transport.car_mins %}{{ transport.car_mins }}{% endif %}" id="id_car_mins">
+                    <span class="message-error"></span>
+                </div>
+            </div>
+
+            <div class="col1 field-building fix-height">
+                <span class="field-label">&nbsp;</span>
+                <div>
+                    <span class="description-field">{% trans '分' %}</span>
+                </div>
+            </div>
+
         </div>
     </div>
-    {% endfor %}
-
-{% endif %}
+</div>
+{% endfor %}
 </div>
 
 <script type="text/javascript">
-$(function(){
-    $('[id=id_station_to]').change(function() {
-        if ($(this).val() && $(this).val() == 'walk') {
-            $(this).parent().parent().parent().find('.by-walk').css('display', 'block');
-            $(this).parent().parent().parent().find('.by-bus').css('display', 'none');
-            $(this).parent().parent().parent().find('.by-car').css('display', 'none');
-        } else if ($(this).val() && $(this).val() == 'bus') {
-            $(this).parent().parent().parent().find('.by-walk').css('display', 'none');
-            $(this).parent().parent().parent().find('.by-bus').css('display', 'block');
-            $(this).parent().parent().parent().find('.by-car').css('display', 'none');
-        } else if ($(this).val() && $(this).val() == 'car') {
-            $(this).parent().parent().parent().find('.by-walk').css('display', 'none');
-            $(this).parent().parent().parent().find('.by-bus').css('display', 'none');
-            $(this).parent().parent().parent().find('.by-car').css('display', 'block');
-        } else {
-            $(this).parent().parent().parent().find('.by-walk').css('display', 'none');
-            $(this).parent().parent().parent().find('.by-bus').css('display', 'none');
-            $(this).parent().parent().parent().find('.by-car').css('display', 'none');
+    $('.pref_transports').each(function () {
+        var pref = $(this).val();
+        var transport = $(this).parent().parent().parent();
+        var region = transport.find('#id_region').val();
+        if (pref && region) {
+            transport.find('#id_transport_company option').remove();
+            transport.find('#id_station_name option').remove();
+            transport.find('#id_walk_mins').val('');
+            transport.find('#id_transport_company').append(new Option('↓(駅名)', ''));
+            transport.find('#id_station_name').append(new Option('↓(駅名)', ''));
+            $.ajax({
+            method: 'GET',
+            url: '/api/railroad/' + pref + '/',
+            }).done(function(data) {
+                for (i=0; i<data.length; i++){
+                    transport.find('#id_transport_company').append(new Option(data[i], data[i]));
+                }
+            });
         }
     });
-});
+
+    $(function(){
+        // Set transports
+        $('[id=id_region]').change(function() {
+            var region = $(this).val();
+            var transport = $(this).parent().parent().parent();
+            transport.find('#id_pref_transports option').remove();
+            transport.find('#id_transport_company option').remove();
+            transport.find('#id_station_name option').remove();
+            transport.find('#id_walk_mins').val('');
+            transport.find('#id_pref_transports').append(new Option('↓(都道府県)', ''));
+            transport.find('#id_transport_company').append(new Option('↓(駅名)', ''));
+            transport.find('#id_station_name').append(new Option('↓(駅名)', ''));
+            if (region) {
+                $.ajax({
+                method: 'GET',
+                url: '/api/railroad/region/' + region + '/',
+                }).done(function(data) {
+                    for (i=0; i<data.length; i++){
+                        transport.find('#id_pref_transports').append(new Option(data[i], data[i]));
+                    }
+                });
+            }
+        });
+
+        $('[id=id_pref_transports]').change(function() {
+            var pref = $(this).val();
+            var transport = $(this).parent().parent().parent();
+            transport.find('#id_transport_company option').remove();
+            transport.find('#id_station_name option').remove();
+            transport.find('#id_walk_mins').val('');
+            transport.find('#id_transport_company').append(new Option('↓(駅名)', ''));
+            transport.find('#id_station_name').append(new Option('↓(駅名)', ''));
+            if (pref) {
+                $.ajax({
+                method: 'GET',
+                url: '/api/railroad/' + pref + '/',
+                }).done(function(data) {
+                    for (i=0; i<data.length; i++){
+                        transport.find('#id_transport_company').append(new Option(data[i], data[i]));
+                    }
+                });
+            }
+        });
+        $('[id=id_transport_company]').change(function() {
+            var transport_company = $(this).val();
+            var transport = $(this).parent().parent().parent();
+            var pref = transport.find('#id_pref_transports').val();
+            transport.find('#id_station_name option').remove();
+            transport.find('#id_walk_mins').val('');
+            if (pref && transport_company) {
+                $.ajax({
+                method: 'GET',
+                url: '/api/railroad/' + pref + '/' + transport_company + '/',
+                }).done(function(data) {
+                    for (i=0; i<data.length; i++){
+                        transport.find('#id_station_name').append(new Option(data[i], data[i]));
+                    }
+                });
+            }
+        });
+        // End set transports
+
+        $('[id=id_station_to]').change(function() {
+            if ($(this).val() && $(this).val() == 'walk') {
+                $(this).parent().parent().parent().find('.by-walk').css('display', 'block');
+                $(this).parent().parent().parent().find('.by-bus').css('display', 'none');
+                $(this).parent().parent().parent().find('.by-car').css('display', 'none');
+            } else if ($(this).val() && $(this).val() == 'bus') {
+                $(this).parent().parent().parent().find('.by-walk').css('display', 'none');
+                $(this).parent().parent().parent().find('.by-bus').css('display', 'block');
+                $(this).parent().parent().parent().find('.by-car').css('display', 'none');
+            } else if ($(this).val() && $(this).val() == 'car') {
+                $(this).parent().parent().parent().find('.by-walk').css('display', 'none');
+                $(this).parent().parent().parent().find('.by-bus').css('display', 'none');
+                $(this).parent().parent().parent().find('.by-car').css('display', 'block');
+            } else {
+                $(this).parent().parent().parent().find('.by-walk').css('display', 'none');
+                $(this).parent().parent().parent().find('.by-bus').css('display', 'none');
+                $(this).parent().parent().parent().find('.by-car').css('display', 'none');
+            }
+        });
+    });
 </script>

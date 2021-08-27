@@ -1,7 +1,7 @@
 from django.utils.translation import gettext as _  # noqa
 from django.template.response import TemplateResponse
-from home.management.commands.locations import PREF_MAP
-from home.management.commands.railroad import MAP_PREF_STATION
+from home.management.commands.locations import PREF_MAP, PREF_MAP_FULL
+from home.management.commands.railroad import MAP_REGION
 from django.http import Http404
 from dashboard.models import SearchSortByPref
 from dashboard.views import MenuSearchItem
@@ -13,7 +13,8 @@ def index(request):
         raise Http404
     context = {
         'pref': PREF_MAP,
-        'map_pref': list(MAP_PREF_STATION.values()),
+        'pref_full': PREF_MAP_FULL,
+        'map_pref': list(MAP_REGION.keys()),
     }
     return TemplateResponse(request, 'wagtailadmin/search_sort/index.html', context)
 

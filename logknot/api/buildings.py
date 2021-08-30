@@ -5,8 +5,11 @@ from rest_framework import status
 from dashboard.models import Buildings
 from mongoengine.queryset.visitor import Q
 from django.urls import reverse
+from bson import ObjectId
+import json
 
 # http://cms.localhost:5000/api/buildings/%E6%9D%B1%E4%BA%AC%E9%83%BD/%E6%B8%AF%E5%8C%BA/%E9%BA%BB%E5%B8%83%E5%8F%B0/1%E4%B8%81%E7%9B%AE/
+# http://cms.localhost:5000/api/buildings/new/61286244507f04c714bd4be1/
 
 
 class BuildingsViewSet(GenericViewSet):
@@ -37,9 +40,24 @@ class BuildingsViewSet(GenericViewSet):
             status=status.HTTP_200_OK
         )
 
+    def new_building(self, request, building_id):
+        try:
+            building = Buildings.objects().filter(id=ObjectId(building_id)).first()
+            building = json.loads(building.to_json())
+        except:
+            building = {}
+        return JsonResponse(
+            building,
+            safe=False,
+            json_dumps_params={'ensure_ascii': False},
+            content_type='application/json',
+            status=status.HTTP_200_OK
+        )
+
     @classmethod
     def get_urlpatterns(cls):
         return [
             path('<pref>/<city>/<ooaza>/', cls.as_view({'get': 'api_buildings'}), name='api_buildings'),
             path('<pref>/<city>/<ooaza>/<tyoume>/', cls.as_view({'get': 'api_buildings'}), name='api_buildings'),
+            path('new/<building_id>/', cls.as_view({'get': 'new_building'}), name='new_building'),
         ]

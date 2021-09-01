@@ -53,28 +53,29 @@ class BuildingsViewSet(GenericViewSet):
                 for k, v in estate.items():
                     if k in building:
                         estate[k] = building[k]
-                estate['estate_name'] = building['building_name']
-                estate['estate_name_kana'] = building['building_name_kana']
+                estate['estate_name'] = building.get('building_name')
+                estate['estate_name_kana'] = building.get('building_name_kana')
                 estate['built_date'] = '{}-{:02d}-01 00:00:00'.format(
-                    building['built_date_year'], building['built_date_month'])
+                    building.get('built_date_year'), building.get('built_date_month'))
                 transports = []
                 for transport in building['transports']:
                     data = {}
-                    data['bus_company'] = transport['bus_company']
-                    data['bus_mins'] = transport['bus_mins']
-                    data['bus_station'] = transport['bus_station']
-                    data['bus_walk_mins'] = transport['bus_walk_mins']
-                    data['car_distance'] = transport['car_distance']
-                    data['car_mins'] = transport['car_mins']
-                    data['station_name'] = transport['station_name']
-                    data['station_to'] = transport['station_to']
-                    data['transport_company'] = railroad_to_fdk(transport['transport_company'])
-                    data['walk_mins'] = transport['walk_mins']
+                    data['bus_company'] = transport.get('bus_company')
+                    data['bus_mins'] = transport.get('bus_mins')
+                    data['bus_station'] = transport.get('bus_station')
+                    data['bus_walk_mins'] = transport.get('bus_walk_mins')
+                    data['car_distance'] = transport.get('car_distance')
+                    data['car_mins'] = transport.get('car_mins')
+                    data['station_name'] = transport.get('station_name')
+                    data['station_to'] = transport.get('station_to')
+                    if transport.get('transport_company'):
+                        data['transport_company'] = railroad_to_fdk(transport.get('transport_company'))
+                    data['walk_mins'] = transport.get('walk_mins')
                     transports.append(data)
                 if 'zipcode_1' in building and 'zipcode_2' in building:
-                    estate['address']['zipcode'] = '{}-{}'.format(building['zipcode_1'], building['zipcode_2'])
+                    estate['address']['zipcode'] = '{}-{}'.format(building.get('zipcode_1'), building.get('zipcode_2'))
                 estate['transports'] = transports
-                estate['mansion_id'] = str(building['_id']['$oid'])
+                estate['mansion_id'] = str(building.get('_id').get('$oid'))
 
         except:
             estate = {}

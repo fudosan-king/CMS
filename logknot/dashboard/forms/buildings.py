@@ -9,7 +9,7 @@ from dashboard.forms.core import double
 
 CATEGORY = double('', 'カテゴリー1', 'カテゴリー2')
 
-DIRECTION = double('', '北', '北東', '東', '南東', '南', '南西', '西', '北西')
+DIRECTION = [('n', '北'), ('ne', '北東'), ('e', '東'), ('se', '南東'), ('s', '南'), ('sw', '南西'), ('w', '西'), ('nw', '北西')]
 
 ROOM_KIND = double('', 'K', 'R', 'DK', 'LK', 'SK', 'LDK', 'SDK', 'SLDK', '間取り最大')
 
@@ -27,7 +27,7 @@ STRUCTURE = double(
     'ブロック', '鉄筋ブロック', 'その他')
 
 STRUCTURE_PART = double(
-    '', '木造', '鉄骨', 'RC', 'SRC', 'PC', 'HPC', '軽量鉄骨', 'ALC', 'CFT',
+    '木造', '鉄骨', 'RC', 'SRC', 'PC', 'HPC', '軽量鉄骨', 'ALC', 'CFT',
     'ブロック', '鉄筋ブロック', 'その他')
 
 MANAGEMENT_SCOPE = double('自主管理', '一部委託', '全部委託')

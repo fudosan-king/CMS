@@ -197,6 +197,7 @@ class Buildings(Document):
         default=[]
     )
     address = fields.DictField(blank=False)
+    cache = fields.DictField(blank=False)
     structure = fields.StringField(max_length=20, blank=False, default='')
     structure_part = fields.StringField(max_length=20, blank=True, default='')
     ground_floors = fields.IntField(blank=False, default=0)
@@ -343,6 +344,9 @@ class Buildings(Document):
                 'tyoume': address.tyoume,
                 'hidden': address.hidden,
             }
+            data['cache']['address'] = '{}{}{}{}{}'.format(
+                address.pref, address.city, address.ooaza, address.tyoume, address.hidden
+            )
 
         data.transports = []
         map_pref = request.POST.getlist('map_pref', [])

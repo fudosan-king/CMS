@@ -116,11 +116,16 @@ class FromCSVConverter(Left2RightConverterBase):
         right.set('address.city', city)
         right.set('address.ooaza', ooaza)
         if tyoume_hidden and len(tyoume_hidden) == 2:
-            right.set('address.tyoume', u'{}丁目'.format(NUM_JP.get(tyoume_hidden[0])))
-            right.set('address.hidden', tyoume_hidden[1])
+            tyoume = u'{}丁目'.format(NUM_JP.get(tyoume_hidden[0]))
+            hidden = tyoume_hidden[1]
         elif tyoume_hidden and len(tyoume_hidden) == 1:
-            right.set('address.tyoume', u'')
-            right.set('address.hidden', tyoume_hidden[0])
+            tyoume = ''
+            hidden = tyoume_hidden[0]
+        right.set('address.tyoume', tyoume)
+        right.set('address.hidden', hidden)
+        right.set('cache.address', '{}{}{}{}{}'.format(
+            pref, city, ooaza, tyoume, hidden
+        ))
 
     def process_room(self, rule, left, right):
         room = left.pop()
@@ -138,9 +143,11 @@ class FromCSVConverter(Left2RightConverterBase):
             transport = Transports()
             transport_company = left.pop().split('/')
             if transport_company and len(transport_company) >= 1:
-                railroad = railroad_from_fdk(transport_company[0])
-                transport.transport_company = railroad[0]
-                transport.map_pref = railroad[1]
+                if transport_company[0]:
+                    railroad = railroad_from_fdk(transport_company[0])
+                if railroad:
+                    transport.transport_company = railroad[0]
+                    transport.map_pref = railroad[1]
             transport.station_name = left.pop()
             station_to = left.pop()
             mins = left.pop()

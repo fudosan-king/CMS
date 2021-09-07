@@ -1,6 +1,7 @@
 ### Require
 
 ```
+sudo yum groupinstall "Development Tools"
 Python3 >= 3.9.1
 pip3 >= 21.1.2
 virtualenv >= 20.4.7 (pip3)
@@ -34,6 +35,16 @@ screen -c .screenrc.develop
 ````
 http://cms.localhost:5000/
 
+
+## Access database
+User: root
+Pass: hgLJ8-8FW9#vD[jM
+
+mysql -u root -p
+> CREATE USER 'cms_buildings'@'localhost' IDENTIFIED BY 'sP9m%c7cDUy.ey}{'; <br>
+> CREATE DATABASE cms_buildings;<br>
+> GRANT ALL PRIVILEGES ON cms_buildings.* TO cms_buildings@localhost WITH GRANT OPTION;<br>
+> FLUSH PRIVILEGES;<br>
 
 
 ### Update locations and railroad

@@ -9,7 +9,7 @@ DATABASES = {
         'HOST': 'localhost',
         'NAME': 'cms_buildings',
         'USER': 'cms_buildings',
-        'PASSWORD': '',
+        'PASSWORD': 'sP9m%c7cDUy.ey}{',
         'TEST': {
             'NAME': 'cms_buildings_test',
         },
@@ -32,7 +32,7 @@ LANGUAGE_CODE = 'ja-jp'
 
 SECRET_KEY = 'django-insecure-2=j#c64aq8xu5@%^0@9k=q=ogo)!)7w5wcla(*i&u_xh2+2(6k'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']  # noqa
+ALLOWED_HOSTS = ['127.0.0.1', 'fudosan-king.xyz']  # noqa
 
 BASE_URL = 'http://fudosan-king.xyz'
 

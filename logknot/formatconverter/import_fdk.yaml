@@ -1,0 +1,134 @@
+#
+#       Left  CSV
+#       Right fdk
+
+direction: l2r
+helper_module: formatconverter.inport_fdk
+encoding: cp932
+allow_crlf: 2
+rules:
+  - pass
+  - index: 1
+    key: estate_subtype
+  - index: 2
+    key: building_name
+  - index: 3
+    key: building_name_kana
+  - processor: process_address
+  - processor: process_transports
+  - index: 40
+    key: management_scope
+  - index: 41
+    key: superintendent
+  - index: 42
+    key: management_company
+  - index: 43
+    key: carpark_type
+  - index: 44
+    key: carpark_space
+  - index: 45
+    key: carpark_space_cars
+  - index: 46
+    key: carpark_place
+  - index: 47
+    key: carpark_fee_min
+  - index: 48
+    key: carpark_fee_per
+  - index: 49
+    key: carpark_fee_tax_inc
+  - processor : process_carpark_note
+  - index: 51
+    key: bike_park
+  - index: 52
+    key: bike_park_price
+  - index: 53
+    key: bike_park_price_per
+  - index: 54
+    key: bicycles_park
+  - index: 55
+    key: bicycles_park_price
+  - index: 56
+    key: bicycles_park_price_per
+  - processor: process_initial_repeat_fee
+    key: usen_fee
+  - processor: process_initial_repeat_fee
+    key: internet_fee
+  - processor: process_initial_repeat_fee
+    key: catv_fee
+  - index: 78
+    key: community_fee_type
+  - index: 79
+    converter: covert_true_false
+    key: community_fee.unfixed
+  - index: 80
+    key: community_fee.price
+  - index: 81
+    key: community_fee.per
+  - index: 82
+    key: spa_type
+  - index: 83
+    converter: covert_true_false
+    key: spa_fee.unfixed
+  - index: 84
+    key: spa_fee.price
+  - index: 85
+    key: spa_fee.per
+  - index: 86
+    converter: convert_list
+    key: spa_tags
+  - processor: process_other_fee
+  - index: 96
+    key: rights_fee.no_fee
+  - index: 97
+    key: rights_fee.fee
+  - index: 98
+    key: guarantee_fee.no_fee
+  - index: 99
+    key: guarantee_fee.fee
+  - index: 100
+    key: deposit_fee.no_fee
+  - index: 101
+    key: deposit_fee.fee
+  - processor: process_built_date
+  - index: 103
+    key: total_houses
+  - index: 104
+    key: ground_floors
+  - index: 105
+    key: underground_floors
+  - index: 106
+    key: constructor_label
+  - index: 107
+    key: constructor
+  - index: 108
+    key: building_confirmation_number
+  - index: 109
+    key: structure
+  - index: 110
+    key: structure_part
+  - index: 111
+    key: land_rights
+  - index: 112
+    key: waterworks
+  - index: 113
+    key: sewer
+  - index: 114
+    key: gas
+  - index: 115
+    key: land_law_report
+  - index: 116
+    key: area_purpose.main
+  - index: 117
+    key: area_purpose.sub
+  - index: 118
+    converter: convert_list
+    key: limitations
+  - index: 119
+    key: limitations_etc
+  - index: 120
+    key: law43.type
+  - index: 121
+    key: law43.comment
+  - index: 122
+    converter: convert_list
+    key: features

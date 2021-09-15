@@ -38,6 +38,12 @@
                                 <label>合計: {{ total }}</label>
                             {% endif %}
                         </div>
+                        <div class="col12 kind" align="center">
+                            <select name="kind">
+                                <option value="default">{% trans 'Default' %}</option>
+                                <option value="fdk">{% trans 'FDK' %}</option>
+                            </select>
+                        </div>
                         <div class="col12 dry-run">
                             <label for="dry_run">
                                 <input type="checkbox" name="dry_run" id="dry_run" checked>
@@ -86,6 +92,12 @@
 {% endblock %}
 
 {% block extra_css %}
+<style type="text/css">
+    .kind select {
+        width: 200px;
+    }
+</style>
+
 {% endblock %}
 
 {% block extra_js %}

@@ -1,16 +1,17 @@
 import os
 import csv
-from formatconverter.converter import FromCSVConverter
+from formatconverter.import_fdk import FromFDKConverter
 from dashboard.models import Buildings, LogsImport
 import datetime
 from mongoengine.queryset.visitor import Q
 from django.urls import reverse
 from dashboard.controllers.buildings import update_count
 
-COL_CSV = 58
+
+COL_CSV = 123
 
 
-def import_csv(dirpath, dry_run=True, user='system'):
+def import_fdk(dirpath, dry_run=True, user='system'):
     importer = CSVImporter(dry_run, user)
 
     try:
@@ -28,7 +29,7 @@ def import_csv(dirpath, dry_run=True, user='system'):
 
 class CSVLoader(object):
     def __init__(self, dirpath):
-        self.converter = FromCSVConverter()
+        self.converter = FromFDKConverter()
         self.dirpath = dirpath
 
     def __call__(self):
@@ -39,7 +40,7 @@ class CSVLoader(object):
 
             header = next(it)
             if len(header) != COL_CSV:
-                print('Please check file csv (only 58 column)')
+                print('Please check file csv (only 123 column)')
                 assert False
 
             for idx, row in enumerate(it):
@@ -105,9 +106,7 @@ class CSVImporter(object):
             for k, v in building.items():
                 import_building[k] = v
             import_building.import_date = datetime.datetime.now
-            import_building.estate_subtype = 'マンション'
             import_building.land_law_report = '要'
-            import_building.management_scope = '自主管理'
             _ok = False
             if not self.dry_run:
                 try:

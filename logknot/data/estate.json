@@ -16,6 +16,7 @@
   "carpark_space": "",
   "carpark_space_cars": 0,
   "carpark_type": "",
+  "carpark_note": "",
   "catv_fee": {
     "initial_cost": None,
     "initial_no": False,

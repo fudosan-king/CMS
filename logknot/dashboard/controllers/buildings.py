@@ -93,6 +93,7 @@ def show(request, building_id):
                     try:
                         building_detail.save()
                         update_count(building_detail, city=city, station=station)
+                        update_building(building_detail)
                         messages.success(request, _('Updated'))
                     except Exception as e:
                         print('Update building error: {}'.format(e))
@@ -175,7 +176,7 @@ def add(request):
     return TemplateResponse(request, 'wagtailadmin/buildings/show.html', context)
 
 
-def update_count(building, removed=False, city=None, station=[]):
+def update_building(building):
     building_update = BuildingUpdated.objects().filter(updated=False).first()
     if not building_update:
         building_update = BuildingUpdated()
@@ -183,6 +184,8 @@ def update_count(building, removed=False, city=None, station=[]):
         building_update.building_id.append(str(building.id))
         building_update.save()
 
+
+def update_count(building, removed=False, city=None, station=[]):
     count_info = CountInfoBuildings.objects().first()
 
     if not count_info:

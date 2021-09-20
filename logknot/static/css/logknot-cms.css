@@ -272,7 +272,12 @@
 .section_content .richtext-image.left {float: left; width: 49%; padding-right: 1%;}
 .section_content .richtext-image.right {float: right; width: 49%; padding-left: 1%;}
 .section_content .richtext-image.full-width {width: 100%; height: auto;}
-.section_content .content-line {min-height: 520px; margin-bottom: 50px;}
+.section_content .content-line {
+  max-width: 941px;
+  min-height: 300px;
+  margin-bottom: 10px;
+  text-align: left;
+}
 
 .search-sort .search-sort-form {
     max-width: 800px;

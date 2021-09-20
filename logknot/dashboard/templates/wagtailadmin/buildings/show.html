@@ -42,7 +42,6 @@
             {% if building_detail %}
             <li><a href="#room">{% trans '部屋' %}</a></li>
             {% endif %}
-            <li><a href="#renovation">{% trans 'リノベーション' %}</a></li>
             {% if building_detail %}
             <li><a href="#content">{% trans 'コンテンツ' %}</a></li>
             <li><a href="#photos">{% trans '写真' %}</a></li>
@@ -370,31 +369,9 @@
             </section>
 
 
-
-
-            <section id="renovation" class="nice-padding">
-                <div class="row">
-                    <div class="col6 column-content">
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.price_full_renovation col='col6' error=forms.errors.price_full_renovation %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.link_2d col='col12' error=forms.errors.link_2d %}
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.link_3d col='col12' error=forms.errors.link_3d %}
-
-                    </div>
-
-                    <div class="col6 column-content">
-
-                        {% include 'wagtailadmin/buildings/form_input.html' with field=forms.specification_description col='col12' error=forms.errors.specification_description %}
-
-                    </div>
-                </div>
-            </section>
-
             <section id="content" class="nice-padding section_content">
                 <div class="row">
-                    <div class="col12">
+                    <div class="col12" align="center">
                         {% if page_content.content %}
                             {% for block in page_content.content %}
                                 {% include_block block %}

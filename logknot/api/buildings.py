@@ -77,7 +77,15 @@ class BuildingsViewSet(GenericViewSet):
                     estate['address']['zipcode'] = '{}-{}'.format(building.get('zipcode_1'), building.get('zipcode_2'))
                 estate['transports'] = transports
                 estate['mansion_id'] = str(building.get('_id').get('$oid'))
-                estate['land_rights'] = '所有権のみ'
+
+                land_rights = building.get('land_rights', '')
+                lr = ''
+                if land_rights:
+                    if land_rights == '所有権':
+                        lr = '所有権のみ'
+                    else:
+                        lr = '借地権のみ'
+                estate['land_rights'] = lr
         except:
             print('Create new building id have problem: {} '.format(building_id))
 

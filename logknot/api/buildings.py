@@ -2,7 +2,7 @@ from rest_framework.viewsets import GenericViewSet
 from django.urls import path
 from django.http import JsonResponse
 from rest_framework import status
-from dashboard.models import Buildings
+from dashboard.models import Buildings, BuildingUpdated
 from mongoengine.queryset.visitor import Q
 from django.urls import reverse
 from bson import ObjectId
@@ -44,11 +44,12 @@ class BuildingsViewSet(GenericViewSet):
 
     def new_building(self, request, building_id):
         estate = {}
-        with open('data/estate.json', 'r', encoding='utf8') as f:
-            estate = eval(f.read())
         try:
             building = Buildings.objects().filter(id=ObjectId(building_id)).first()
             if building:
+                with open('data/estate.json', 'r', encoding='utf8') as f:
+                    estate = eval(f.read())
+
                 building = json.loads(building.to_json())
                 for k, v in estate.items():
                     if k in building:
@@ -76,10 +77,10 @@ class BuildingsViewSet(GenericViewSet):
                     estate['address']['zipcode'] = '{}-{}'.format(building.get('zipcode_1'), building.get('zipcode_2'))
                 estate['transports'] = transports
                 estate['mansion_id'] = str(building.get('_id').get('$oid'))
-
+                estate['land_rights'] = '所有権のみ'
         except:
-            estate = {}
             print('Create new building id have problem: {} '.format(building_id))
+
         return JsonResponse(
             estate,
             safe=False,
@@ -126,6 +127,23 @@ class BuildingsViewSet(GenericViewSet):
             status=status.HTTP_200_OK
         )
 
+    def update_building(self, request):
+        building_update = BuildingUpdated.objects().filter(updated=False).first()
+        data = []
+
+        if building_update and building_update.building_id:
+            data = building_update.building_id
+            building_update.updated = True
+            building_update.save()
+
+        return JsonResponse(
+            data,
+            safe=False,
+            json_dumps_params={'ensure_ascii': False},
+            content_type='application/json',
+            status=status.HTTP_200_OK
+        )
+
     @classmethod
     def get_urlpatterns(cls):
         return [
@@ -133,4 +151,5 @@ class BuildingsViewSet(GenericViewSet):
             path('<pref>/<city>/<ooaza>/<tyoume>/', cls.as_view({'get': 'api_buildings'}), name='api_buildings'),
             path('new/<building_id>/', cls.as_view({'get': 'new_building'}), name='new_building'),
             path('search/', cls.as_view({'post': 'search_buildings'}), name='search_buildings'),
+            path('updated/', cls.as_view({'get': 'update_building'}), name='update_building'),
         ]

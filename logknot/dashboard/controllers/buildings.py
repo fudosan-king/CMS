@@ -105,11 +105,11 @@ def show(request, building_id):
             else:
                 messages.error(request, _('Sorry, you do not have permission to access this area.'))
 
-    data = fetch_url_to_json(settings.API_DATA_FDK)
+    data = fetch_url_to_json('{}&{}={}&unactive=1'.format(settings.API_DATA_FDK, 'building_id', building_id))
     total_room = 0
-    active_room = 2
-    if data and 'esstates' in data:
-        total_room = len(data.get('esstates'))
+    active_room = 0
+    if data and 'estates' in data:
+        total_room = len(data.get('estates'))
     try:
         page_content = ContentDetailPage.objects.get(building_id=building_id)
     except:
@@ -128,7 +128,7 @@ def show(request, building_id):
         'pref_default': MAP_REGION['関東'],
         'total_room': total_room,
         'active_room': active_room,
-        'rooms': data.get('esstates'),
+        'rooms': data.get('estates'),
         'page_content': page_content,
         'features': features
     }

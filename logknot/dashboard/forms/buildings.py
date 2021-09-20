@@ -463,29 +463,6 @@ class BuildingsForm(DocumentForm):
         widget=forms.TextInput(),
         required=False
     )
-    price_full_renovation = forms.IntegerField(
-        label=__('フルリノベーション概算価格'),
-        required=False,
-        widget=forms.NumberInput()
-    )
-    link_2d = forms.CharField(
-        label=__('2D参考プランイメージ'),
-        max_length=100,
-        widget=forms.TextInput(),
-        required=False
-    )
-    link_3d = forms.CharField(
-        label=__('3D参考プランイメージ'),
-        max_length=100,
-        widget=forms.TextInput(),
-        required=False
-    )
-    specification_description = forms.CharField(
-        label=__('仕様説明'),
-        max_length=1000,
-        widget=forms.Textarea(),
-        required=False
-    )
     pref = forms.CharField(
         label=__('住所'),
         required=True

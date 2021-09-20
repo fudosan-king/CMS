@@ -1,4 +1,4 @@
-from dashboard.models import Buildings, CountInfoBuildings
+from dashboard.models import Buildings, CountInfoBuildings, BuildingUpdated
 from django.shortcuts import redirect
 from django.http import Http404
 from django.core.paginator import Paginator
@@ -176,6 +176,13 @@ def add(request):
 
 
 def update_count(building, removed=False, city=None, station=[]):
+    building_update = BuildingUpdated.objects().filter(updated=False).first()
+    if not building_update:
+        building_update = BuildingUpdated()
+    if building_update and str(building.id) not in building_update.building_id:
+        building_update.building_id.append(str(building.id))
+        building_update.save()
+
     count_info = CountInfoBuildings.objects().first()
 
     if not count_info:

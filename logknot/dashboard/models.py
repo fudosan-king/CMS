@@ -73,6 +73,7 @@ IGNORE = [
     'law43-type',
     'law43-comment',
     'features',
+    'region'
 ]
 
 
@@ -286,10 +287,6 @@ class Buildings(Document):
     )
     limitations_etc = fields.StringField(max_length=60, blank=True)
     law43 = fields.DictField(blank=True, default={})
-    price_full_renovation = fields.StringField(max_length=20, blank=True)
-    link_2d = fields.StringField(max_length=100, blank=True)
-    link_3d = fields.StringField(max_length=100, blank=True)
-    specification_description = fields.StringField(max_length=1000, blank=True)
     features = fields.ListField(
         fields.StringField(max_length=20, blank=True),
         blank=True,
@@ -512,3 +509,15 @@ class SearchSortByPref(Document):
             for sn in transport_company:
                 self.transport_company.append(sn)
         return self
+
+
+class BuildingUpdated(Document):
+    created_at = fields.DateTimeField(
+        default=datetime.datetime.now, editable=False,
+    )
+    updated = fields.BooleanField(default=False, blank=True)
+    building_id = fields.ListField(
+        fields.StringField(max_length=24, blank=True),
+        blank=True,
+        default=[]
+    )

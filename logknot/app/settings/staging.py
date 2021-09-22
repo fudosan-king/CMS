@@ -32,9 +32,9 @@ LANGUAGE_CODE = 'ja-jp'
 
 SECRET_KEY = 'django-insecure-2=j#c64aq8xu5@%^0@9k=q=ogo)!)7w5wcla(*i&u_xh2+2(6k'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'fudosan-king.xyz']  # noqa
+ALLOWED_HOSTS = ['127.0.0.1', 'staging-msdb.order-renove.jp', 'localhost']  # noqa
 
-BASE_URL = 'http://fudosan-king.xyz'
+BASE_URL = 'https://staging-msdb.order-renove.jp'
 
 try:
     from .local import *  # noqa

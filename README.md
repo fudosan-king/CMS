@@ -22,6 +22,11 @@ cd logknot
 pip3 install -r requirements.txt
 python3 manage.py migrate
 python3 manage.py createsuperuser
+
+mkdir ~/project/wagtail/logknot/www/tmp
+mkdir ~/project/wagtail/logknot/www/logs
+mkdir ~/project/wagtail/logknot/www/import
+chmod -R 777  ~/project/wagtail/logknot/www
 ```
 
 

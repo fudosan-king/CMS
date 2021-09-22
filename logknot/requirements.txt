@@ -9,3 +9,5 @@ git+https://github.com/spapas/wagtail-multi-upload.git
 numpy>=1.21.0
 PyYAML>=5.4.1
 flake8>=3.9.0
+uwsgi>=2.0.19.1
+wagtail

@@ -47,9 +47,9 @@ Pass: hgLJ8-8FW9#vD[jM
 
 mysql -u root -p
 > CREATE USER 'cms_buildings'@'localhost' IDENTIFIED BY 'sP9m%c7cDUy.ey}{'; <br>
-> CREATE DATABASE cms_buildings;<br>
-> GRANT ALL PRIVILEGES ON cms_buildings.* TO cms_buildings@localhost WITH GRANT OPTION;<br>
-> FLUSH PRIVILEGES;<br>
+> CREATE DATABASE cms_buildings CHARACTER SET utf8 COLLATE utf8_general_ci; <br>
+> GRANT ALL PRIVILEGES ON cms_buildings.* TO cms_buildings@localhost WITH GRANT OPTION; <br>
+> FLUSH PRIVILEGES; <br>
 
 
 ### Update locations and railroad

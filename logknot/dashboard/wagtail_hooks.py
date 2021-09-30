@@ -1,9 +1,9 @@
 from django.contrib.auth.models import Permission
 from wagtail.core import hooks
-from django.urls import path, reverse
-from dashboard.controllers import buildings, import_buildings, removed, import_logs, search_sort
+from django.urls import path, reverse  # noqa
+from dashboard.controllers import buildings, import_buildings, removed, import_logs, search_sort, admin_3d
 from django.utils.translation import gettext as _  # noqa
-from dashboard.views import (
+from dashboard.views import (  # noqa
     MenuBuildingItem, MenuRemovedItem, MenuImportItem, MenuLogsItem,
     MenuSearchItem
 )
@@ -72,6 +72,18 @@ def register_report_import_menu_item():
 @hooks.register('register_admin_menu_item')
 def register_search_sort_menu_item():
     return MenuSearchItem(_('Sort Search'), reverse('search_sort'), icon_name='search', order=6)
+
+
+@hooks.register('register_admin_menu_item')
+def register_3d_menu_item():
+    return MenuBuildingItem(_('3D Models'), reverse('3d'), icon_name='code', order=7)
+
+
+@hooks.register('register_admin_urls')
+def admin_3d_index():
+    return [
+        path('3d/', admin_3d.index, name='3d'),
+    ]
 
 
 @hooks.register('register_admin_urls')

@@ -1,0 +1,279 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n wagtailadmin_tags %}
+{% load home_tags %}
+
+{% block titletag %}{% trans "3D Models" %}{% endblock %}
+
+{% block content %}
+    <header class="hasform">
+        <div class="row nice-padding">
+            <div class="col2">
+                <h1>
+                	<svg class="icon icon-doc-full header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-doc-full"></use></svg>
+                        {% trans '3D Models' %}
+                </h1>
+            </div>
+            <div class="col9">
+
+            </div>
+        </div>
+    </header>
+    <form action="{% url '3d_show' models3d.id %}" method="POST" class="form-3dmodels" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="col12">
+            <div class="col8" id="canvas">
+            </div>
+            <div class="col4" id="info-item">
+                <div class="col12">
+                    <div class="col2"><label class="name_jp">名前</label></div>
+                    <div class="col10"><input type="input" name="name_jp" value="{{ models3d.name_jp }}" required></div>
+                </div>
+                <div class="col12">
+                    <div class="col2"><label>Name</label></div>
+                    <div class="col10"><input type="input" name="name_en" value="{{ models3d.name_en }}" required></div>
+                </div>
+                <div class="col12">
+                    <div class="col2"><label>Price</label></div>
+                    <div class="col10">
+                        <div class="input-group">
+                            <input class="form-control lv-int" id="price" name="price" type="number" min="0" step="0.1" value="{{ models3d.price }}" required>
+                            <span class="input-group-addon">円</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col12 fotmatxyz rotation">
+                    <div class="col2"><label>Rotation: </label></div>
+                    <div class="col3"><label>X</label><input type="" name="rotation_x" value="{{ models3d.rotation.x }}"></div>
+                    <div class="col3"><label>Y</label><input type="" name="rotation_y" value="{{ models3d.rotation.y }}"></div>
+                    <div class="col3"><label>Z</label><input type="" name="rotation_z" value="{{ models3d.rotation.z }}"></div>
+                </div>
+                <div class="col12 fotmatxyz scale">
+                    <div class="col2"><label>Scale: </label></div>
+                    <div class="col3"><label>X</label><input type="" name="scale_x" value="{{ models3d.scale.x }}"></div>
+                    <div class="col3"><label>Y</label><input type="" name="scale_y" value="{{ models3d.scale.y }}"></div>
+                    <div class="col3"><label>Z</label><input type="" name="scale_z" value="{{ models3d.scale.z }}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col12">
+            <div class="col7">
+                <input type="file" accept=".glb" name="file_glb">
+            </div>
+        </div>
+        <div class="col12">
+            <div class="col12"><label>Mesh-Material:</label>{% if models3d.mesh %}<a class="button button-cancel">Reset</a>{% endif %}</div>
+            <div class="col12 header-mesh">
+                <div class="col1" align="center"><span>Index</span></div>
+                <div class="col2" align="center"><span>Name</span></div>
+                <div class="col2" align="center"><span>Color</span></div>
+                <div class="col4" align="center"><span>Image</span></div>
+            </div>
+            <div class="col12 material">
+                {% if models3d.mesh %}
+                    {% for mesh in models3d.mesh %}
+                        <div class="col12 index_{{ mesh.index }}">
+                            <input type="hidden" name="material_index" value="{{ mesh.index }}">
+                            <div class="col1"><label>{{ mesh.index }}</label></div>
+                            <div class="col2"><input type="input" name="material_name" value="{{ mesh.name }}"></div>
+                            <div class="col2">
+                                {% if mesh.color %}
+                                <input type="input" name="material_color" class="material_data" value="{{ mesh.color }}">
+                                {% else %}
+                                <input type="hidden" name="material_color" class="material_data" value="">&nbsp;
+                                {% endif %}
+                            </div>
+                            <div class="col4">
+                                {% if mesh.color %}
+                                <input type="hidden" name="material_image" class="material_data" value="">&nbsp;
+                                {% else %}
+                                <select name="material_image">
+                                    <option value=""></option>
+                                    {% for key, value in textures.items %}
+                                        <option value="{{ value }}" {% if value == mesh.image %}selected{% endif %}>{{ key }}</option>
+                                    {% endfor %}
+                                </select>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col12 button-submit" align="center">
+            <button type="submit" class="button button-save">Save</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block extra_css %}
+<style type="text/css">
+  .name_jp{
+    float: none;
+    position: relative;
+    top: 12px;
+  }
+  #canvas {
+    width: 1000px;
+    height: 562px;
+  }
+  .fotmatxyz label {
+    width: 20%;
+  }
+  .fotmatxyz input {
+    width: 80%;
+  }
+  .material .checkbox {
+    margin-top: 15px;
+  }
+  .button-submit {
+    padding-top: 20px;
+  }
+  .button-cancel {
+    width: 100px;
+    text-align: center;
+  }
+  form .col12 {
+    padding-top: 5px;
+  }
+  .header-mesh span{
+    font-weight: bold;
+  }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script type="module">
+    import * as THREE from '/static/build/three.module.js';
+    import { OrbitControls } from '/static/threejs/jsm/controls/OrbitControls.js';
+    import { GLTFLoader } from '/static/threejs/jsm/loaders/GLTFLoader.js';
+    import { RGBELoader } from '/static/threejs/jsm/loaders/RGBELoader.js';
+    import { RoughnessMipmapper } from '/static/threejs/jsm/utils/RoughnessMipmapper.js';
+
+    let camera, scene, renderer;
+
+    $('.form-3dmodels').on('click', '.button-cancel', function(){
+        $('.material').empty();
+    });
+
+    {% if models3d.path_3d %}
+    init();
+    animate();
+
+    function init() {
+
+        const container = document.getElementById('canvas');
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+
+        camera = new THREE.PerspectiveCamera( 45, width / height, 0.25, 20 );
+        camera.position.set( - 1.8, 0.6, 2.7 );
+
+        scene = new THREE.Scene();
+
+        new RGBELoader()
+            .setPath('/static/threejs/textures/')
+            .load('lebombo_1k.hdr', function(texture) {
+
+                texture.mapping = THREE.EquirectangularReflectionMapping;
+
+                // scene.background = texture;
+                scene.environment = texture;
+
+                const loader = new GLTFLoader().setPath('/static/threejs/models/');
+
+                loader.load('{{ models3d.id }}.glb', function(gltf) {
+                    let idx = 0;
+                    gltf.scene.traverse( function(child) {
+                        if (child.isMesh) {
+                            {% if not models3d.mesh %}
+                                let material = $('.material');
+                                let data = '';
+                                let placeholder = '';
+                                if (child.material.map){
+                                    placeholder = '*.jpg, *.png';
+                                } else {
+                                    data = child.material.color.getHexString();
+                                }
+                                material.append(
+                                    `
+                                    <div class="col12 index_`+ idx + `">
+                                        <input type="hidden" name="material_index" value="`+ idx + `">
+                                        <div class="col1"><label>` + idx + `</label></div>
+                                        <div class="col2"><input type="input" name="material_name" value="`+ child.material.name + `"></div>
+                                        <div class="col2"><input type="input" name="material_color" class="material_data" value="` + data + `"></div>
+                                        <div class="col4"><input type="input" name="material_image" class="material_data" value="" placeholder="` + placeholder + `"></div>
+                                    </div>
+                                    `
+                                );
+                            {% endif %}
+
+                            let mesh = [];
+
+                            {% if models3d.mesh %}
+                                mesh = {{ models3d.mesh|safe }};
+                            {% endif %}
+
+                            if (mesh){
+                                for (var i in mesh){
+                                    if (child.material.color && mesh[i].index === idx && mesh[i].color){
+                                        child.material.color = new THREE.Color('#' + mesh[i].color);
+                                    }
+
+                                    if (child.material.map && mesh[i].index === idx && mesh[i].image) {
+                                        const texture = new THREE.TextureLoader().load(mesh[i].image);
+                                        child.material.map = texture;
+                                    }
+                                }
+                            }
+                        }
+                        idx += 1;
+                    } );
+                    {% if models3d.rotation.x %}
+                        gltf.scene.rotation.x = {{ models3d.rotation.x }};
+                    {% endif %}
+                    {% if models3d.rotation.y %}
+                        gltf.scene.rotation.y = {{ models3d.rotation.y }};
+                    {% endif %}
+                    {% if models3d.rotation.z %}
+                        gltf.scene.rotation.z = {{ models3d.rotation.z }};
+                    {% endif %}
+
+                    {% if models3d.scale.x %}
+                        gltf.scene.scale.x = {{ models3d.scale.x }};
+                    {% endif %}
+                    {% if models3d.scale.y %}
+                        gltf.scene.scale.y = {{ models3d.scale.y }};
+                    {% endif %}
+                    {% if models3d.scale.z %}
+                        gltf.scene.scale.z = {{ models3d.scale.z }};
+                    {% endif %}
+                    scene.add(gltf.scene);
+
+                } );
+
+            } );
+
+        renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(width, height, false);
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1;
+        renderer.outputEncoding = THREE.sRGBEncoding;
+        container.appendChild(renderer.domElement);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.minDistance = 2;
+        controls.maxDistance = 10;
+        controls.target.set(0, 0, - 0.2);
+        controls.update();
+    }
+    {% endif %}
+
+    function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+    }
+
+</script>
+{% endblock %}

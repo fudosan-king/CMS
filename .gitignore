@@ -20,6 +20,7 @@ db.sqlite3*
 /logknot/www
 /logknot/media
 /logknot/admin
+/logknot/static/threejs/models
 
 ### JetBrains
 .idea/

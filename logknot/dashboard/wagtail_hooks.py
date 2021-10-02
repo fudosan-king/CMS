@@ -76,13 +76,27 @@ def register_search_sort_menu_item():
 
 @hooks.register('register_admin_menu_item')
 def register_3d_menu_item():
-    return MenuBuildingItem(_('3D Models'), reverse('3d'), icon_name='code', order=7)
+    return MenuBuildingItem(_('3D Models'), reverse('3d_index'), icon_name='code', order=7)
 
 
 @hooks.register('register_admin_urls')
 def admin_3d_index():
     return [
-        path('3d/', admin_3d.index, name='3d'),
+        path('3d/', admin_3d.index, name='3d_index'),
+    ]
+
+
+@hooks.register('register_admin_urls')
+def admin_3d_add():
+    return [
+        path('3d/add/', admin_3d.add, name='3d_add'),
+    ]
+
+
+@hooks.register('register_admin_urls')
+def admin_3d_show():
+    return [
+        path('3d/<models3d_id>', admin_3d.show, name='3d_show'),
     ]
 
 

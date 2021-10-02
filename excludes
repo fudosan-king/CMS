@@ -8,3 +8,4 @@ env
 logknot/manage.py
 logknot/media
 logknot/www
+logknot/static/threejs/models

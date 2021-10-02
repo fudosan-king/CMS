@@ -1,0 +1,58 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n wagtailadmin_tags %}
+{% load home_tags %}
+
+{% block titletag %}{% trans "3D Models" %}{% endblock %}
+
+{% block content %}
+    <header class="hasform">
+        <div class="row nice-padding">
+            <div class="col2">
+                <h1>
+                	<svg class="icon icon-doc-full header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-doc-full"></use></svg>
+                        {% trans '3D Models' %}
+                </h1>
+            </div>
+            <div class="col9">
+
+            </div>
+        </div>
+    </header>
+    <form method="POST" action="{% url '3d_add' %}">
+        {% csrf_token %}
+        <div class="col12">
+            <div class="col1">名前</div>
+            <div class="col5"><input type="input" name="name_jp" required></div>
+        </div>
+        <div class="col12">
+            <div class="col1">Name</div>
+            <div class="col5"><input type="input" name="name_en" required></div>
+        </div>
+        <div class="col12">
+            <div class="col1">Price</div>
+            <div class="col5">
+                <div class="input-group">
+                    <input class="form-control lv-int" id="price" name="price" type="number" min="0" value="" step="0.1" required>
+                    <span class="input-group-addon">円</span>
+                </div>
+            </div>
+        </div>
+        <div class="col6 button-submit" align="center">
+            <button type="submit" class="button button-save">Save</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block extra_css %}
+<style type="text/css">
+  .button-submit {
+    padding-top: 50px;
+  }
+  .col12 {
+    padding-top: 5px;
+  }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}

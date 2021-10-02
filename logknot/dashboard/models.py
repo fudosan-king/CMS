@@ -521,3 +521,18 @@ class BuildingUpdated(Document):
         blank=True,
         default=[]
     )
+
+
+class Models3D(Document):
+    created_at = fields.DateTimeField(
+        default=datetime.datetime.now, editable=False,
+    )
+    name_en = fields.StringField(max_length=20, blank=False)
+    name_jp = fields.StringField(max_length=20, blank=False)
+    price = fields.FloatField(min_value=0, default=0)
+    path_3d = fields.StringField(max_length=255, blank=True)
+    path_2d = fields.StringField(max_length=255, blank=True)
+    active = fields.BooleanField(default=True, blank=True)
+    rotation = fields.DictField(blank=True, default={})
+    scale = fields.DictField(blank=True, default={})
+    mesh = fields.ListField(blank=True, default=[])

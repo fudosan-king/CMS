@@ -106,7 +106,7 @@ DATABASES = {
         'HOST': 'localhost',
         'NAME': 'cms_buildings',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'hgLJ8-8FW9#vD[jM',
         'TEST': {
             'NAME': 'cms_buildings_test',
         },

@@ -6,6 +6,12 @@ from wagtail.core.models import Page
 from wagtail.search.models import Query
 from home.management.commands.locations import PREF_MAP
 from home.management.commands.railroad import MAP_REGION
+import urllib3
+import json
+from django.conf import settings
+
+
+http = urllib3.PoolManager()
 
 
 def search(request):
@@ -70,11 +76,18 @@ def search_all(request):
     limit = index + per_page
     buildings = buildings[index:limit]
 
+    building_estates = {}
+
+    for building in buildings:
+        estates = get_estate(building.id)
+        building_estates[building.id] = estates
+
     context = {
         'paginator': paginator,
         'page': page,
         'limit': per_page,
-        'buildings': buildings
+        'buildings': buildings,
+        'building_estates': building_estates
     }
 
     return TemplateResponse(request, 'search/result.html', context)
@@ -113,11 +126,18 @@ def result(request):
     limit = index + per_page
     buildings = buildings[index:limit]
 
+    building_estates = {}
+
+    for building in buildings:
+        estates = get_estate(building.id)
+        building_estates[building.id] = estates
+
     context = {
         'paginator': paginator,
         'page': page,
         'limit': per_page,
         'buildings': buildings,
+        'building_estates': building_estates
     }
     return TemplateResponse(request, 'search/result.html', context)
 
@@ -151,3 +171,20 @@ def page(request):
         'search_results': search_results,
         'paginator': paginator
     })
+
+
+def get_estate(building_id):
+    if settings.BUILDING_ID:
+        building_id = settings.BUILDING_ID
+
+    url = '{}/api/161/list?token={}&building_id={}'.format(
+        settings.FDK_URL,
+        settings.TOKEN_FDK,
+        building_id
+    )
+    estates = http.request('GET', url)
+    estates = json.loads(estates.data)
+
+    if 'estates' in estates:
+        return estates['estates']
+    return []

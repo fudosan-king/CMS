@@ -20,6 +20,11 @@ def format_money(money, **kwargs):
     return None
 
 
+@register.simple_tag()
+def covert_money(money):
+    return '{:,.0f}'.format(money)
+
+
 @register.filter
 def index(indexable, i):
     try:

@@ -16,6 +16,8 @@ LANGUAGE_CODE = 'en-us'
 
 BASE_URL = 'http://cms.localhost:5000'
 
+BUILDING_ID = '614931df7150c517fb4ec330'
+
 try:
     from .local import *  # noqa
 except ImportError:

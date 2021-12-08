@@ -1,168 +1,80 @@
 {% extends "home_base.html" %}
 {% load static %}
 
-{% block body_class %}template-homepage{% endblock %}
+{% block body_class %}navigation nav-fixed nav-white{% endblock %}
 
 {% block extra_css %}
 {% endblock extra_css %}
 
 {% block content %}
-	<section class="section_banner" style="background-image: url('/static/images/img.jpg');">
-        <div class="caption d-none d-lg-block">
-            <img src="/static/images/svg/label.svg" alt="" class="img-fluid" width="430">
-            <p>『自分に合った住まい』を考え、新しい暮らしの夢を膨らませませんか？<br>
-            自宅にいながら最適なリノベーションを全力でサポートいたします。</p>
+<section class="section-top-slide" style="background-image:url('/static/images/top-page/top-img.jpg')">
+	<div class="top-slide_info">
+		<div class="d-none d-md-block top-slide_info_img">
+			<img src="/static/images/top-page/top-img-slide.png" alt="" title="" >
+		</div>
+		<p class="d-none d-md-block">『自分に合った住まい』を考え、新しい暮らしの夢を膨らませませんか？<br>
+			自宅にいながら最適なリノベーションを全力でサポートいたします。</p>
+	</div>
+</section>
+<!-- <section class="section-top_action">
+	<div class="top_action">
+		<ul>
+			<li>
+				<a href="#">
+					<i class="c-icon i-map"></i>
+					<span>エリアから探す</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class="c-icon i-train"></i>
+					<span>沿線から探す</span>
+				</a>
+			</li>
+			<li class="d-none d-md-block">
+				<a href="#">
+					<i class="c-icon i-location"></i>
+					<span>MAPから探す</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+</section> -->
+<section>
+	<div class="lists-block">
+		<div class="container">
+			<h2 class="title"><b>新着物件</b></h2>
+		    <ul class="archive-list">
+		    	{% for building in self.get_buildings_new %}
+	            <li>
+	                <div class="property-archive_item">
+	                    <a href="{% url 'building' building.id %}">
+	                    	<div class="property_img">
+	                        	<img src="{{ building.get_photo_first }}" alt="" class="img-fluid">
+	                        	<p class="total_price">{{ building.price }}<span class="unit">万円</span><span class="sub">（物件＋リノベーション）</span></p>
+	                        </div>
+	                        <p class="label_custom">カスタム<br>可能物件</p>
+		                    <div class="w_property-archive_head">
+		                        <div class="property-archive_head">
+	                                <div class="property_info">
+	                                    <p class="property_name">{{ building.building_name }}</p>
+	                                    <p class="property_address">
+	                                        <span>{% for k, address in building.address.items %}{{ address }}{% endfor %}</span>
+	                                        <span>{{ building.tatemono_menseki }}m²</span>
+	                                    </p>
+	                                </div>
+	                                <!-- <div class="property_wishlist">
+	                                    <a class="btn_wishlist" href="#"></a>
+	                                </div> -->
+		                        </div>
+		                    </div>
+	                    </a>
+	                </div>
+	            </li>
+	            {% endfor %}
+	        </ul>
+	        <a href="{% url 'search_all' %}"><button type="button" class="btn btn-more">もっと見る</button></a>
         </div>
-        <ul>
-            <li>
-                <a class="btn_map" href="#">
-                <img src="/static/images/svg/i_map.svg" alt="" class="img-fluid d-none d-lg-inline-block" width="18">
-                <img src="/static/images/svg/i_map_black.svg" alt="" class="img-fluid d-inline-block d-lg-none" width="18">
-                エリアから探す</a>
-            </li>
-            <li>
-                <a class="btn_stations" href="#">
-                <img src="/static/images/svg/i_stations.svg" alt="" class="img-fluid d-none d-lg-inline-block" width="13">
-                <img src="/static/images/svg/i_stations_black.svg" alt="" class="img-fluid d-inline-block d-lg-none" width="13">
-                沿線から探す</a>
-            </li>
-        </ul>
-    </section>
-
-
-    <!-- <section class="section_searh">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-lg-12">
-                    <div class="box_searchby area">
-                        <h3><a class="btn" data-toggle="collapse" href="#box_byarea" role="button" aria-expanded="false" aria-controls="box_byarea">エリアから探す</a></h3>
-                        <ul id="box_byarea" class="collapse">
-                            <li><a href="#">足立区</a></li>
-                            <li><a href="">荒川区</a></li>
-                            <li><a href="">板橋区</a></li>
-                            <li><a href="">江戸川区</a></li>
-                            <li><a href="">大田区</a></li>
-                            <li><a href="">葛飾区</a></li>
-                            <li><a href="">北区</a></li>
-                            <li><a href="">江東区</a></li>
-                            <li><a href="">品川区</a></li>
-                            <li><a href="">渋谷区</a></li>
-                            <li><a href="">新宿区</a></li>
-                            <li><a href="">杉並区</a></li>
-                            <li><a href="">墨田区</a></li>
-                            <li><a href="">世田谷区</a></li>
-                            <li><a href="">台東区</a></li>
-                            <li><a href="">千代田区</a></li>
-                            <li><a href="">中央区</a></li>
-                            <li><a href="">豊島区</a></li>
-                            <li><a href="">中野区</a></li>
-                            <li><a href="">練馬区</a></li>
-                            <li><a href="">文京区</a></li>
-                            <li><a href="">港区</a></li>
-                            <li><a href="">目黒区</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="box_searchby line">
-                        <h3><a class="btn" data-toggle="collapse"  href="#box_byline" aria-expanded="false" aria-controls="box_byline">沿線から探す</a></h3>
-                        <ul id="box_byline" class="collapse">
-                            <li><a href="#">足立区</a></li>
-                            <li><a href="">荒川区</a></li>
-                            <li><a href="">板橋区</a></li>
-                            <li><a href="">江戸川区</a></li>
-                            <li><a href="">大田区</a></li>
-                            <li><a href="">葛飾区</a></li>
-                            <li><a href="">北区</a></li>
-                            <li><a href="">江東区</a></li>
-                            <li><a href="">品川区</a></li>
-                            <li><a href="">渋谷区</a></li>
-                            <li><a href="">新宿区</a></li>
-                            <li><a href="">杉並区</a></li>
-                            <li><a href="">墨田区</a></li>
-                            <li><a href="">世田谷区</a></li>
-                            <li><a href="">台東区</a></li>
-                            <li><a href="">千代田区</a></li>
-                            <li><a href="">中央区</a></li>
-                            <li><a href="">豊島区</a></li>
-                            <li><a href="">中野区</a></li>
-                            <li><a href="">練馬区</a></li>
-                            <li><a href="">文京区</a></li>
-                            <li><a href="">港区</a></li>
-                            <li><a href="">目黒区</a></li>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section> -->
-
-
-    <section class="section_new_property">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-lg-12">
-                    <h2 class="title">お勧めの物件</h2>
-                    <ul class="list_property">
-                        {% for building in self.get_buildings_recommend %}
-                        <li>
-                            <div class="property_img">
-                                <a href="{% url 'building' building.id %}">
-                                    <img src="{{ building.get_photo_first }}" alt="" class="img-fluid">
-                                </a>
-                                <p class="total_price"><span>総戸数</span>{{ building.total_houses }}<span class="sub"></span></p>
-                                <p class="label_custom">お勧め</p>
-                            </div>
-                            <div class="property_head">
-                                <div class="row">
-                                    <div class="col-10 col-lg-10">
-                                        <p class="property_name">{{ building.building_name }}</p>
-                                        <p class="mb-0">
-                                            <span class="property_address">{% for k, address in building.address.items %}{{ address }}{% endfor %}</span>
-                                        </p>
-                                    </div>
-                                    <!-- <div class="col-2 col-lg-2">
-                                        <a href="#" class="btn_wishlist"></a>
-                                    </div> -->
-                                </div>
-                            </div>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section_near_property bg-white">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-lg-12">
-                    <h2 class="title">新着の物件</h2>
-                    <ul class="list_property">
-                        {% for building in self.get_buildings_new %}
-                        <li>
-                            <div class="property_img">
-                                <a href="{% url 'building' building.id %}">
-                                    <img src="{{ building.get_photo_first }}" alt="" class="img-fluid">
-                                </a>
-                                <p class="total_price"><span>総戸数</span>{{ building.total_houses }}<span class="sub"></span></p>
-                                <p class="label_custom renovated">NEW</p>
-                            </div>
-                            <div class="property_head">
-                                <p class="property_name">{{ building.building_name }}</p>
-                                <p class="mb-0">
-                                    <span class="property_address">{% for k, address in building.address.items %}{{ address }}{% endfor %}</span>
-                                </p>
-                            </div>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    <p class="text-center mt-3"><a href="{% url 'search_all' %}" class="btn btnSeemore">もっと見る</a></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
+	</div>
+</section>
 {% endblock content %}

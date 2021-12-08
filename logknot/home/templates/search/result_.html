@@ -1,0 +1,85 @@
+{% extends "home_base.html" %}
+{% load static wagtailcore_tags %}
+{% load i18n wagtailadmin_tags wagtailimages_tags %}
+{% load home_tags %}
+
+
+{% block body_class %}template-searchresults{% endblock %}
+
+{% block title %}Search result | {{ home_page.title }}{% endblock %}
+
+{% block seo %}
+        <meta name="description" content="{{ home_page.description }}" />
+        <meta name="keyword" content="{{ home_page.keyword }}" />
+        <link rel="canonical" href="{{ base_url }}{% url 'result' %}">
+        <meta property="og:title" content="{{ home_page.og_title }}" />
+        <meta property="og:url" content="{{ base_url }}" />
+        <meta property="og:type" content="{{ home_page.og_type }}" />
+        <meta property="og:description" content="{% if home_page.og_description %}{{ home_page.og_description }}{% else %}{{ home_page.description }}{% endif %}" />
+        {% image home_page.og_image fill-1200x300 as og_image %}
+        <meta property="og:image" content="{{ og_image.url }}" />
+        <meta property='article:modified_time' content="{{ home_page.article_modified_time }}" />
+{% endblock %}
+
+{% block header %}
+    {% include 'header2.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="box_template">
+        <section class="section_near_property custom pt-0 bg-white">
+            <div class="box_top">
+                <div class="container">
+                    <h2 class="title mb-2">港区エリア</h2>
+                    <p class="subtitle mb-4">リノベーション・中古マンション物件一覧</p>
+                    <ul class="box_sort">
+                        <li><a href="#">価格 指定なし</a></li>
+                        <li><a href="#">広さ 指定なし</a></li>
+                        <li><a href="#"><img src="/static/images/svg/i_sort.svg" alt="" class="img-fluid" width="15"> 条件を変更する</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-12">
+
+                        <ul class="list_property">
+                            {% for building in buildings %}
+                                <li>
+                                    <div class="property_img">
+                                        <a href="{% url 'building' building.id %}"><img src="{{ building.get_photo_first }}" alt="" class="img-fluid"></a>
+                                        <p class="total_price"><span>総戸数</span>{{ building.total_houses }}<span class="sub"></span></p>
+                                    </div>
+                                    <div class="property_head">
+                                        <p class="property_name">{{ building.building_name }}</p>
+                                        <div class="d-flex d-lg-block">
+                                            <p class="property_address">{% for k, address in building.address.items %}{{ address }}{% endfor %}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div align="center">
+                {% if paginator %}
+                    {% if paginator.has_previous %}
+                        <a href="{% url 'search_all' %}?{% url_replace page=paginator.previous_page_number limit=limit %}">{% trans 'Previous' %}</a>
+                    {% endif %}
+                    {{ paginator }}
+                    {% if paginator.has_next %}
+                        <a href="{% url 'search_all' %}?{% url_replace page=paginator.next_page_number limit=limit %}">{% trans 'Next' %}</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </section>
+
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}

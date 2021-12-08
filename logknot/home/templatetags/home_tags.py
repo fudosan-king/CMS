@@ -12,3 +12,8 @@ def url_replace(context, **kwargs):
         query.pop('limit')
     query.update(kwargs)
     return query.urlencode()
+
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)

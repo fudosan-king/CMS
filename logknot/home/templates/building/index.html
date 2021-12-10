@@ -185,38 +185,39 @@
             </div>
         </div>
     </div>
-    <!-- <div class="lists-block">
+    <div class="lists-block">
         <div class="container">
             <h2 class="title"><b>新着物件</b></h2>
             <ul class="archive-list">
+                {% for building_same in buildings_same_area%}
                 <li>
                     <div class="property-archive_item">
-                        <a href="#">
+                        <a href="{% url 'building' building_same.id %}">
                             <div class="property_img">
-                                <img src="/static/images/top-page/img.jpg" alt="" class="img-fluid">
-                                <p class="total_price">5400<span class="unit">万円</span><span class="sub">（物件＋リノベーション）</span></p>
+                                <img src="{{ building_same.get_photo_first }}" alt="" class="img-fluid">
+                                <p class="total_price">{{ building_same.total_houses }}<span class="unit">戸</span></p>
                             </div>
                             <p class="label_custom">カスタム<br>可能物件</p>
                             <div class="w_property-archive_head">
                                 <div class="property-archive_head">
                                     <div class="property_info">
-                                        <p class="property_name">麻布狸穴ナショナルコート</p>
+                                        <p class="property_name">{{ building_same.building_name }}</p>
                                         <p class="property_address">
-                                            <span>港区西麻布2丁目</span>
-                                            <span>50.4m²</span>
+                                            <span>{% for k, address in building_same.address.items %}{{ address }}{% endfor %}</span>
                                         </p>
                                     </div>
-                                    <div class="property_wishlist">
+                                   <!--  <div class="property_wishlist">
                                         <a class="btn_wishlist" href="#"></a>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </a>
                     </div>
                 </li>
+                {% endfor %}
             </ul>
             <button type="button" class="btn btn-more">もっと見る</button>
         </div>
-    </div> -->
+    </div>
 </section>
 {% endblock %}

@@ -41,10 +41,17 @@ def index(request, building_id):
     estates = http.request('GET', url)
     estates = json.loads(estates.data)
 
+    area = Q(removed=False)
+    area &= Q(address__pref=building.address['pref'])
+    area &= Q(address__city__in=[building.address['city']])
+    area &= Q(id__nin=[building.id])
+    buildings_same_area = Buildings.objects().filter(area).order_by('-date_created')
+
     context = {
         'building': building,
         'page_content': page_content,
-        'estates': estates
+        'estates': estates,
+        'buildings_same_area': buildings_same_area[:16]
     }
 
     return TemplateResponse(request, 'building/index.html', context)

@@ -162,10 +162,23 @@ def result(request):
         q &= Q(address__city__in=request.GET.getlist('area'))
     if request.GET.getlist('transport_company', []):
         q &= Q(transports__transport_company__in=request.GET.getlist('transport_company'))
-    if request.GET.getlist('station', []):
-        q &= Q(transports__station_name__in=request.GET.getlist('station'))
+    station = request.GET.getlist('station', [])
+    if station:
+        q &= Q(transports__transport_company__exists=True)
+        q &= Q(transports__station_name__in=station)
 
-    buildings = Buildings.objects().filter(q).order_by('-created_at')
+    buildings = []
+    buildings_query = Buildings.objects().filter(q).order_by('-created_at')
+
+    if station:
+        for building in buildings_query:
+            for transport in building.transports:
+                if transport.transport_company and transport.station_name \
+                        and transport.station_name in station:
+                    buildings.append(building)
+                    break
+    else:
+        buildings = buildings_query
 
     try:
         page = int(request.GET.get('page', 1))

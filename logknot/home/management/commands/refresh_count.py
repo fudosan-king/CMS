@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from dashboard.models import Buildings, CountInfoBuildings
 from dashboard.controllers.buildings import update_count
+from mongoengine.queryset.visitor import Q
 
 
 class Command(BaseCommand):
@@ -11,7 +12,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         try:
-            buildings = Buildings.objects().order_by('-id')
+            pref = '東京都'
+            q = Q(removed=False)
+            q &= Q(address__pref=pref)
+            buildings = Buildings.objects().filter(q).order_by('-id')
             count = CountInfoBuildings()
             count.drop_collection()
             for building in buildings:

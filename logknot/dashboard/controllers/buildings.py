@@ -63,10 +63,12 @@ def show(request, building_id):
     transport_company = []
     station = []
     for transport in building_detail.transports:
-        if transport.station_name and [transport.map_pref, transport.station_name] not in station:
-            station.append([transport.map_pref, transport.station_name])
         if transport.transport_company and [transport.map_pref, transport.transport_company] not in transport_company:
             transport_company.append([transport.map_pref, transport.transport_company])
+        if transport.transport_company and transport.station_name \
+                and transport.transport_company != '' \
+                and [transport.map_pref, transport.station_name] not in station:
+            station.append([transport.map_pref, transport.station_name])
 
     photos = get_image_model().objects.filter(building_id=building_id)
 
@@ -213,7 +215,9 @@ def update_count(building, removed=False, city=None, transport_company=[], stati
         if transport.transport_company \
                 and [transport.map_pref, transport.transport_company] not in transport_company_in:
             transport_company_in.append([transport.map_pref, transport.transport_company])
-        if transport.station_name and [transport.map_pref, transport.station_name] not in station_in:
+        if transport.transport_company and transport.station_name \
+                and transport.transport_company != '' \
+                and [transport.map_pref, transport.station_name] not in station_in:
             station_in.append([transport.map_pref, transport.station_name])
 
     if city and city in city_dict and city_dict[city] > 0:
@@ -256,11 +260,11 @@ def update_count(building, removed=False, city=None, transport_company=[], stati
         for st in station_in:
             if st[0] and st[1]:
                 # 東京都-六本木一丁目
-                name_transport = '{}-{}'.format(st[0], st[1])
-                if name_transport not in station_dict:
-                    station_dict[name_transport] = 1
+                station_name_ = '{}-{}'.format(st[0], st[1])
+                if station_name_ not in station_dict:
+                    station_dict[station_name_] = 1
                 else:
-                    station_dict[name_transport] = station_dict[name_transport] + 1
+                    station_dict[station_name_] = station_dict[station_name_] + 1
 
     count_info.city = city_dict
     count_info.transport_company = transport_company_dict

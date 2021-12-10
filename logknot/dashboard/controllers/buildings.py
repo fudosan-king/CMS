@@ -60,10 +60,13 @@ def show(request, building_id):
         raise Http404
 
     city = building_detail.address.get('city')
+    transport_company = []
     station = []
     for transport in building_detail.transports:
-        if transport.transport_company and transport.transport_company not in station:
-            station.append([transport.map_pref, transport.transport_company])
+        if transport.station_name and [transport.map_pref, transport.station_name] not in station:
+            station.append([transport.map_pref, transport.station_name])
+        if transport.transport_company and [transport.map_pref, transport.transport_company] not in transport_company:
+            transport_company.append([transport.map_pref, transport.transport_company])
 
     photos = get_image_model().objects.filter(building_id=building_id)
 
@@ -79,7 +82,10 @@ def show(request, building_id):
                 building_detail = building_detail.remove(request)
                 if building_detail:
                     building_detail.save()
-                    update_count(building_detail, removed=True, city=city, station=station)
+                    update_count(
+                        building_detail, removed=True, city=city,
+                        transport_company=transport_company, station=station
+                    )
                     return redirect('buildings')
                 return Http404
             else:
@@ -92,7 +98,10 @@ def show(request, building_id):
                     building_detail = building_detail.update(request)
                     try:
                         building_detail.save()
-                        update_count(building_detail, city=city, station=station)
+                        update_count(
+                            building_detail, city=city,
+                            transport_company=transport_company, station=station
+                        )
                         update_building(building_detail)
                         messages.success(request, _('Updated'))
                     except Exception as e:
@@ -185,46 +194,75 @@ def update_building(building):
         building_update.save()
 
 
-def update_count(building, removed=False, city=None, station=[]):
+def update_count(building, removed=False, city=None, transport_company=[], station=[]):
     count_info = CountInfoBuildings.objects().first()
 
     if not count_info:
         count_info = CountInfoBuildings()
 
     city_dict = count_info.city
+    transport_company_dict = count_info.transport_company
     station_dict = count_info.station
 
     city_in = building.address.get('city')
 
+    # Check duplicate
     transport_company_in = []
+    station_in = []
     for transport in building.transports:
-        if transport.transport_company and transport.transport_company not in transport_company_in:
+        if transport.transport_company \
+                and [transport.map_pref, transport.transport_company] not in transport_company_in:
             transport_company_in.append([transport.map_pref, transport.transport_company])
+        if transport.station_name and [transport.map_pref, transport.station_name] not in station_in:
+            station_in.append([transport.map_pref, transport.station_name])
 
     if city and city in city_dict and city_dict[city] > 0:
         city_dict[city] = city_dict[city] - 1
 
+    if transport_company:
+        for ts in transport_company:
+            # ts[0]: 東京都 (pref)
+            # ts[1]: 東京地下鉄南北線 (transport_company)
+            if ts[0] and ts[1]:
+                name_transport = '{}-{}'.format(ts[0], ts[1])
+                if name_transport in transport_company_dict and transport_company_dict[name_transport] > 0:
+                    transport_company_dict[name_transport] = transport_company_dict[name_transport] - 1
+
     if station:
         for st in station:
+            # st[0]: 東京都 (pref)
+            # st[1]: 六本木一丁目 (station_name)
             if st[0] and st[1]:
                 name_station = '{}-{}'.format(st[0], st[1])
                 if name_station in station_dict and station_dict[name_station] > 0:
                     station_dict[name_station] = station_dict[name_station] - 1
 
+    # Import or create new building
     if not removed:
         if city_in not in city_dict:
             city_dict[city_in] = 1
         else:
             city_dict[city_in] = city_dict[city_in] + 1
 
-        for sn in transport_company_in:
-            if sn[0] and sn[1]:
-                name_station = '{}-{}'.format(sn[0], sn[1])
-                if name_station not in station_dict:
-                    station_dict[name_station] = 1
+        for ts in transport_company_in:
+            if ts[0] and ts[1]:
+                # 東京都-東京地下鉄南北線
+                transport_name = '{}-{}'.format(ts[0], ts[1])
+                if transport_name not in transport_company_dict:
+                    transport_company_dict[transport_name] = 1
                 else:
-                    station_dict[name_station] = station_dict[name_station] + 1
+                    transport_company_dict[transport_name] = transport_company_dict[transport_name] + 1
+
+        for st in station_in:
+            if st[0] and st[1]:
+                # 東京都-六本木一丁目
+                name_transport = '{}-{}'.format(st[0], st[1])
+                if name_transport not in station_dict:
+                    station_dict[name_transport] = 1
+                else:
+                    station_dict[name_transport] = station_dict[name_transport] + 1
 
     count_info.city = city_dict
+    count_info.transport_company = transport_company_dict
     count_info.station = station_dict
     count_info.save()

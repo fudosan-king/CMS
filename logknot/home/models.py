@@ -14,6 +14,12 @@ from dashboard.models import Buildings
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from django.shortcuts import render
 from django.utils import timezone
+import urllib3
+import json
+from django.conf import settings
+
+
+http = urllib3.PoolManager()
 
 
 class HomePage(RoutablePageMixin, Page):
@@ -80,6 +86,18 @@ class HomePage(RoutablePageMixin, Page):
 
     def get_buildings_new(self, *args, **kwargs):
         return Buildings.objects().filter(removed=False).order_by('-created_at')[:16]
+
+    def get_estate(self, *args, **kwargs):
+        url = '{}/api/{}/list?token={}&have_mansion_id=1&sort_key=date_created&sort_order=1&limit=1000'.format(
+            settings.FDK_URL,
+            settings.COMPANY_ID_FDK,
+            settings.TOKEN_FDK
+        )
+        estates = http.request('GET', url)
+        estates = json.loads(estates.data)
+        if 'estates' in estates:
+            return estates['estates']
+        return []
 
     @route(r'^company/', name='company')
     def company_page(self, request):

@@ -480,6 +480,7 @@ class LogsImport(Document):
 
 class CountInfoBuildings(Document):
     city = fields.DictField(blank=True, default={})
+    transport_company = fields.DictField(blank=True, default={})
     station = fields.DictField(blank=True, default={})
 
 

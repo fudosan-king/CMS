@@ -32,8 +32,9 @@ def index(request, building_id):
     if settings.BUILDING_ID:
         building_id = settings.BUILDING_ID
 
-    url = '{}/api/161/list?token={}&building_id={}'.format(
+    url = '{}/api/{}/list?token={}&building_id={}'.format(
         settings.FDK_URL,
+        settings.COMPANY_ID_FDK,
         settings.TOKEN_FDK,
         building_id
     )

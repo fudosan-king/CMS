@@ -1,5 +1,6 @@
 {% extends "home_base.html" %}
 {% load static %}
+{% load dashboard_tags wagtailcore_tags %}
 
 {% block body_class %}navigation nav-fixed nav-white{% endblock %}
 
@@ -16,51 +17,51 @@
 			自宅にいながら最適なリノベーションを全力でサポートいたします。</p>
 	</div>
 </section>
-<!-- <section class="section-top_action">
+<section class="section-top_action">
 	<div class="top_action">
 		<ul>
 			<li>
-				<a href="#">
+				<a href="{% url 'search' %}?area=1">
 					<i class="c-icon i-map"></i>
 					<span>エリアから探す</span>
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="{% url 'search' %}?station=1">
 					<i class="c-icon i-train"></i>
 					<span>沿線から探す</span>
 				</a>
 			</li>
-			<li class="d-none d-md-block">
+			<!-- <li class="d-none d-md-block">
 				<a href="#">
 					<i class="c-icon i-location"></i>
 					<span>MAPから探す</span>
 				</a>
-			</li>
+			</li> -->
 		</ul>
 	</div>
-</section> -->
+</section>
 <section>
 	<div class="lists-block">
 		<div class="container">
 			<h2 class="title"><b>新着物件</b></h2>
 		    <ul class="archive-list">
-		    	{% for building in self.get_buildings_new %}
+		    	{% for estate in self.get_estate %}
 	            <li>
 	                <div class="property-archive_item">
-	                    <a href="{% url 'building' building.id %}">
+	                    <a href="{% url 'building' estate.mansion_id %}">
 	                    	<div class="property_img">
-	                        	<img src="{{ building.get_photo_first }}" alt="" class="img-fluid">
-	                        	<p class="total_price">{{ building.price }}<span class="unit">万円</span><span class="sub">（物件＋リノベーション）</span></p>
+	                        	<img src="{{ estate.photo.url }}" alt="" class="img-fluid">
+	                        	<p class="total_price">{% covert_money estate.price %}<span class="unit">万円</span><span class="sub">（物件＋リノベーション）</span></p>
 	                        </div>
 	                        <p class="label_custom">カスタム<br>可能物件</p>
 		                    <div class="w_property-archive_head">
 		                        <div class="property-archive_head">
 	                                <div class="property_info">
-	                                    <p class="property_name">{{ building.building_name }}</p>
+	                                    <p class="property_name">{{ estate.estate_name }}</p>
 	                                    <p class="property_address">
-	                                        <span>{% for k, address in building.address.items %}{{ address }}{% endfor %}</span>
-	                                        <span>{{ building.tatemono_menseki }}m²</span>
+	                                        <span>{{ estate.address }}</span>
+	                                        <span>{{ estate.tatemono_menseki }}m²</span>
 	                                    </p>
 	                                </div>
 	                                <!-- <div class="property_wishlist">

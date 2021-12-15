@@ -381,6 +381,27 @@
 .table-buildings {
   width: 100%;
 }
+.search-buildings {
+  padding-top: 40px;
+  min-height: 180px;
+  max-width: 900px;
+  margin: auto;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+}
+.search-buildings span {
+  font-weight: bold;
+  position: relative;
+  top: 16px;
+}
+.search-buildings .button-search {
+  width: 200px;
+  margin: 20px 0 20px 0;
+}
+.table-buildings {
+  margin-top: 50px;
+}
+.icon-arrow-up-down-after:after{content:""}
 
 @media (max-width: 1024px) {
     .section_content .content-line {min-height: 320px; margin-bottom: 20px;}
@@ -391,6 +412,18 @@
 @media (max-width: 992px) {
     .search-sort .search-sort-item .button {
         width: 260px;
+    }
+    .search-buildings span {
+      position: relative;
+      top: 0px;
+      float: left;
+    }
+    .search-buildings {
+      min-height: 100px;
+      padding: 10px 10px 0 10px;
+    }
+    .search-buildings .button-search {
+      margin: 10px 0 10px 0;
     }
 }
 @media (max-width: 823px) {

@@ -206,3 +206,11 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
         'WIDGET': 'wagtail.tests.testapp.rich_text.CustomRichTextArea'
     },
 }
+
+FDK_URL = 'http://aws.fudosan-king.jp'
+
+TOKEN_FDK = 'ik6gi6Do9eyYpyVH'
+
+BUILDING_ID = None
+
+COMPANY_ID_FDK = 161

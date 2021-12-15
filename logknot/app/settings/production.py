@@ -36,6 +36,10 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'msdb.order-renove.jp']  # noqa
 
 BASE_URL = 'https://msdb.order-renove.jp'
 
+FDK_URL = 'https://fudosan-king.jp'
+
+TOKEN_FDK = 'ik6gi6Do9eyYpyVH'
+
 try:
     from .local import *  # noqa
 except ImportError:

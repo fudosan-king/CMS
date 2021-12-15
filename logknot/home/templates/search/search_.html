@@ -1,0 +1,214 @@
+{% extends "home_base.html" %}
+{% load static wagtailcore_tags %}
+{% load i18n wagtailadmin_tags wagtailimages_tags %}
+
+
+{% block body_class %}template-searchresults{% endblock %}
+
+{% block title %}Search | {{ home_page.title }}{% endblock %}
+
+{% block seo %}
+        <meta name="description" content="{{ home_page.description }}" />
+        <meta name="keyword" content="{{ home_page.keyword }}" />
+        <link rel="canonical" href="{{ base_url }}{% url 'search' %}">
+        <meta property="og:title" content="{{ home_page.og_title }}" />
+        <meta property="og:url" content="{{ base_url }}" />
+        <meta property="og:type" content="{{ home_page.og_type }}" />
+        <meta property="og:description" content="{% if home_page.og_description %}{{ home_page.og_description }}{% else %}{{ home_page.description }}{% endif %}" />
+        {% image home_page.og_image fill-1200x300 as og_image %}
+        <meta property="og:image" content="{{ og_image.url }}" />
+        <meta property='article:modified_time' content="{{ home_page.article_modified_time }}" />
+{% endblock %}
+
+{% block header %}
+    {% include 'header2.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="box_template">
+        <section class="p-0">
+            <div class="box_top mb-0">
+                <div class="container">
+                    <h2 class="title mb-3">メルマガ配信希望条件</h2>
+                    <p class="subtitle mb-2">
+                        <small>ご希望の条件にチェックを付けてください。<br>
+                        希望条件にあった物件をメールでお送りします。</small>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section_accinfo bg-white pt-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-12">
+                        <form class="frm_accinfo" action="{% url 'result' %}" method="GET">
+                            <h4>物件名</h4>
+                            <input type="text" name="building_name" class="form-control">
+                            <button type="submit" class="btn btnsave my-lg-5">保存</button>
+                        </form>
+
+                        <form class="frm_accinfo" action="{% url 'result' %}" method="GET">
+                            <h4>エリアから探す</h4>
+                            <div class="row">
+                                <div class="col-2 col-lg-2">
+                                    <label>領域</label>
+                                </div>
+                                <div class="col-10 col-lg-10">
+                                    <select name="" id="id_pref" class="custom-select">
+                                        {% for p in pref %}
+                                        <option value="{{ p }}" {% if p == '東京都' %}selected{% endif %}>{{ p }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="height: 20px;">
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-lg-12">
+                                    <ul class="list_area" id="id_city">
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h4>沿線から探す</h4>
+                            <div style="height: 20px;">
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-lg-12">
+                                    <ul class="list_area" id="id_transport_company">
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- <h4>価格（万円）</h4>
+                            <div class="row">
+                                <div class="col-6 col-lg-6">
+                                    <div class="box_select">
+                                        <select name="" class="custom-select">
+                                            <option>3,000</option>
+                                            <option>3,500</option>
+                                            <option>4,000</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-6">
+                                    <select name="" class="custom-select">
+                                        <option>3,500</option>
+                                        <option>4,500</option>
+                                        <option>4,500</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <h4>広さ（m2）</h4>
+                            <div class="row">
+                                <div class="col-6 col-lg-6">
+                                    <div class="box_select">
+                                        <select name="" class="custom-select">
+                                            <option>65</option>
+                                            <option>70</option>
+                                            <option>75</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-6">
+                                    <select name="" class="custom-select">
+                                        <option>0</option>
+                                        <option>20</option>
+                                        <option>80</option>
+                                    </select>
+                                </div>
+                            </div> -->
+
+                            <button type="submit" class="btn btnsave my-lg-5">保存</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script type="text/javascript">
+        function set_city(pref) {
+            $.ajax({
+            method: 'GET',
+            url: '/api/locations/' + pref + '/',
+            }).done(function(data) {
+                for (i=0; i<data.length; i++){
+                    $.ajax({
+                    method: 'GET',
+                    url: '/api/count/city/' + data[i] + '/',
+                    }).done(function(data) {
+                        if (data && data[1]) {
+                            $('#id_city').append(
+                                `
+                                <li>
+                                    <div class="custom-control custom-checkbox">
+                                        <input name="city" type="checkbox" class="custom-control-input" id="area_` + data[0] + `" value="` + data[0] + `">
+                                        <label class="custom-control-label" for="area_` + data[0] + `">` + data[0] + ` (` + data[1] +  `)` + `</label>
+                                    </div>
+                                </li>
+                                `
+                            );
+                        }
+                    });
+                }
+            });
+        }
+
+        function set_transport_company(pref) {
+            $.ajax({
+            method: 'GET',
+            url: '/api/railroad/' + pref + '/',
+            }).done(function(data) {
+                for (i=0; i<data.length; i++){
+                    $.ajax({
+                    method: 'GET',
+                    url: '/api/count/station/' + pref + '-' + data[i] + '/',
+                    }).done(function(data) {
+                        if (data && data[1]) {
+                            $('#id_transport_company').append(
+                                `
+                                <li>
+                                    <div class="custom-control custom-checkbox">
+                                        <input name="transport_company" type="checkbox" class="custom-control-input" id="station` + data[0].split('-')[1] + `" value="` + data[0].split('-')[1] + `">
+                                        <label class="custom-control-label" for="station` + data[0].split('-')[1] + `">` + data[0].split('-')[1] + ` (` + data[1] +  `)` + `</label>
+                                    </div>
+                                </li>
+                                `
+                            );
+                        }
+                    });
+                }
+            });
+        }
+        $(function(){
+            var pref = $('#id_pref').val();
+            if (pref) {
+                set_city(pref);
+            }
+            if (pref) {
+                set_transport_company(pref);
+            }
+            $('[id=id_pref]').change(function() {
+                $('#id_city li').remove();
+                var pref = $(this).val();
+                if (pref) {
+                    set_city(pref);
+                }
+            })
+            $('[id=id_pref]').change(function() {
+                $('#id_transport_company li').remove();
+                var pref = $(this).val();
+                if (pref) {
+                    set_transport_company(pref);
+                }
+            })
+        });
+    </script>
+{% endblock %}
+

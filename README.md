@@ -132,10 +132,21 @@ python3 manage.py import_csv -d True
 
 ```
 
+Update count
+
+```
+cd ~/project/wagtail
+. ./env/bin/activate
+cd logknot
+python3 manage.py refresh_count
+
+```
+
 
 
 ### Document
 http://docs.mongoengine.org/ <br>
+https://docs.mongoengine.org/guide/querying.html <br>
 https://docs.wagtail.io/en/stable/ <br>
 https://docs.wagtail.io/en/stable/reference/contrib/forms/customisation.html <br>
 https://github.com/spapas/wagtail-multi-upload <br>

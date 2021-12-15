@@ -2,9 +2,10 @@
 {% load static wagtailcore_tags %}
 {% load i18n wagtailadmin_tags wagtailimages_tags %}
 {% load home_tags %}
+{% load dashboard_tags wagtailcore_tags %}
 
 
-{% block body_class %}template-searchresults{% endblock %}
+{% block body_class %}nav-black{% endblock %}
 
 {% block title %}Search result | {{ home_page.title }}{% endblock %}
 
@@ -21,63 +22,148 @@
         <meta property='article:modified_time' content="{{ home_page.article_modified_time }}" />
 {% endblock %}
 
-{% block header %}
-    {% include 'header2.html' %}
-{% endblock %}
-
 {% block content %}
-    <div class="box_template">
-        <section class="section_near_property custom pt-0 bg-white">
-            <div class="box_top">
-                <div class="container">
-                    <h2 class="title mb-2">港区エリア</h2>
-                    <p class="subtitle mb-4">リノベーション・中古マンション物件一覧</p>
-                    <ul class="box_sort">
-                        <li><a href="#">価格 指定なし</a></li>
-                        <li><a href="#">広さ 指定なし</a></li>
-                        <li><a href="#"><img src="/static/images/svg/i_sort.svg" alt="" class="img-fluid" width="15"> 条件を変更する</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 col-lg-12">
-
-                        <ul class="list_property">
-                            {% for building in buildings %}
-                                <li>
-                                    <div class="property_img">
-                                        <a href="{% url 'building' building.id %}"><img src="{{ building.get_photo_first }}" alt="" class="img-fluid"></a>
-                                        <p class="total_price"><span>総戸数</span>{{ building.total_houses }}<span class="sub"></span></p>
-                                    </div>
-                                    <div class="property_head">
-                                        <p class="property_name">{{ building.building_name }}</p>
-                                        <div class="d-flex d-lg-block">
-                                            <p class="property_address">{% for k, address in building.address.items %}{{ address }}{% endfor %}</p>
+<section>
+    <div class="property-list_head">
+        <div class="container">
+            <h1>渋谷区エリア</h1>
+            <p>マンションデータベース物件一覧</p>
+            <!-- <ul>
+                <li>
+                    <button type="button" class="btn btn-filter">価格 指定なし</button>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-filter">広さ 指定なし</button>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-filter red">
+                        <i class="c-icon i-filter-white"></i>
+                    条件を変更する</button>
+                </li>
+            </ul> -->
+        </div>
+    </div>
+    <div class="property-block">
+        <div class="container">
+            <ul class="property-list">
+                {% for building in buildings %}
+                <li>
+                    <div class="property_slide-item">
+                        <div class="property_slide">
+                            <div class="swiper property_slide_swiper">
+                                <div class="swiper-wrapper">
+                                    {% if building.photos %}
+                                        {% for photo in building.photos %}
+                                        <div class="swiper-slide">
+                                            <div class="property_slide_img"
+                                                style="background-image:url({{ photo.path }});"></div>
                                         </div>
+                                        {% endfor %}
+                                    {% else %}
+                                    <div class="swiper-slide">
+                                        <div class="property_slide_img"
+                                            style="background-image:url('/static/images/no-image.png');"></div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </div>
+                        <div class="property_info">
+                            <p class="property_name">{{ building.building_name }}</p>
+                            <ul class="property_description">
+                                <li>
+                                    <div>
+                                        <i class="c-icon i-location-gray"></i>
+                                        <p>{% for k, address in building.address.items %}{{ address }}{% endfor %}</p>
                                     </div>
                                 </li>
-                            {% endfor %}
-                        </ul>
+                                <li>
+                                    <div>
+                                        <i class="c-icon i-train-gray"></i>
+                                        {% for transport in building.transports %}
+                                            {% if transport.transport_company %}<p>{{ transport.transport_company }}/{{ transport.station_name }}{% if transport.walk_mins %} 徒歩{{ transport.walk_mins }}分{% endif %}</p>{% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <i class="c-icon i-building-gray"></i>
+                                        <p>{{ building.ground_floors }}階地下{{ building.underground_floors }}階建／{{ building.structure }}</p>
+                                        <p>総戸数：{{ building.total_houses }}戸</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="swiper property-into_swiper">
+                              <div class="swiper-wrapper">
+                                {% with estates=building_estates|get_item:building.id %}
+                                {% if estates %}
+                                    {% for estate in estates %}
+                                    <div class="swiper-slide">
+                                       <div class="property-archive_item">
+                                            <a href="#">
+                                                <div class="property_img">
+                                                    <img src="{{ estate.photo.url }}" alt="" class="img-fluid">
+                                                    <p class="total_price">{% covert_money estate.price %}<span class="unit">万円</span></p>
+                                                </div>
+                                                <p class="label_custom special">カスタム<br>可能物件</p>
+                                                <div class="w_property-archive_head">
+                                                    <div class="property-archive_head">
+                                                        <div class="property_info">
+                                                            <p class="property_address">
+                                                                <span>{{ estate.room_floor }}階／{{ estate.tatemono_menseki }}m²／{{ estate.room_count }}{{ estate.room_kind }}</span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                {% else %}
+                                <div class="swiper-slide">
+                                   <div class="property-archive_item">
+                                        <div class="property_img" style="height: 108px">
+                                        </div>
+                                        <div class="w_property-archive_head">
+                                            <div class="property-archive_head">
+                                                <div class="property_info">
+                                                    <p class="property_address">
+                                                        <span></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endwith %}
+                              </div>
+                            </div>
+
+                            <a href="{% url 'building' building.id %}" class="btn btn-more">詳細情報を見る</a>
+                        </div>
+
                     </div>
-                </div>
-            </div>
-
-            <div align="center">
-                {% if paginator %}
-                    {% if paginator.has_previous %}
-                        <a href="{% url 'search_all' %}?{% url_replace page=paginator.previous_page_number limit=limit %}">{% trans 'Previous' %}</a>
-                    {% endif %}
-                    {{ paginator }}
-                    {% if paginator.has_next %}
-                        <a href="{% url 'search_all' %}?{% url_replace page=paginator.next_page_number limit=limit %}">{% trans 'Next' %}</a>
-                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div align="center">
+            {% if paginator %}
+                {% if paginator.has_previous %}
+                    <a href="{% url 'search_all' %}?{% url_replace page=paginator.previous_page_number limit=limit %}">{% trans 'Previous' %}</a>
                 {% endif %}
-            </div>
-        </section>
-
+                {{ paginator }}
+                {% if paginator.has_next %}
+                    <a href="{% url 'search_all' %}?{% url_replace page=paginator.next_page_number limit=limit %}">{% trans 'Next' %}</a>
+                {% endif %}
+            {% endif %}
+        </div>
     </div>
+</section>
 
 {% endblock %}
 

@@ -1,9 +1,10 @@
 {% extends "home_base.html" %}
 {% load static wagtailcore_tags %}
 {% load i18n wagtailadmin_tags wagtailimages_tags %}
+{% load dashboard_tags wagtailcore_tags %}
 
 
-{% block body_class %}template-searchresults{% endblock %}
+{% block body_class %}nav-black{% endblock %}
 
 {% block title %}{{ building.building_name }} | {{ home_page.title }}{% endblock %}
 
@@ -19,114 +20,204 @@
         <meta property='article:modified_time' content="{{ building.last_time_update }}" />
 {% endblock %}
 
-{% block header %}
-    {% include 'header2.html' %}
-{% endblock %}
-
 {% block content %}
-    <div class="box_template">
-        <section class="p-0">
-            <div class="box_top mb-0">
-                <div class="container">
-                    <h2 class="title mb-2">{{ building.building_name }}</h2>
-                    <p class="subtitle mb-2">
-                        <small>{% for k, address in building.address.items %}{{ address }}{% endfor %}<br>
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section class="p-0 section_carousel">
-            <div class="carousel_property">
-                <div class="carousel carousel-main"
-                data-flickity='{"contain": true, "prevNextButtons": false, "pageDots": false }'>
+<section>
+    <div class="property-list_head">
+        <h1>{{ building.building_name }}</h1>
+        <div class="property_detail_slide">
+            <div class="swiper property_detail_swiper">
+                <div class="swiper-wrapper">
                     {% for photo in building.photos %}
-                    <div class="carousel-cell">
-                        <img src="{{ photo.path }}" alt="" class="img-fluid">
+                    <div class="swiper-slide">
+                        <div class="property_slide_img"
+                        style="background-image:url({{ photo.path }});"></div>
+                        <p>{{ photo.comment }}</p>
                     </div>
                     {% endfor %}
                 </div>
-                <div class="carousel carousel-nav"
-                    data-flickity='{"asNavFor": ".carousel-main", "contain": true, "prevNextButtons": false, "pageDots": false }'>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+            <div thumbsSlider="" class="d-block d-md-none swiper property_detail_swiper_thumnail">
+                <div class="swiper-wrapper">
                     {% for photo in building.photos %}
-                    <div class="carousel-cell">
-                        <img src="{{ photo.path }}" alt="" class="img-fluid">
+                    <div class="swiper-slide">
+                      <div class="property_slide_img"
+                        style="background-image:url({{ photo.path }});"></div>
                     </div>
                     {% endfor %}
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="section_property_main">
+    </div>
+</section>
+
+<section class="section_property_detail">
+    <div class="property_detail_block">
+        <div class="property_detail_rooms">
             <div class="container">
-                <div class="row">
-                    <div class="col-12 col-lg-12">
-                        <div class="box_renovation_specifications">
-                            <div class="renovation_specifications_table">
-                                <table class="table">
-                                    <tr>
-                                        <th width="45%">構造</th>
-                                        <td>{{ building.structure }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>階建て</th>
-                                        <td>{{ building.ground_floors }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>階建て (地下)</th>
-                                        <td>{{ building.underground_floors }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>築年月</th>
-                                        <td>{{ building.built_date_year }}年{{ building.built_date_month }}月 </td>
-                                    </tr>
-                                    <tr>
-                                        <th>総戸数</th>
-                                        <td>{{ building.total_houses }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>沿線・駅</th>
-                                        <td>
-                                        {% for transport in building.transports %}
-                                            {% if transport.transport_company %}{{ transport.transport_company }} - {{ transport.station_name }}<br>{% endif %}
-                                        {% endfor %}
-                                        </td>
-                                    </tr>
-                                </table>
-
-                                <div class="map">
-                                    <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCAtwN6hoZdj7sUBvvO_rBLe3o300qqBnM&q={% for k, address in building.address.items %}{{ address }}{% endfor %}" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                                    <div class="row">
-                                        <div class="col-8 col-lg-8">
-                                            <p>{% for k, address in building.address.items %}{{ address }}{% endfor %}</p>
-                                        </div>
-                                        <div class="col-4 col-lg-4">
-                                            <p class="text-right"><a target="_blank" class="btn_viewmap" href="#">マップで見る</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-
+                <div class="property_detail_rooms_head">
+                    <p class="title">物件情報</p>
+                    <p>全 <span>{{ estates.estates|length }}</span> 件　募集中 <span class="used">0</span> 件</p>
+                </div>
+                <div class="property_detail_rooms_ct">
+                    <div class="d-none d-md-flex head">
+                        <div class="head_col"></div>
+                        <div class="head_col">回数</div>
+                        <div class="head_col">面積</div>
+                        <div class="head_col">間取り</div>
+                        <div class="head_col">参考価格</div>
+                        <div class="head_col">物件</div>
+                        <div class="head_col"></div>
+                    </div>
+                    <div class="body">
+                        {% for estate in estates.estates %}
+                        <div class="body-row">
+                            <div data-title="" class="body-col">
+                                <div class="body_img" style="background-image: url({{ estate.photo.url }});"></div>
+                                <span class="label">販売中</span>
                             </div>
+                            <div class="body-info">
+                                <div data-title="回数" class="body-col">{{ estate.room_floor }}階</div>
+                                <div data-title="面積" class="body-col">{{ estate.tatemono_menseki }}㎡</div>
+                                <div data-title="間取り" class="body-col">{{ estate.room_count }}{{ estate.room_kind }}</div>
+                                <div data-title="参考価格" class="body-col">{% covert_money estate.price %}万円</div>
+                                <div data-title="物件タイプ" class="body-col">リノベーション済み</div>
+                                <div data-title="" class="d-none d-md-block body-col"><i class="c-icon i-arrow-r"></i><i class="c-icon i-arrow-red-r"></i></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <a href="" class="btn btn-white-go">もっと見る</a>
+                </div>
+            </div>
+        </div>
+        <div class="property_detail_info">
+            <div class="container">
+                <h2>物件概要</h2>
+                <div class="property_detail_table">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>物件種別</th>
+                                <td>マンション</td>
+                            </tr>
+                            <tr>
+                                <th>建物構造</th>
+                                <td>{{ building.structure }}</td>
+                            </tr>
+                            <tr>
+                                <th>総戸数</th>
+                                <td>{{ building.total_houses }}戸</td>
+                            </tr>
+                            <tr>
+                                <th>管理形態</th>
+                                <td>{{ building.management_scope }}</td>
+                            </tr>
+                            <tr>
+                                <th>地目</th>
+                                <td>---</td>
+                            </tr>
+                            <tr>
+                                <th>国土法届出</th>
+                                <td>{{ building.land_law_report }}</td>
+                            </tr>
+                            <tr>
+                                <th>築年月（築年数）</th>
+                                <td>{{ building.built_date_year }}年{{ building.built_date_month }}月</td>
+                            </tr>
+                            <tr>
+                                <th>建物階建</th>
+                                <td>地上{{ building.ground_floors }}階/地下{{ building.underground_floors }}階建</td>
+                            </tr>
+                            <tr>
+                                <th>管理人</th>
+                                <td>{{ building.superintendent }}</td>
+                            </tr>
+                            <tr>
+                                <th>都市計画</th>
+                                <td>{{ building.area_purpose.main }}</td>
+                            </tr>
+                            <tr>
+                                <th>土地権利</th>
+                                <td>{{ building.land_rights }}</td>
+                            </tr>
+                            <tr>
+                                <th>交通</th>
+                                <td>
+                                    <p>
+                                        {% for transport in building.transports %}
+                                            {% if transport.transport_company %}{{ transport.transport_company }}/{{ transport.station_name }} 徒歩{{ transport.walk_mins }}分<br>{% endif %}
+                                        {% endfor %}
+                                    </p>
+                                </td>
+                            </tr>
 
+                        </tbody>
+                    </table>
+                </div>
+                <div class="property_detail_map">
+                    <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCAtwN6hoZdj7sUBvvO_rBLe3o300qqBnM&q={% for k, address in building.address.items %}{{ address }}{% endfor %}" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <div class="row">
+                        <div class="col-8 col-lg-8">
+                            <p>{% for k, address in building.address.items %}{{ address }}{% endfor %}</p>
+                        </div>
+                        <div class="col-4 col-lg-4">
+                            <p class="text-right"><a target="_blank" class="btn_viewmap" href="#">マップで見る</a></p>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-
-        {% if page_content.content and page_content.live %}
-        <section class="section_property_main section_content">
+        </div>
+        <div class="property-detail_img">
             <div class="container">
-                <div class="row">
-                    <div class="col-12 col-lg-12">
-                        {% for block in page_content.content %}
-                            {% include_block block %}
-                        {% endfor %}
+                {% if page_content.content and page_content.live %}
+                    <div class="row">
+                        <div class="col-12 col-lg-12">
+                            {% for block in page_content.content %}
+                                {% include_block block %}
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
+                {% endif %}
+                <a href="#" class="btn btn-white-go">もっと見る</a>
             </div>
-        </section>
-        {% endif %}
-
+        </div>
     </div>
+    <div class="lists-block">
+        <div class="container">
+            <h2 class="title"><b>新着物件</b></h2>
+            <ul class="archive-list">
+                {% for building_same in buildings_same_area%}
+                <li>
+                    <div class="property-archive_item">
+                        <a href="{% url 'building' building_same.id %}">
+                            <div class="property_img">
+                                <img src="{{ building_same.get_photo_first }}" alt="" class="img-fluid">
+                                <p class="total_price">{{ building_same.total_houses }}<span class="unit">戸</span></p>
+                            </div>
+                            <p class="label_custom">カスタム<br>可能物件</p>
+                            <div class="w_property-archive_head">
+                                <div class="property-archive_head">
+                                    <div class="property_info">
+                                        <p class="property_name">{{ building_same.building_name }}</p>
+                                        <p class="property_address">
+                                            <span>{% for k, address in building_same.address.items %}{{ address }}{% endfor %}</span>
+                                        </p>
+                                    </div>
+                                   <!--  <div class="property_wishlist">
+                                        <a class="btn_wishlist" href="#"></a>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            <button type="button" class="btn btn-more">もっと見る</button>
+        </div>
+    </div>
+</section>
 {% endblock %}

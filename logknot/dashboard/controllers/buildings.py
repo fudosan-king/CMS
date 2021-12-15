@@ -16,11 +16,22 @@ from dashboard.views import MenuBuildingItem
 from dashboard.forms.features import features
 
 
+def convert_order(order_by):
+    if order_by in ['address', '-address']:
+        order_by = order_by.replace('address', 'cache.address')
+    return order_by
+
+
 def index(request):
     if not MenuBuildingItem.is_shown(MenuBuildingItem, request):
         raise Http404
     query = Buildings().query(request, False)
-    buildings = Buildings.objects().filter(query).order_by('-id')
+    if request.GET.get('order_by', None):
+        order_by = request.GET.get('order_by')
+    else:
+        order_by = '-id'
+
+    buildings = Buildings.objects().filter(query).order_by(convert_order(order_by))
 
     try:
         page = int(request.GET.get('page', 1))
@@ -47,6 +58,9 @@ def index(request):
         'page': page,
         'limit': per_page,
         'buildings': buildings,
+        'building_name': request.GET.get('building_name'),
+        'address': request.GET.get('address'),
+        'order_by': order_by
     }
 
     return TemplateResponse(request, 'wagtailadmin/buildings/index.html', context)

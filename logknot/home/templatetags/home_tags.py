@@ -10,6 +10,8 @@ def url_replace(context, **kwargs):
         query.pop('page')
     if 'limit' in query:
         query.pop('limit')
+    if 'order_by' in query:
+        query.pop('order_by')
     query.update(kwargs)
     return query.urlencode()
 

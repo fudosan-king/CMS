@@ -304,7 +304,9 @@ class Buildings(Document):
     def query(self, request, removed=False):
         q = Q(removed=removed)
         if request.GET.get('building_name', None):
-            q &= Q(building_name=request.GET.get('building_name', None))
+            q &= Q(building_name__icontains=request.GET.get('building_name', None))
+        if request.GET.get('address', None):
+            q &= Q(cache__address__icontains=request.GET.get('address', None))
         return q
 
     @staticmethod

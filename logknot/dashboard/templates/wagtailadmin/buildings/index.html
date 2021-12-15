@@ -14,22 +14,7 @@
                 </h1>
             </div>
             <div class="col9">
-                <form class="col search-form" action="{% url 'buildings' %}" method="get" novalidate="" role="search">
-                    <ul class="fields">
-                        <li class="required">
-                        <div class="field char_field text_input field-small iconfield" data-contentpath="building_name">
-                            <label for="building_name">Search term:</label>
-                            <div class="field-content">
-                                <div class="input icon-search ">
-                                        <input type="text" name="building_name" placeholder="{% trans '建物を検索する' %}" required="" id="building_name">
-                                    <span></span>
-                                </div>
-                            </div>
-                        </div>
-                        </li>
-                        <li class="submit visuallyhidden"><input type="submit" value="Search" class="button"></li>
-                    </ul>
-                </form>
+                &nbsp;
             </div>
             <div class="col1">
                 <div class="actionbutton">
@@ -39,11 +24,50 @@
         </div>
     </header>
 
-    <table class="listing">
+    <div class="search-buildings">
+        <form class="col search-form" action="{% url 'buildings' %}" method="get" novalidate="" role="search">
+            <div class="col12">
+                <div class="col2" align="right">
+                    <span>{% trans '物件名' %}</span>
+                </div>
+                <div class="col10">
+                    <input type="text" name="building_name" placeholder="{% trans '' %}" required="" id="building_name" value="{% if building_name %}{{ building_name }}{% endif %}">
+                </div>
+                <div class="col2" align="right">
+                    <span>{% trans '所在地' %}</span>
+                </div>
+                <div class="col10">
+                    <input type="text" name="address" placeholder="{% trans '' %}" required="" id="address" value="{% if address %}{{ address }}{% endif %}">
+                </div>
+                <div class="col12" align="center">
+                    <button class="button button-search">{% trans 'Search' %}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <table class="listing table-buildings">
         <thead>
             <tr>
+                <th >
+                    {% if order_by and order_by == 'building_name'%}
+                    <a href="{% url 'buildings' %}?{% url_replace page=page limit=limit order_by='-building_name'%}" class="icon icon-arrow-down-after">
+                    {% elif order_by and order_by == '-building_name' %}
+                    <a href="{% url 'buildings' %}?{% url_replace page=page limit=limit order_by='building_name'%}" class="icon icon-arrow-up-after">
+                    {% else %}
+                    <a href="{% url 'buildings' %}?{% url_replace page=page limit=limit order_by='building_name'%}" class="icon icon-arrow-up-down-after">
+                    {% endif %}
+                    {% trans '物件名' %}</a>
+                </th>
                 <th>
-                    {% trans '物件名' %}
+                    {% if order_by and order_by == 'address'%}
+                    <a href="{% url 'buildings' %}?{% url_replace page=page limit=limit order_by='-address'%}" class="icon icon-arrow-down-after">
+                    {% elif order_by and order_by == '-address' %}
+                    <a href="{% url 'buildings' %}?{% url_replace page=page limit=limit order_by='address'%}" class="icon icon-arrow-up-after">
+                    {% else %}
+                    <a href="{% url 'buildings' %}?{% url_replace page=page limit=limit order_by='address'%}" class="icon icon-arrow-up-down-after">
+                    {% endif %}
+                    {% trans '所在地' %}</a>
                 </th>
                 <th>
                     {% trans '作成した' %}
@@ -61,6 +85,9 @@
             <tr>
                 <td class="title" valign="top">
                     <a href="{% url 'buildings_show' building.id %}">{{ building.building_name }}</a>
+                </td>
+                <td>
+                   {{ building.cache.address }}
                 </td>
                 <td class="create-readable-date" title="{{ building.create_by }}">
                     {{ building.created_at }}
@@ -83,11 +110,11 @@
     <div align="center">
     {% if paginator %}
         {% if paginator.has_previous %}
-            <a href="{% url 'buildings' %}?{% url_replace page=paginator.previous_page_number limit=limit %}">{% trans 'Previous' %}</a>
+            <a href="{% url 'buildings' %}?{% url_replace page=paginator.previous_page_number limit=limit order_by='-building_name' %}">{% trans 'Previous' %}</a>
         {% endif %}
         {{ paginator }}
         {% if paginator.has_next %}
-            <a href="{% url 'buildings' %}?{% url_replace page=paginator.next_page_number limit=limit %}">{% trans 'Next' %}</a>
+            <a href="{% url 'buildings' %}?{% url_replace page=paginator.next_page_number limit=limit order_by='-building_name' %}">{% trans 'Next' %}</a>
         {% endif %}
     {% endif %}
     </div>

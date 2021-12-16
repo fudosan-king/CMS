@@ -41,6 +41,9 @@
                     {% trans '物件名' %}
                 </th>
                 <th>
+                    {% trans '所在地' %}
+                </th>
+                <th>
                     {% trans '削除されました' %}
                 </th>
                 <th>
@@ -53,6 +56,9 @@
             <tr>
                 <td class="title" valign="top">
                     <a href="{% url 'buildings_removed_show' building.id %}">{{ building.building_name }}</a>
+                </td>
+                <td>
+                    {{ building.cache.address }}
                 </td>
                 <td class="create-readable-date" title="{{ building.remove_by }}">
                     {{ building.last_time_remove }}

@@ -1,0 +1,64 @@
+{% extends "wagtailadmin/base.html" %}
+{% include "wagtailadmin/macros.html" %}
+{% load i18n wagtailadmin_tags %}
+{% load wagtailimages_tags %}
+{% load dashboard_tags wagtailcore_tags %}
+
+
+{% block titletag %}{{ building.building_name }}{% endblock %}
+
+{% block content %}
+ <header class="merged nice-padding">
+    <div class="row">
+        <div class="col10">
+            <h1>
+            	<svg class="icon icon-form header-title-icon" aria-hidden="true" focusable="false"><use href="#icon-form"></use></svg>
+                    {% if building %}{{ building.building_name }}{% else %}{% trans 'Add' %}{% endif %}
+            </h1>
+        </div>
+        <div class="col1">
+            <span>&nbsp;</span>
+        </div>
+        <div class="col1">
+        </div>
+    </div>
+</header>
+
+<div style="padding-top:40px"></div>
+
+<form method="post" action="{% url 'buildings_merge' building_id=building.id %}" class="building-merge">
+	{% csrf_token %}
+	{% for bm in building_merge %}
+		<input type="hidden" name="building_id" value="{{ bm.id }}">
+	{% endfor %}
+
+	{% include 'wagtailadmin/buildings/form_input_merge.html' with name="物件名" building=building building_merge=building_merge %}
+
+	<div class="col12" align="center">
+		<button class="button button-merge" type="submit">{% trans 'Merge'%}</button>
+	</div>
+</form>
+{% endblock %}
+
+{% block extra_css %}
+<style type="text/css">
+	.building-merge {
+		width: 100%;
+		min-height: 1000px;
+	}
+	.building-merge .button-merge {
+		margin: 10px 0 10px 0;
+		width: 200px;
+	}
+	.building-merge .label-merge {
+		font-weight: bold;
+		font-size: 16px;
+	}
+	.building-merge label {
+		font-weight: normal;
+	}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}

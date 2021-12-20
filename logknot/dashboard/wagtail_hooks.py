@@ -96,6 +96,13 @@ def buildings_show():
 
 
 @hooks.register('register_admin_urls')
+def buildings_merge():
+    return [
+        path('buildings/merge/<building_id>/', buildings.merge, name='buildings_merge'),
+    ]
+
+
+@hooks.register('register_admin_urls')
 def buildings_import():
     return [
         path('import/', import_buildings.index, name='buildings_import'),

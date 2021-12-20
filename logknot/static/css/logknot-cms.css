@@ -402,7 +402,9 @@
   margin-top: 50px;
 }
 .icon-arrow-up-down-after:after{content:""}
-
+.table-buildings .button-merge {
+  height: 28px;
+}
 @media (max-width: 1024px) {
     .section_content .content-line {min-height: 320px; margin-bottom: 20px;}
     .search-sort .search-sort-item .button {

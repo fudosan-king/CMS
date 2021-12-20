@@ -45,7 +45,7 @@ class BuildingsViewSet(GenericViewSet):
     def new_building(self, request, building_id):
         estate = {}
         try:
-            building = Buildings.objects().filter(id=ObjectId(building_id)).first()
+            building = Buildings.objects().filter(id=ObjectId(building_id), removed=False).first()
             if building:
                 with open('data/estate.json', 'r', encoding='utf8') as f:
                     estate = eval(f.read())

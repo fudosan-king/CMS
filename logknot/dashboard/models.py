@@ -452,6 +452,13 @@ class Buildings(Document):
 
         return self
 
+    def merge(self, request):
+        if request.POST.get('building_name', None):
+            self.building_name = request.POST.get('building_name')
+        self.last_time_update = datetime.datetime.now
+        self.update_by = str(request.user)
+        return self
+
     def remove(self, request):
         self.removed = True
         self.last_time_remove = datetime.datetime.now

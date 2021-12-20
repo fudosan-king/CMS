@@ -1,0 +1,19 @@
+{% load i18n wagtailadmin_tags %}
+{% load wagtailimages_tags %}
+
+<div class="col12">
+	<span class="label-merge">{{ name }}</span>
+</div>
+<div class="col12">
+	<label class="col4" for="building_name">
+		<input id="building_name" name="building_name" type="radio" value="{{ building.building_name }}" checked>
+		{{ building.building_name }}
+	</label>
+
+	{% for bm in building_merge %}
+	<label class="col4">
+		<input id="building_name" name="building_name" type="radio" value="{{ bm.building_name }}">
+		{{ bm.building_name }}
+	</label>
+	{% endfor %}
+</div>

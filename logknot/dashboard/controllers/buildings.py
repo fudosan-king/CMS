@@ -14,6 +14,7 @@ from dashboard.views import fetch_url_to_json
 from content.models import ContentDetailPage, ContentPage
 from dashboard.views import MenuBuildingItem
 from dashboard.forms.features import features
+from bson import ObjectId
 
 
 def convert_order(order_by):
@@ -284,3 +285,89 @@ def update_count(building, removed=False, city=None, transport_company=[], stati
     count_info.transport_company = transport_company_dict
     count_info.station = station_dict
     count_info.save()
+
+
+def merge(request, building_id):
+    building = Buildings.objects(id=building_id, removed=False).first()
+    if not building:
+        raise Http404
+
+    building_merge = []
+    building_id_list = request.GET.getlist('building_id', [])
+    if not building_id_list:
+        building_id_list = request.POST.getlist('building_id', [])
+
+    for _id in building_id_list:
+        try:
+            _id = ObjectId(_id)
+        except Exception:
+            _id = None
+
+        if _id:
+            building_ = Buildings.objects(id=_id, removed=False).first()
+            if building_:
+                building_merge.append(building_)
+
+    if request.method == 'POST':
+        user = request.user
+
+        if user and user.has_perms(['buildinggroup.change_building']):
+            try:
+                # # If have data change (Method POST). Pls get all data of city and transports
+                # transport_company = []
+                # station = []
+                # for transport in building.transports:
+                #     if transport.transport_company and \
+                #             [transport.map_pref, transport.transport_company] not in transport_company:
+                #         transport_company.append([transport.map_pref, transport.transport_company])
+                #     if transport.transport_company and transport.station_name \
+                #             and transport.transport_company != '' \
+                #             and [transport.map_pref, transport.station_name] not in station:
+                #         station.append([transport.map_pref, transport.station_name])
+                # # End get data city, transports
+
+                # update_count(
+                #     building, city=building.address['city'],
+                #     transport_company=transport_company, station=station
+                # )
+
+                if building_merge:
+                    for building_m in building_merge:
+                        for key in building_m:
+                            if not building[key] or building[key] and building[key] in ['無']  \
+                                    and key not in ['address', 'transports']:
+                                building[key] = building_m[key]
+                        building_m = building_m.remove(request)
+                        building_m.save()
+
+                        # Get data city and transports to remove
+                        transport_company = []
+                        station = []
+                        for transport in building_m.transports:
+                            if transport.transport_company and \
+                                    [transport.map_pref, transport.transport_company] not in transport_company:
+                                transport_company.append([transport.map_pref, transport.transport_company])
+                            if transport.transport_company and transport.station_name \
+                                    and transport.transport_company != '' \
+                                    and [transport.map_pref, transport.station_name] not in station:
+                                station.append([transport.map_pref, transport.station_name])
+                        update_count(
+                            building_m, removed=True, city=building_m.address['city'],
+                            transport_company=transport_company, station=station
+                        )
+                building = building.merge(request)
+                building.save()
+                messages.success(request, _('Merged'))
+                return redirect('buildings_show', building.id)
+            except Exception as e:
+                print('Merge building error: {}'.format(e))
+                messages.error(request, _('Error'))
+        else:
+            messages.error(request, _('Sorry, you do not have permission to access this area.'))
+
+    context = {
+        'building': building,
+        'building_merge': building_merge
+    }
+
+    return TemplateResponse(request, 'wagtailadmin/buildings/merge.html', context)

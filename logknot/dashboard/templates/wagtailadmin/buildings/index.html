@@ -76,6 +76,9 @@
                     {% trans '編集' %}
                 </th>
                 <th>
+                    {% trans 'Merge' %}
+                </th>
+                <th>
                 </th>
             </tr>
         </thead>
@@ -94,6 +97,10 @@
                 </td>
                 <td class="update-readable-date" title="{{ building.update_by }}">
                     {{ building.last_time_update }}
+                </td>
+                <td align="center">
+                    <input type="checkbox" id="merge-building-{{ building.id }}" name="merge-building" value="{{ building.id }}">
+                    <button class="button button-merge" type="button" value="{% url 'buildings_merge' building_id=building.id %}">{% trans 'Merge' %}</button>
                 </td>
                 <td>
                     <form method="post" action="{% url 'buildings_show' building.id %}" class="buildings-action">
@@ -125,4 +132,26 @@
 {% endblock %}
 
 {% block extra_js %}
+<script type="text/javascript">
+$(function(){
+    $('.table-buildings').on('click', '.button-merge', function(){
+        $building_id = $(this).val();
+        $link = ($(this).val()) + '?';
+        $first = 0;
+        $('input[name=merge-building]:checked').each (function() {
+            if ($building_id.indexOf($(this).val()) < 0) {
+                if ($first == 0){
+                    $link = $link + 'building_id=' + $(this).val();
+                    $first = 1;
+                } else {
+                    $link = $link + '&building_id=' + $(this).val();
+                }
+            }
+        });
+        if ($first){
+            location.href = $link;
+        }
+    });
+});
+</script>
 {% endblock %}

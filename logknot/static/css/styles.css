@@ -371,7 +371,7 @@ ul.archive-list li:nth-of-type(4n) {
   }
 }
 .property-archive_item * .property_img .total_price .unit {
-  font-size: 0.75rem;
+  font-size: 1.25rem;
   font-weight: normal;
 }
 @media (max-width: 991px) {

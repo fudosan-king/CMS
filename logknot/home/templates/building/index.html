@@ -195,7 +195,7 @@
                         <a href="{% url 'building' building_same.id %}">
                             <div class="property_img">
                                 <img src="{{ building_same.get_photo_first }}" alt="" class="img-fluid">
-                                <p class="total_price">{{ building_same.total_houses }}<span class="unit">戸</span></p>
+                                <p class="total_price"><span class="unit">総戸数</span>{{ building_same.total_houses }}</p>
                             </div>
                             <p class="label_custom">カスタム<br>可能物件</p>
                             <div class="w_property-archive_head">

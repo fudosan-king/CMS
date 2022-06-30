@@ -71,9 +71,14 @@ def search(request):
                     transport_company_tokyo.append(st)
 
     count_info = CountInfoBuildings.objects().first()
-    city_dict = count_info.city
-    transport_company_dict = count_info.transport_company
-    station_dict = count_info.station
+    if count_info is not None:
+        city_dict = count_info.city
+        transport_company_dict = count_info.transport_company
+        station_dict = count_info.station
+    else:
+        city_dict = {}
+        transport_company_dict = {}
+        station_dict = {}
 
     city_count_tokyo = {}
     for city in city_tokyo:
